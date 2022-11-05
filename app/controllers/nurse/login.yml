@@ -1,0 +1,30 @@
+parameters:
+  - name: username
+    in: body
+    type: string
+    required: true
+  - name: password
+    in: body
+    type: string
+    required: true
+definitions:
+  Nurse:
+    type: object
+    properties:
+      jwt:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      department:
+        type: integer
+responses:
+  200:
+    schema:
+      $ref: '#/definitions/Nurse'
+    examples:
+      jwt: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2Njc3NDMzOTYsInVzZXIiOiJhZG1pbiIsImlkIjoxfQ.9t7Cz730T8KHZtLGcLSNYSi8OYoRalWDKARGHiOdNM4"
+      id: 1
+      name: "测试护士"
+      department: 1
