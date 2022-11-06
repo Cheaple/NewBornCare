@@ -15,8 +15,14 @@ definitions:
         type: string
       id:
         type: integer
+      username:
+        type: string
       name:
         type: string
+      gender:
+        type: integer
+      tel:
+        type: integer
       department:
         type: integer
 responses:
@@ -26,5 +32,8 @@ responses:
     examples:
       jwt: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2Njc3NDMzOTYsInVzZXIiOiJhZG1pbiIsImlkIjoxfQ.9t7Cz730T8KHZtLGcLSNYSi8OYoRalWDKARGHiOdNM4"
       id: 1
-      name: "测试护士"
+      username: 'nurse'
+      name: '测试护士'
+      gender: 1
+      tel: 19912345678
       department: 1

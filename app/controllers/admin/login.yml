@@ -15,6 +15,8 @@ definitions:
         type: string
       id:
         type: integer
+      username:
+        type: string
       name:
         type: string
       department:
@@ -26,5 +28,6 @@ responses:
     examples:
       jwt: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2Njc3NDMzOTYsInVzZXIiOiJhZG1pbiIsImlkIjoxfQ.9t7Cz730T8KHZtLGcLSNYSi8OYoRalWDKARGHiOdNM4"
       id: 1
+      username: "admin"
       name: "测试管理员"
-      department: 1
+      department: 0

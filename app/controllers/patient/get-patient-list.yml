@@ -1,0 +1,26 @@
+parameters:
+  - name: department
+    in: query
+    type: integer
+    required: false
+
+definitions:
+  PatientList:
+    type: object
+    properties:
+      count:
+        type: integer
+      posts:
+        type: object
+        properties:
+          id:
+            type: integer
+          name:
+            type: string
+          gender:
+            type: integer
+          
+responses:
+  200:
+    schema:
+      $ref: '#/definitions/PatientList'

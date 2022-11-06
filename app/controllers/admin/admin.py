@@ -2,7 +2,7 @@
 from flask import Blueprint, jsonify, request
 from flasgger import swag_from
 from app.models import Admin
-from app.services.admin import AdminService
+from app.services import AdminService
 from app.utils import encipher, jwt
 
 bp = Blueprint(
@@ -33,10 +33,11 @@ def login():
                 "id": admin.id
             })
             return jsonify({
-                "jwt": token,
+                "jwt": token,                
                 "id": admin.id,
+                "username": admin.username,
                 "name": admin.name,
-                "department": admin.department
+                "department": admin.department,
             }), 200
         else:
             return jsonify({'message': admin}), 500

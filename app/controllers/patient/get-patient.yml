@@ -1,0 +1,21 @@
+parameters:
+  - name: id
+    in: query
+    type: integer
+    required: true
+
+definitions:
+  Patient:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      gender:
+        type: integer
+          
+responses:
+  200:
+    schema:
+      $ref: '#/definitions/Patient'

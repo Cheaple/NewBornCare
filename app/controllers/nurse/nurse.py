@@ -2,7 +2,7 @@
 from flask import Blueprint, jsonify, request
 from flasgger import swag_from
 from app.models import Nurse
-from app.services.nurse import NurseService
+from app.services import NurseService
 from app.utils import encipher, jwt
 
 bp = Blueprint(
@@ -35,7 +35,10 @@ def login():
             return jsonify({
                 "jwt": token,
                 "id": nurse.id,
+                "username": nurse.username,
                 "name": nurse.name,
+                "gender": nurse.gender,
+                "tel": nurse.tel,
                 "department": nurse.department
             }), 200
         else:
