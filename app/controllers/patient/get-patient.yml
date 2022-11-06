@@ -14,7 +14,33 @@ definitions:
         type: string
       gender:
         type: integer
-          
+      birthdate:
+        type: integer
+      palmprint:
+        type: binary
+      guardian:
+        type: string
+      guardianId:
+        type: string
+      relation:
+        type: integer
+      tel:
+        type: integer
+      status:
+        type: integer
+      inDate:
+        type: string
+      outDate:
+        type: string
+      department:
+        type: integer
+      room:
+        type: integer
+      bed:
+        type: integer
+      allergy:
+        type: string
+
 responses:
   200:
     schema:

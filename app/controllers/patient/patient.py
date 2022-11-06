@@ -34,8 +34,8 @@ def get_patient(patientId):
     '''
     获取患者的完整基本信息
     '''
-    patient, result = service.get_post_detail(patientId)
+    patient, result = service.get_patient(patientId)
     if result:
         return jsonify(patient), 200
     else:
-        return jsonify({'message': "error"}), 500
+        return jsonify({'message': patient}), 500

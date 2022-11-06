@@ -1,7 +1,10 @@
+from codecs import getencoder
+from unicodedata import name
 from sqlalchemy import and_
 
 from app.extensions import db
 from app.models import Admin
+from app.models.patient import Patient
 
 
 class PatientService():
@@ -18,7 +21,6 @@ class PatientService():
                     name,
                     gender,
                     birthdate,
-                    palmprint,
                     tel,
                     indate,
                     outdate,
@@ -52,4 +54,28 @@ class PatientService():
             return [], 0, False
     
     def get_patient(self, id):
-        pass
+        try:
+            result = db.session.query(
+                Patient.id,
+                Patient.name,
+                Patient.gender,
+                Patient.birthdate,
+                Patient.palmprint,
+                Patient.guardian,
+                Patient.guardianId,
+                Patient.relation,
+                Patient.tel,
+                Patient.status,
+                Patient.inDate,
+                Patient.outDate,
+                Patient.department,
+                Patient.room,
+                Patient.bed
+            ).filter(Patient.id == id).first()
+            patient = dict(zip(result.keys(), result))
+            if patient is None:
+                return "user not found", False
+            return patient, True
+        except Exception as e:
+            print(e)
+            return "errors", False

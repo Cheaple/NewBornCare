@@ -15,6 +15,11 @@ class Patient(db.Model):
     gender = db.Column(db.Integer, nullable=False, doc='性别')
     birthdate = db.Column(db.DateTime, nullable=False, doc='生日')
     palmprint = db.Column(db.LargeBinary, doc='脚纹')
+
+    # 监护人信息
+    guardian = db.Column(db.Integer, nullable=False, doc='监护人姓名')
+    guardianId = db.Column(db.String, nullable=False, doc='监护人身份证号')
+    relation = db.Column(db.Integer, nullable=False, doc='监护人与患者关系')  # 1: 父子; 2: 母子
     tel = db.Column(db.Integer, nullable=False, doc='监护人联系方式')
 
     # 住院信息

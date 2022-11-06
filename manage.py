@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from datetime import date, datetime
 import os
 from unicodedata import name
 
@@ -6,6 +7,8 @@ from flask_script import Manager
 
 from app import create_app, db
 from app.utils import encipher
+
+import datetime
 
 app = create_app(os.getenv('TYPE', 'default'))
 
@@ -24,16 +27,37 @@ def init_db():
         username='admin',
         password=encipher('admin'),
         name='测试管理员',
-        department=0)
+        department=0,
+        status=1
+        )
+
     nurse = models.Nurse(
         username='nurse',
         password=encipher('nurse'),
         name='测试护士',
-        department=5,
+        gender=1,
+        tel=19912345678,
+        department=1,
         status=1)
-    #patient = models.Patient(username='patient', password='patient', name='测试患者')
-    db.session.add(admin)
+
+    patient = models.Patient(
+        name='测试患儿',
+        gender=0,
+        birthdate=datetime.datetime(2022,11,1,12,0,0),
+        #palmprint=,
+        guardian = "患儿父",
+        guardianId = "42100220000725141x",
+        relation = 1,
+        tel = 19972644417,
+        status=1,
+        inDate=datetime.date.today(),
+        department=1, 
+        room=234,
+        bed=3
+    )
+    db.session.add(admin)   
     db.session.add(nurse)
+    db.session.add(patient)
 
     # commit the changes
     db.session.commit()

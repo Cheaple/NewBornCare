@@ -44,7 +44,7 @@ def login():
         else:
             return jsonify({'message': nurse}), 500
     except KeyError:
-        return jsonify({'message': "bad arguments"}), 400
+        return jsonify({'message': 'bad arguments'}), 400
 
 
 @bp.route('/nurse/logout', methods=['PATCH'])
