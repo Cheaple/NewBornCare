@@ -29,9 +29,9 @@ definitions:
       status:
         type: integer
       inDate:
-        type: string
+        type: integer
       outDate:
-        type: string
+        type: integer
       department:
         type: integer
       room:

@@ -3,8 +3,7 @@ from unicodedata import name
 from sqlalchemy import and_
 
 from app.extensions import db
-from app.models import Admin
-from app.models.patient import Patient
+from app.models import Patient
 
 
 class PatientService():
@@ -14,7 +13,7 @@ class PatientService():
             if department != 0:
                 where_clause += ("AND department = " + str(department))
 
-            # todo: list是否应该返回所有信息？
+            # TODO: list是否应该返回所有信息？
             content_base = '''
                 SELECT
                     id,
@@ -79,3 +78,27 @@ class PatientService():
         except Exception as e:
             print(e)
             return "errors", False
+    
+    def add_patient(self, content):
+        try:
+            patient = Patient(
+                name=content['name'],
+                gender=content['gender'],
+                birthdate=content['birthdate'],
+                # palmprint=content['palmprint'],
+                guardian=content['guardian'],
+                guardianId=content['guardianId'],
+                relation=content['relation'],
+                tel=content['tel'],
+                status=content['status'],
+                inDate=content['inDate'],
+                department=content['department'],
+                room=content['room'],
+                bed=content['bed']
+            )
+            db.session.add(patient)
+            db.session.commit()
+            return patient.id, True
+        except Exception as e:
+            print(e)
+            return 0, False

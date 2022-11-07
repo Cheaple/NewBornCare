@@ -6,9 +6,8 @@ from unicodedata import name
 from flask_script import Manager
 
 from app import create_app, db
-from app.utils import encipher
+from app.utils import encipher, toTimestamp
 
-import datetime
 
 app = create_app(os.getenv('TYPE', 'default'))
 
@@ -43,14 +42,14 @@ def init_db():
     patient = models.Patient(
         name='测试患儿',
         gender=0,
-        birthdate=datetime.datetime(2022,11,1,12,0,0),
+        birthdate=toTimestamp(datetime(2022,11,1,12,0,0)),
         #palmprint=,
         guardian = "患儿父",
         guardianId = "42100220000725141x",
         relation = 1,
         tel = 19972644417,
         status=1,
-        inDate=datetime.date.today(),
+        inDate=toTimestamp(datetime.now()),
         department=1, 
         room=234,
         bed=3
