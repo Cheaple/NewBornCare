@@ -14,7 +14,7 @@ class Patient(db.Model):
     name = db.Column(db.String(20), nullable=False, doc='姓名')
     gender = db.Column(db.Integer, nullable=False, doc='性别')
     birthdate = db.Column(db.Integer, nullable=False, doc='生日')
-    palmprint = db.Column(db.LargeBinary, doc='脚纹')
+    palmprint = db.Column(db.LargeBinary, doc='脚纹图片')  # TODO: 图片处理(延后到下一次迭代)
 
     # 监护人信息
     guardian = db.Column(db.Integer, nullable=False, doc='监护人姓名')

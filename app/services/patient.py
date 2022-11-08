@@ -73,7 +73,7 @@ class PatientService():
             ).filter(Patient.id == id).first()
             patient = dict(zip(result.keys(), result))
             if patient is None:
-                return "user not found", False
+                return "patient not found", False
             return patient, True
         except Exception as e:
             print(e)

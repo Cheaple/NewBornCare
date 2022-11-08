@@ -5,9 +5,8 @@ from unicodedata import name
 
 from flask_script import Manager
 
-from app import create_app, db
+from app import create_app, db, models
 from app.utils import encipher, toTimestamp
-
 
 app = create_app(os.getenv('TYPE', 'default'))
 
@@ -54,9 +53,24 @@ def init_db():
         room=234,
         bed=3
     )
+
+    transfusion = models.Transfusion(
+        nurseId=1,
+        patientId=1,
+        startTime=toTimestamp(datetime.now()),
+
+        vein=2,
+        drug=3,
+        dose=200,
+        tool=1,
+        rate=3,
+        info="心跳较快"
+    )
+
     db.session.add(admin)   
     db.session.add(nurse)
     db.session.add(patient)
+    db.session.add(transfusion)
 
     # commit the changes
     db.session.commit()
