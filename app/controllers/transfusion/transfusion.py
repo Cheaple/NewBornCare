@@ -16,7 +16,7 @@ service = TransfusionService()
 @swag_from('get-transfusion-list.yml')
 def get_transfusion_list():
     '''
-    获取患者的输液列表
+    获取患者的输液记录列表
     '''
     patientId = request.args.get('patientId')
     transfusions, count, result = service.get_transfusion_list(patientId)
@@ -32,7 +32,7 @@ def get_transfusion_list():
 @swag_from('get-transfusion.yml')
 def get_transfusion(transfusionId):
     '''
-    获取输液的完整基本信息
+    获取输液记录的完整信息
     '''
     transfusion, result = service.get_transfusion(transfusionId)
     if result:
@@ -44,7 +44,7 @@ def get_transfusion(transfusionId):
 @swag_from('add-transfusion.yml')
 def add_transfusion():
     """
-    添加患者
+    添加输液记录
     """
     try:
         content = request.get_json()
@@ -58,6 +58,8 @@ def add_transfusion():
             # return jsonify({'message': "invalid arguments: " + key}), 400
         if 'startTime' not in content:
             content['startTime'] = toTimestamp(datetime.now())
+        if 'status' not in content:
+            content['status'] = 1
         if 'info' not in content:
             content['info'] = None
 

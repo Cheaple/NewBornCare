@@ -12,6 +12,7 @@ class Transfusion(db.Model):
     patientId = db.Column(db.Integer, nullable=False, doc="输液病人")
     startTime = db.Column(db.Integer, nullable=False, doc="开始时间")
     finishTime = db.Column(db.Integer, nullable=True, doc="结束时间")
+    status = db.Column(db.Integer, nullable=False, doc='输液状态')  # 0: 已完成  1: 进行中  2: 中止 
 
     #form = Column(db.Integer, nullable=False, doc="类型")
     vein = db.Column(db.Integer, nullable=False, doc="静脉")

@@ -18,6 +18,8 @@ definitions:
         type: integer
       finishTime:
         type: integer
+      status:
+        type: integer
       vein:
         type: integer
       drug:

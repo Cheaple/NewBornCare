@@ -58,6 +58,7 @@ def init_db():
         nurseId=1,
         patientId=1,
         startTime=toTimestamp(datetime.now()),
+        status=1,
 
         vein=2,
         drug=3,
