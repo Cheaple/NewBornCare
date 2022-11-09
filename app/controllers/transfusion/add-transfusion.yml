@@ -1,0 +1,57 @@
+parameters:
+  - name: id
+    in: body
+    type: integer
+    required: true
+  - name: nurseId
+    in: body
+    type: integer
+    required: true
+  - name: patientId
+    in: body
+    type: integer
+    required: true
+  - name: startTime
+    in: body
+    type: integer
+    required: true
+  - name: finishTime
+    in: body
+    type: integer
+    required: true
+  - name: vein
+    in: body
+    type: integer
+    required: true
+  - name: drug
+    in: body
+    type: integer
+    required: true
+  - name: dose
+    in: body
+    type: integer
+    required: true
+  - name: tool
+    in: body
+    type: integer
+    required: true
+  - name: rate
+    in: body
+    type: integer
+    required: true
+  - name: info
+    in: body
+    type: string
+    required: true
+definitions:
+  TransfusionAdd:
+    type: object
+    properties:
+      message:
+        type: string
+      id:
+        type: integer
+responses:
+  200:
+    schema:
+      $ref: '#/definitions/TransfusionAdd'

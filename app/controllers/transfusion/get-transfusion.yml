@@ -1,0 +1,37 @@
+parameters:
+  - name: id
+    in: query
+    type: integer
+    required: true
+
+definitions:
+  Transfusion:
+    type: object
+    properties:
+      id:
+        type: integer
+      patientId:
+        type: integer
+      nurseId:
+        type: integer
+      startTime:
+        type: integer
+      finishTime:
+        type: integer
+      vein:
+        type: integer
+      drug:
+        type: integer
+      dose:
+        type: integer
+      tool:
+        type: integer
+      rate:
+        type: integer
+      info:
+        type: string
+
+responses:
+  200:
+    schema:
+      $ref: '#/definitions/Transfusion'

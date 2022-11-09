@@ -75,7 +75,7 @@ class TransfusionService():
     
     def add_transfusion(self, content):
         try:
-            transfusion = transfusion(
+            transfusion = Transfusion(
                 nurseId=content['nurseId'],
                 patientId=content['patientId'],
                 startTime=content['startTime'],
