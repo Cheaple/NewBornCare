@@ -9,7 +9,7 @@ from app.models import Transfusion
 class TransfusionService():
     def get_transfusion_list(self, patientId):
         try:
-            where_clause = "WHERE patientId  = " + str(patientId)
+            where_clause = "WHERE patientId = " + str(patientId)
 
             # TODO: list是否应该返回所有信息？
             content_base = '''
@@ -27,14 +27,14 @@ class TransfusionService():
                     rate,
                     info
                 FROM
-                    transfusion
+                    Transfusion
                 {where}
             '''
             count_base = '''
-                select
-                    count(id) as count
-                from
-                    transfusion
+                SELECT
+                    COUNT(id) as count
+                FROM
+                    Transfusion
                 {where}
             '''
             sql_content = content_base.format(where=where_clause)
@@ -42,10 +42,10 @@ class TransfusionService():
 
             content_result = db.session.execute(sql_content)
             count_result = db.session.execute(sql_count)
-            post_list = [dict(zip(result.keys(), result)) for result in content_result]
+            transfusion_list = [dict(zip(result.keys(), result)) for result in content_result]
             count = [dict(zip(result.keys(), result)) for result in count_result]
 
-            return post_list, count[0]['count'], True
+            return transfusion_list, count[0]['count'], True
 
         except Exception as e:
             print(e)

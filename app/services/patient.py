@@ -28,14 +28,14 @@ class PatientService():
                     bed,
                     allergy
                 FROM
-                    patient
+                    Patient
                 {where}
             '''
             count_base = '''
-                select
-                    count(id) as count
-                from
-                    patient
+                SELECT
+                    COUNT(id) as count
+                FROM
+                    Patient
                 {where}
             '''
             sql_content = content_base.format(where=where_clause)
@@ -43,10 +43,10 @@ class PatientService():
 
             content_result = db.session.execute(sql_content)
             count_result = db.session.execute(sql_count)
-            post_list = [dict(zip(result.keys(), result)) for result in content_result]
+            patient_list = [dict(zip(result.keys(), result)) for result in content_result]
             count = [dict(zip(result.keys(), result)) for result in count_result]
 
-            return post_list, count[0]['count'], True
+            return patient, count[0]['count'], True
 
         except Exception as e:
             print(e)
