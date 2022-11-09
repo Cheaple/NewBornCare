@@ -26,14 +26,14 @@ class CheckService():
                     rate,
                     info
                 FROM
-                    Check
+                    `Check`
                 {where}
             '''
             count_base = '''
                 SELECT
                     COUNT(id) as count
                 FROM
-                    Check
+                    `Check`
                 {where}
             '''
             sql_content = content_base.format(where=where_clause)
@@ -62,10 +62,9 @@ class CheckService():
                 Check.rate,
                 Check.info,
             ).filter(Check.id == id).first()
-            check = dict(zip(result.keys(), result))
-            if check is None:
+            if result is None:
                 return "check not found", False
-            return check, True
+            return dict(zip(result.keys(), result)), True
         except Exception as e:
             print(e)
             return "errors", False

@@ -71,10 +71,9 @@ class PatientService():
                 Patient.room,
                 Patient.bed
             ).filter(Patient.id == id).first()
-            patient = dict(zip(result.keys(), result))
-            if patient is None:
+            if result is None:
                 return "patient not found", False
-            return patient, True
+            return dict(zip(result.keys(), result)), True
         except Exception as e:
             print(e)
             return "errors", False

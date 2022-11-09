@@ -3,4 +3,3 @@ from .check import Check
 from .nurse import Nurse
 from .patient import Patient
 from .transfusion import Transfusion
-from .check import Check

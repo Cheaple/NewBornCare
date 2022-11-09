@@ -67,10 +67,9 @@ class TransfusionService():
                 Transfusion.rate,
                 Transfusion.info,
             ).filter(Transfusion.id == id).first()
-            transfusion = dict(zip(result.keys(), result))
-            if transfusion is None:
+            if result is None:
                 return "transfusion not found", False
-            return transfusion, True
+            return dict(zip(result.keys(), result)), True
         except Exception as e:
             print(e)
             return "errors", False

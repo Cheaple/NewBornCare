@@ -68,10 +68,21 @@ def init_db():
         info="心跳较快"
     )
 
+    check = models.Check(
+        nurseId=10,
+        patientId=1,
+        transfusionId=1,
+        time=toTimestamp(datetime.now()),
+        dose=100,
+        rate=3,
+        info="心跳正常"
+    )
+
     db.session.add(admin)   
     db.session.add(nurse)
     db.session.add(patient)
     db.session.add(transfusion)
+    db.session.add(check)
 
     # commit the changes
     db.session.commit()
