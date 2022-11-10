@@ -15,6 +15,7 @@ class CheckService():
                 where_clause = "WHERE transfusionId = " + str(transfusionId)
 
             # TODO: list是否应该返回所有信息？
+            # Note: 'check' is a keyword in SQL
             content_base = '''
                 SELECT
                     id,

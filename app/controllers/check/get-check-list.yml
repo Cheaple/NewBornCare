@@ -1,0 +1,40 @@
+parameters:
+  - name: patientId
+    in: query
+    type: integer
+    required: false
+  - name: transfusionId
+    in: query
+    type: integer
+    required: false
+
+definitions:
+  CheckList:
+    type: object
+    properties:
+      count:
+        type: integer
+      transfusions:
+        type: object
+        properties:
+          id:
+            type: integer
+          patientId:
+            type: integer
+          nurseId:
+            type: integer
+          transfusionId:
+            type: integer
+          time:
+            type: integer
+          dose:
+            type: integer
+          rate:
+            type: integer
+          info:
+            type: string
+          
+responses:
+  200:
+    schema:
+      $ref: '#/definitions/CheckList'

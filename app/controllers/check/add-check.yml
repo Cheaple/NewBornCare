@@ -1,0 +1,45 @@
+parameters:
+  - name: id
+    in: body
+    type: integer
+    required: true
+  - name: nurseId
+    in: body
+    type: integer
+    required: true
+  - name: patientId
+    in: body
+    type: integer
+    required: true
+  - name: transfusionId
+    in: body
+    type: integer
+    required: true
+  - name: time
+    in: body
+    type: integer
+    required: true
+  - name: dose
+    in: body
+    type: integer
+    required: true
+  - name: rate
+    in: body
+    type: integer
+    required: true
+  - name: info
+    in: body
+    type: string
+    required: false
+definitions:
+  CheckAdd:
+    type: object
+    properties:
+      message:
+        type: string
+      id:
+        type: integer
+responses:
+  200:
+    schema:
+      $ref: '#/definitions/CheckAdd'
