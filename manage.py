@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
-from datetime import date, datetime
 import os
-from unicodedata import name
+from datetime import datetime
 
 from flask_script import Manager
 
@@ -16,8 +15,6 @@ manager = Manager(app)
 @manager.command
 def init_db():
     """Init Database"""
-    from app import models
-
     # create the database and the db table
     db.create_all()
 
@@ -27,7 +24,7 @@ def init_db():
         name='测试管理员',
         department=0,
         status=1
-        )
+    )
 
     nurse = models.Nurse(
         username='nurse',
@@ -41,15 +38,15 @@ def init_db():
     patient = models.Patient(
         name='测试患儿',
         gender=0,
-        birthdate=toTimestamp(datetime(2022,11,1,12,0,0)),
-        #palmprint=,
-        guardian = "患儿父",
-        guardianId = "42100220000725141x",
-        relation = 1,
-        tel = 19972644417,
+        birthdate=toTimestamp(datetime(2022, 11, 1, 12, 0, 0)),
+        # palmprint=,
+        guardian="患儿父",
+        guardianId="42100220000725141x",
+        relation=1,
+        tel=19972644417,
         status=1,
         inDate=toTimestamp(datetime.now()),
-        department=1, 
+        department=1,
         room=234,
         bed=3
     )
@@ -78,7 +75,7 @@ def init_db():
         info="心跳正常"
     )
 
-    db.session.add(admin)   
+    db.session.add(admin)
     db.session.add(nurse)
     db.session.add(patient)
     db.session.add(transfusion)

@@ -1,3 +1,4 @@
+# flake8: noqa
 from .admin import Admin
 from .check import Check
 from .nurse import Nurse

@@ -1,7 +1,3 @@
-from codecs import getencoder
-from unicodedata import name
-from sqlalchemy import and_
-
 from app.extensions import db
 from app.models import Patient
 
@@ -43,15 +39,17 @@ class PatientService():
 
             content_result = db.session.execute(sql_content)
             count_result = db.session.execute(sql_count)
-            patient_list = [dict(zip(result.keys(), result)) for result in content_result]
-            count = [dict(zip(result.keys(), result)) for result in count_result]
+            patient_list = [dict(zip(result.keys(), result))
+                            for result in content_result]
+            count = [dict(zip(result.keys(), result))
+                     for result in count_result]
 
             return patient_list, count[0]['count'], True
 
         except Exception as e:
             print(e)
             return [], 0, False
-    
+
     def get_patient(self, id):
         try:
             result = db.session.query(
@@ -77,7 +75,7 @@ class PatientService():
         except Exception as e:
             print(e)
             return "errors", False
-    
+
     def add_patient(self, content):
         try:
             patient = Patient(

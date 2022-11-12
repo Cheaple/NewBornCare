@@ -7,7 +7,8 @@ from flask import current_app, g, request
 def generate(payload, expiry=None):
     if expiry is None:
         expire_hours = int(current_app.config.get('JWT_EXPIRY'))
-        expiry = datetime.datetime.now() + datetime.timedelta(hours=expire_hours)
+        expiry = datetime.datetime.now()
+        + datetime.timedelta(hours=expire_hours)
 
     _payload = {'exp': expiry}
     _payload.update(payload)

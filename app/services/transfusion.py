@@ -1,7 +1,3 @@
-from codecs import getencoder
-from unicodedata import name
-from sqlalchemy import and_
-
 from app.extensions import db
 from app.models import Transfusion
 
@@ -42,15 +38,17 @@ class TransfusionService():
 
             content_result = db.session.execute(sql_content)
             count_result = db.session.execute(sql_count)
-            transfusion_list = [dict(zip(result.keys(), result)) for result in content_result]
-            count = [dict(zip(result.keys(), result)) for result in count_result]
+            transfusion_list = [dict(zip(result.keys(), result))
+                                for result in content_result]
+            count = [dict(zip(result.keys(), result))
+                     for result in count_result]
 
             return transfusion_list, count[0]['count'], True
 
         except Exception as e:
             print(e)
             return [], 0, False
-    
+
     def get_transfusion(self, id):
         try:
             result = db.session.query(
@@ -73,7 +71,7 @@ class TransfusionService():
         except Exception as e:
             print(e)
             return "errors", False
-    
+
     def add_transfusion(self, content):
         try:
             transfusion = Transfusion(

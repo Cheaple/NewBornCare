@@ -1,8 +1,10 @@
-from flask import Blueprint, jsonify, request
+from datetime import datetime
+
 from flasgger import swag_from
+from flask import Blueprint, jsonify, request
+
 from app.services import CheckService
 from app.utils import toTimestamp
-from datetime import datetime
 
 bp = Blueprint(
     'check',
@@ -12,6 +14,7 @@ bp = Blueprint(
 
 service = CheckService()
 
+
 @bp.route('/check', methods=['GET'])
 @swag_from('get-check-list.yml')
 def get_check_list():
@@ -20,7 +23,8 @@ def get_check_list():
     '''
     patientId = request.args.get('patientId')
     transfusionId = request.args.get('transfusionId')
-    checks, count, result = service.get_check_list(patientId=patientId, transfusionId=transfusionId)
+    checks, count, result = service.get_check_list(
+        patientId=patientId, transfusionId=transfusionId)
     if result:
         return jsonify({
             'check': checks,
@@ -28,6 +32,7 @@ def get_check_list():
         }), 200
     else:
         return jsonify({'message': "error"}), 500
+
 
 @bp.route('/check/<int:checkId>', methods=['GET'])
 @swag_from('get-check.yml')
@@ -40,6 +45,7 @@ def get_check(checkId):
         return jsonify(check), 200
     else:
         return jsonify({'message': check}), 500
+
 
 @bp.route('/check/add', methods=['POST'])
 @swag_from('add-check.yml')

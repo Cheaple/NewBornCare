@@ -1,9 +1,9 @@
 
-from flask import Blueprint, jsonify, request
 from flasgger import swag_from
-from app.models import Nurse
+from flask import Blueprint, jsonify, request
+
 from app.services import NurseService
-from app.utils import encipher, jwt
+from app.utils import jwt
 
 bp = Blueprint(
     'nurse',
@@ -58,7 +58,8 @@ def get_nurse_list():
     '''
     获取护士列表
     '''
-    dep = 0 if request.args.get('department') is None else int(request.args.get('department'))
+    dep = 0 if request.args.get('department') is None else int(
+        request.args.get('department'))
     # TODO: 添加department之外的其他的搜索条件
 
     nurses, count, result = service.get_nurse_list(dep)
@@ -69,6 +70,7 @@ def get_nurse_list():
         }), 200
     else:
         return jsonify({'message': "error"}), 500
+
 
 @bp.route('/nurse/<int:nurseId>', methods=['GET'])
 @swag_from('get-nurse.yml')
@@ -81,6 +83,7 @@ def get_nurse(nurseId):
         return jsonify(nurse), 200
     else:
         return jsonify({'message': nurse}), 500
+
 
 @bp.route('/nurse/add', methods=['POST'])
 @swag_from('add-nurse.yml')

@@ -1,7 +1,7 @@
 from sqlalchemy import and_
 
 from app.extensions import db
-from app.models import Admin, Nurse
+from app.models import Nurse
 from app.utils import encipher
 
 
@@ -51,15 +51,17 @@ class NurseService():
 
             content_result = db.session.execute(sql_content)
             count_result = db.session.execute(sql_count)
-            nurse_list = [dict(zip(result.keys(), result)) for result in content_result]
-            count = [dict(zip(result.keys(), result)) for result in count_result]
+            nurse_list = [dict(zip(result.keys(), result))
+                          for result in content_result]
+            count = [dict(zip(result.keys(), result))
+                     for result in count_result]
 
             return nurse_list, count[0]['count'], True
 
         except Exception as e:
             print(e)
             return [], 0, False
-    
+
     def get_nurse(self, id):
         try:
             result = db.session.query(
@@ -76,7 +78,7 @@ class NurseService():
         except Exception as e:
             print(e)
             return "errors", False
-    
+
     def add_nurse(self, content):
         try:
             nurse = Nurse(

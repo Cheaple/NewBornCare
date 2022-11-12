@@ -1,12 +1,9 @@
-from codecs import getencoder
-from unicodedata import name
-from sqlalchemy import and_
-
 from app.extensions import db
 from app.models import Check
 
+
 class CheckService():
-    def get_check_list(self, patientId = None, transfusionId = None):
+    def get_check_list(self, patientId=None, transfusionId=None):
         try:
             where_clause = ""
             if patientId:
@@ -42,15 +39,17 @@ class CheckService():
 
             content_result = db.session.execute(sql_content)
             count_result = db.session.execute(sql_count)
-            check_list = [dict(zip(result.keys(), result)) for result in content_result]
-            count = [dict(zip(result.keys(), result)) for result in count_result]
+            check_list = [dict(zip(result.keys(), result))
+                          for result in content_result]
+            count = [dict(zip(result.keys(), result))
+                     for result in count_result]
 
             return check_list, count[0]['count'], True
 
         except Exception as e:
             print(e)
             return [], 0, False
-    
+
     def get_check(self, id):
         try:
             result = db.session.query(
@@ -69,14 +68,14 @@ class CheckService():
         except Exception as e:
             print(e)
             return "errors", False
-    
+
     def add_check(self, content):
         try:
             check = Check(
                 nurseId=content['nurseId'],
                 patientId=content['patientId'],
                 transfusionId=content['transfusionId'],
-                
+
                 time=content['time'],
                 dose=content['dose'],
                 rate=content['rate'],

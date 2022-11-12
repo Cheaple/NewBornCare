@@ -1,8 +1,10 @@
-from flask import Blueprint, jsonify, request
+from datetime import datetime
+
 from flasgger import swag_from
+from flask import Blueprint, jsonify, request
+
 from app.services import TransfusionService
 from app.utils import toTimestamp
-from datetime import datetime
 
 bp = Blueprint(
     'transfusion',
@@ -11,6 +13,7 @@ bp = Blueprint(
 )
 
 service = TransfusionService()
+
 
 @bp.route('/transfusion', methods=['GET'])
 @swag_from('get-transfusion-list.yml')
@@ -28,6 +31,7 @@ def get_transfusion_list():
     else:
         return jsonify({'message': "error"}), 500
 
+
 @bp.route('/transfusion/<int:transfusionId>', methods=['GET'])
 @swag_from('get-transfusion.yml')
 def get_transfusion(transfusionId):
@@ -39,6 +43,7 @@ def get_transfusion(transfusionId):
         return jsonify(transfusion), 200
     else:
         return jsonify({'message': transfusion}), 500
+
 
 @bp.route('/transfusion/add', methods=['POST'])
 @swag_from('add-transfusion.yml')

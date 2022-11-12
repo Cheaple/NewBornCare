@@ -1,8 +1,7 @@
-from flask import Blueprint, jsonify, request
 from flasgger import swag_from
+from flask import Blueprint, jsonify, request
+
 from app.services import PatientService
-from app.utils import toTimestamp
-from datetime import datetime
 
 bp = Blueprint(
     'patient',
@@ -12,13 +11,15 @@ bp = Blueprint(
 
 service = PatientService()
 
+
 @bp.route('/patient', methods=['GET'])
 @swag_from('get-patient-list.yml')
 def get_patient_list():
     '''
     获取患者列表
     '''
-    dep = 0 if request.args.get('department') is None else int(request.args.get('department'))
+    dep = 0 if request.args.get('department') is None else int(
+        request.args.get('department'))
     # TODO: 添加department之外的其他的搜索条件
 
     patients, count, result = service.get_patient_list(dep)
@@ -29,6 +30,7 @@ def get_patient_list():
         }), 200
     else:
         return jsonify({'message': "error"}), 500
+
 
 @bp.route('/patient/<int:patientId>', methods=['GET'])
 @swag_from('get-patient.yml')
@@ -41,6 +43,7 @@ def get_patient(patientId):
         return jsonify(patient), 200
     else:
         return jsonify({'message': patient}), 500
+
 
 @bp.route('/patient/add', methods=['POST'])
 @swag_from('add-patient.yml')
