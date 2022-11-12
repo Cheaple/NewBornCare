@@ -25,7 +25,7 @@ def login():
         if content is None:
             return jsonify({'message': "bad arguments"}), 400
         admin, result = service.get_user_with_password(
-            content['username'], encipher(content['password']))
+            content['username'], content['password'])
 
         if result:
             token = jwt.generate({

@@ -15,4 +15,4 @@ class Nurse(db.Model):
     tel = db.Column(db.Integer, nullable=False, doc='联系方式')
     department = db.Column(db.Integer, nullable=False, doc='科室（通常是儿科）')
     
-    status = db.Column(db.Integer, nullable=False, doc='工作状态')
+    status = db.Column(db.Integer, nullable=False, doc='工作状态')  # 0: 离职  1: 在职  ...

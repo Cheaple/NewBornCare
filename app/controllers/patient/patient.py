@@ -60,14 +60,6 @@ def add_patient():
             # return jsonify({'message': "invalid arguments: " + key}), 400
         if 'status' not in content:
             content['status'] = 1
-        if 'inDate' not in content:
-            content['inDate'] = toTimestamp(datetime.now())
-        if 'room' not in content:
-            content['room'] = None
-        if 'bed' not in content:
-            content['bed'] = None
-        if 'allergy' not in content:
-            content['allergy'] = None
 
         id, result = service.add_patient(content)
 

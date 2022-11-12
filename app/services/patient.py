@@ -46,7 +46,7 @@ class PatientService():
             patient_list = [dict(zip(result.keys(), result)) for result in content_result]
             count = [dict(zip(result.keys(), result)) for result in count_result]
 
-            return patient, count[0]['count'], True
+            return patient_list, count[0]['count'], True
 
         except Exception as e:
             print(e)

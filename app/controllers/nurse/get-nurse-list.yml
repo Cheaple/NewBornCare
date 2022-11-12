@@ -5,12 +5,12 @@ parameters:
     required: false
 
 definitions:
-  PatientList:
+  NurseList:
     type: object
     properties:
       count:
         type: integer
-      patients:
+      nurses:
         type: object
         properties:
           id:
@@ -19,8 +19,14 @@ definitions:
             type: string
           gender:
             type: integer
+          tel:
+            type: integer
+          department:
+            type: integer
+          status:
+            type: integer
           
 responses:
   200:
     schema:
-      $ref: '#/definitions/PatientList'
+      $ref: '#/definitions/NurseList'

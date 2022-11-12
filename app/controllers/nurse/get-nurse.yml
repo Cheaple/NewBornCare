@@ -1,0 +1,27 @@
+parameters:
+  - name: id
+    in: query
+    type: integer
+    required: true
+
+definitions:
+  Nurse:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      gender:
+        type: integer
+      tel:
+        type: integer
+      department:
+        type: integer
+      status:
+        type: integer
+
+responses:
+  200:
+    schema:
+      $ref: '#/definitions/Nurse'

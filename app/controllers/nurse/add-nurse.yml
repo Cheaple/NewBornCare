@@ -1,42 +1,34 @@
 parameters:
-  - name: nurseId
-    in: body
-    type: integer
-    required: true
-  - name: patientId
-    in: body
-    type: integer
-    required: true
-  - name: startTime
-    in: body
-    type: integer
-    required: true
-  - name: vein
-    in: body
-    type: integer
-    required: true
-  - name: drug
-    in: body
-    type: integer
-    required: true
-  - name: dose
-    in: body
-    type: integer
-    required: true
-  - name: tool
-    in: body
-    type: integer
-    required: true
-  - name: rate
-    in: body
-    type: integer
-    required: true
-  - name: info
+  - name: username
     in: body
     type: string
+    required: true
+  - name: password
+    in: body
+    type: string
+    required: true
+  - name: name
+    in: body
+    type: string
+    required: true
+  - name: gender
+    in: body
+    type: integer
+    required: true
+  - name: tel
+    in: body
+    type: integer
+    required: true
+  - name: department
+    in: body
+    type: integer
+    required: true
+  - name: status
+    in: body
+    type: integer
     required: false
 definitions:
-  TransfusionAdd:
+  NurseAdd:
     type: object
     properties:
       message:
@@ -46,4 +38,4 @@ definitions:
 responses:
   200:
     schema:
-      $ref: '#/definitions/TransfusionAdd'
+      $ref: '#/definitions/NurseAdd'

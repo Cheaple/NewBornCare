@@ -1,8 +1,4 @@
 parameters:
-  - name: id
-    in: body
-    type: integer
-    required: true
   - name: name
     in: body
     type: string
