@@ -12,6 +12,6 @@ def index():
     return render_template('index.html')
 
 
-@bp.route("/hello")
+@bp.route("/api/hello")
 def hello():
     return "Hello, World!"

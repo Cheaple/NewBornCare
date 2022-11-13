@@ -5,6 +5,6 @@ from flask import current_app
 
 
 def encipher(text):
-    salt = current_app.config.get('SALT', '')
+    salt = current_app.config.get('ENCRY_SALT', '')
     key = scrypt.hash(text, salt, 32768, 8, 1, 32)
     return base64.b64encode(key).decode("ascii")

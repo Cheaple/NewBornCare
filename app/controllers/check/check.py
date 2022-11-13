@@ -15,7 +15,7 @@ bp = Blueprint(
 service = CheckService()
 
 
-@bp.route('/check', methods=['GET'])
+@bp.route('/api/check', methods=['GET'])
 @swag_from('get-check-list.yml')
 def get_check_list():
     '''
@@ -34,7 +34,7 @@ def get_check_list():
         return jsonify({'message': "error"}), 500
 
 
-@bp.route('/check/<int:checkId>', methods=['GET'])
+@bp.route('/api/check/<int:checkId>', methods=['GET'])
 @swag_from('get-check.yml')
 def get_check(checkId):
     '''
@@ -47,7 +47,7 @@ def get_check(checkId):
         return jsonify({'message': check}), 500
 
 
-@bp.route('/check/add', methods=['POST'])
+@bp.route('/api/check/add', methods=['POST'])
 @swag_from('add-check.yml')
 def add_check():
     """

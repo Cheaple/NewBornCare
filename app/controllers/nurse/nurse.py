@@ -14,7 +14,7 @@ bp = Blueprint(
 service = NurseService()
 
 
-@bp.route('/nurse/login', methods=['POST'])
+@bp.route('/api/nurse/login', methods=['POST'])
 @swag_from('login.yml')
 def login():
     """
@@ -47,12 +47,12 @@ def login():
         return jsonify({'message': 'bad arguments'}), 400
 
 
-@bp.route('/nurse/logout', methods=['PATCH'])
+@bp.route('/api/nurse/logout', methods=['PATCH'])
 def logout():
     pass
 
 
-@bp.route('/nurse', methods=['GET'])
+@bp.route('/api/nurse', methods=['GET'])
 @swag_from('get-nurse-list.yml')
 def get_nurse_list():
     '''
@@ -72,7 +72,7 @@ def get_nurse_list():
         return jsonify({'message': "error"}), 500
 
 
-@bp.route('/nurse/<int:nurseId>', methods=['GET'])
+@bp.route('/api/nurse/<int:nurseId>', methods=['GET'])
 @swag_from('get-nurse.yml')
 def get_nurse(nurseId):
     '''
@@ -85,7 +85,7 @@ def get_nurse(nurseId):
         return jsonify({'message': nurse}), 500
 
 
-@bp.route('/nurse/add', methods=['POST'])
+@bp.route('/api/nurse/add', methods=['POST'])
 @swag_from('add-nurse.yml')
 def add_nurse():
     """

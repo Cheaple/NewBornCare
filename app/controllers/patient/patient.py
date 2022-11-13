@@ -1,7 +1,10 @@
+from datetime import datetime
+
 from flasgger import swag_from
 from flask import Blueprint, jsonify, request
 
 from app.services import PatientService
+from app.utils import toTimestamp
 
 bp = Blueprint(
     'patient',
@@ -12,7 +15,7 @@ bp = Blueprint(
 service = PatientService()
 
 
-@bp.route('/patient', methods=['GET'])
+@bp.route('/api/patient', methods=['GET'])
 @swag_from('get-patient-list.yml')
 def get_patient_list():
     '''
@@ -32,7 +35,7 @@ def get_patient_list():
         return jsonify({'message': "error"}), 500
 
 
-@bp.route('/patient/<int:patientId>', methods=['GET'])
+@bp.route('/api/patient/<int:patientId>', methods=['GET'])
 @swag_from('get-patient.yml')
 def get_patient(patientId):
     '''
@@ -45,7 +48,7 @@ def get_patient(patientId):
         return jsonify({'message': patient}), 500
 
 
-@bp.route('/patient/add', methods=['POST'])
+@bp.route('/api/patient/add', methods=['POST'])
 @swag_from('add-patient.yml')
 def add_patient():
     """
@@ -63,6 +66,14 @@ def add_patient():
             # return jsonify({'message': "invalid arguments: " + key}), 400
         if 'status' not in content:
             content['status'] = 1
+        if 'inDate' not in content:
+            content['inDate'] = toTimestamp(datetime.now())
+        if 'room' not in content:
+            content['room'] = None
+        if 'bed' not in content:
+            content['bed'] = None
+        if 'allergy' not in content:
+            content['allergy'] = None
 
         id, result = service.add_patient(content)
 

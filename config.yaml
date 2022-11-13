@@ -1,0 +1,13 @@
+cache:
+  CACHE_TYPE: simple
+jwt:
+  SALT: thss
+  EXPIRY: 24  # HOURS
+app:
+  ENCRY_SALT: cheaple
+  ENV: dev
+  SECRET: 2018cheaple011660
+  HOST: localhost
+  PORT: 5000
+db:
+  MYSQL: sqlite:///newborn.db

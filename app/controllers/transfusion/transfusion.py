@@ -15,7 +15,7 @@ bp = Blueprint(
 service = TransfusionService()
 
 
-@bp.route('/transfusion', methods=['GET'])
+@bp.route('/api/transfusion', methods=['GET'])
 @swag_from('get-transfusion-list.yml')
 def get_transfusion_list():
     '''
@@ -32,7 +32,7 @@ def get_transfusion_list():
         return jsonify({'message': "error"}), 500
 
 
-@bp.route('/transfusion/<int:transfusionId>', methods=['GET'])
+@bp.route('/api/transfusion/<int:transfusionId>', methods=['GET'])
 @swag_from('get-transfusion.yml')
 def get_transfusion(transfusionId):
     '''
@@ -45,7 +45,7 @@ def get_transfusion(transfusionId):
         return jsonify({'message': transfusion}), 500
 
 
-@bp.route('/transfusion/add', methods=['POST'])
+@bp.route('/api/transfusion/add', methods=['POST'])
 @swag_from('add-transfusion.yml')
 def add_transfusion():
     """

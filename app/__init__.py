@@ -26,5 +26,3 @@ def create_app(config_name=None):
 
     return app
 
-
-create_app()

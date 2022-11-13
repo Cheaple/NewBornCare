@@ -14,7 +14,7 @@ bp = Blueprint(
 service = AdminService()
 
 
-@bp.route('/admin/login', methods=['POST'])
+@bp.route('/api/admin/login', methods=['POST'])
 @swag_from('login.yml')
 def login():
     """
@@ -45,16 +45,16 @@ def login():
         return jsonify({'message': "bad arguments"}), 400
 
 
-@bp.route('/admin/logout', methods=['PATCH'])
+@bp.route('/api/admin/logout', methods=['PATCH'])
 def logout():
     pass
 
 
-@bp.route('/admin/staff', methods=['PATCH'])
+@bp.route('/api/admin/staff', methods=['PATCH'])
 def staff_list():
     pass
 
 
-@bp.route('/admin/patient', methods=['PATCH'])
+@bp.route('/api/admin/patient', methods=['PATCH'])
 def patient_list():
     pass

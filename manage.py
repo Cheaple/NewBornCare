@@ -2,20 +2,24 @@
 import os
 from datetime import datetime
 
-from flask_script import Manager
+from flask_script import Manager, Server
 
 from app import create_app, db, models
-from app.utils import encipher, toTimestamp
+from app.utils import config, encipher, toTimestamp
 
 app = create_app(os.getenv('TYPE', 'default'))
 
-manager = Manager(app)
+host = config.get_yaml('app.HOST')
+port = config.get_yaml('app.PORT')
 
+manager = Manager(app)
+manager.add_command('runserver', Server(host=host, port=port))
 
 @manager.command
 def init_db():
     """Init Database"""
-    # create the database and the db table
+    # recreate the database and the db table
+    db.drop_all()
     db.create_all()
 
     admin = models.Admin(
