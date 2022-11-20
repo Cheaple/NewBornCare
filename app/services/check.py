@@ -20,8 +20,6 @@ class CheckService():
                     patientId,
                     transfusionId,
                     time,
-                    dose,
-                    rate,
                     info
                 FROM
                     `Check`
@@ -58,8 +56,6 @@ class CheckService():
                 Check.patientId,
                 Check.transfusionId,
                 Check.time,
-                Check.dose,
-                Check.rate,
                 Check.info,
             ).filter(Check.id == id).first()
             if result is None:
@@ -77,8 +73,6 @@ class CheckService():
                 transfusionId=content['transfusionId'],
 
                 time=content['time'],
-                dose=content['dose'],
-                rate=content['rate'],
                 info=content['info'],
             )
             db.session.add(check)

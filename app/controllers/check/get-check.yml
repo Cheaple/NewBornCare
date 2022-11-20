@@ -18,10 +18,6 @@ definitions:
         type: integer
       time:
         type: integer
-      dose:
-        type: integer
-      rate:
-        type: integer
       info:
         type: string
 

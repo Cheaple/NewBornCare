@@ -19,14 +19,6 @@ parameters:
     in: body
     type: integer
     required: true
-  - name: dose
-    in: body
-    type: integer
-    required: true
-  - name: rate
-    in: body
-    type: integer
-    required: true
   - name: info
     in: body
     type: string
