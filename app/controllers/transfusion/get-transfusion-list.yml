@@ -19,6 +19,8 @@ definitions:
             type: integer
           nurseId:
             type: integer
+          name:
+            type: string
           startTime:
             type: integer
           finishTime:
@@ -27,13 +29,7 @@ definitions:
             type: integer
           vein:
             type: integer
-          drug:
-            type: integer
-          dose:
-            type: integer
           tool:
-            type: integer
-          rate:
             type: integer
           info:
             type: string

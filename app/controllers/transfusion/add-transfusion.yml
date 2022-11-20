@@ -7,27 +7,19 @@ parameters:
     in: body
     type: integer
     required: true
+  - name: name
+    in: body
+    type: string
+    required: false
   - name: startTime
     in: body
     type: integer
-    required: true
+    required: false
   - name: vein
     in: body
     type: integer
-    required: true
-  - name: drug
-    in: body
-    type: integer
-    required: true
-  - name: dose
-    in: body
-    type: integer
-    required: true
+    required: true  
   - name: tool
-    in: body
-    type: integer
-    required: true
-  - name: rate
     in: body
     type: integer
     required: true
@@ -35,6 +27,21 @@ parameters:
     in: body
     type: string
     required: false
+  - name: drug
+    in: body
+    type: object
+    properties:
+      drug:
+        type: integer
+      dose:
+        type: integer
+      rate:
+        type: integer
+      startTime:
+        type: integer
+      status:
+        type: integer
+    required: true
 definitions:
   TransfusionAdd:
     type: object

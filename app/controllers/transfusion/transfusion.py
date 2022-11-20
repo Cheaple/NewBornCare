@@ -61,6 +61,8 @@ def add_transfusion():
         # key, passed = transfusion_params_check(content)
         # if not passed:
             # return jsonify({'message': "invalid arguments: " + key}), 400
+        if 'name' not in content:
+            content['name'] = ', '.join([d['drug'] for d in content['drug']])
         if 'startTime' not in content:
             content['startTime'] = toTimestamp(datetime.now())
         if 'status' not in content:
@@ -68,7 +70,12 @@ def add_transfusion():
         if 'info' not in content:
             content['info'] = None
 
-        id, result = service.add_transfusion(content)
+        drugs = content['drug']
+        del content['drug']
+        if 'status' not in drugs[0]:
+            drugs[0]['status'] = 1
+
+        id, result = service.add_transfusion(content, drugs)
 
         if result:
             return jsonify({

@@ -112,6 +112,6 @@ def add_nurse():
                 'message': "ok"
             }), 200
         else:
-            return jsonify({'message': "error"}), 500
+            return jsonify({'message': "username already exists"}), 500
     except KeyError:
         return jsonify({'message': "bad arguments"}), 400

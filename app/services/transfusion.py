@@ -1,5 +1,5 @@
 from app.extensions import db
-from app.models import Transfusion
+from app.models import Transfusion, TransfusionDrug
 
 
 class TransfusionService():
@@ -13,14 +13,12 @@ class TransfusionService():
                     id,
                     nurseId,
                     patientId,
+                    name,
                     startTime,
                     finishTime,
                     status,
                     vein,
-                    drug,
-                    dose,
                     tool,
-                    rate,
                     info
                 FROM
                     Transfusion
@@ -38,8 +36,8 @@ class TransfusionService():
 
             content_result = db.session.execute(sql_content)
             count_result = db.session.execute(sql_count)
-            transfusion_list = [dict(zip(result.keys(), result))
-                                for result in content_result]
+            transfusion_list = [dict(zip(row.keys(), row))
+                                for row in content_result]
             count = [dict(zip(result.keys(), result))
                      for result in count_result]
 
@@ -59,34 +57,37 @@ class TransfusionService():
                 Transfusion.finishTime,
                 Transfusion.status,
                 Transfusion.vein,
-                Transfusion.drug,
-                Transfusion.dose,
                 Transfusion.tool,
-                Transfusion.rate,
                 Transfusion.info,
             ).filter(Transfusion.id == id).first()
             if result is None:
                 return "transfusion not found", False
-            return dict(zip(result.keys(), result)), True
+
+            drugs = db.session.query(
+                TransfusionDrug.id,
+                TransfusionDrug.drug,
+                TransfusionDrug.dose,
+                TransfusionDrug.rate,
+                TransfusionDrug.startTime,
+                TransfusionDrug.status,
+            ).filter(TransfusionDrug.transfusionId == id).all()
+
+            transfusion = dict(zip(result.keys(), result))
+            transfusion["drug"] = [dict(zip(row.keys(), row)) for row in drugs]
+            return transfusion, True
         except Exception as e:
             print(e)
             return "errors", False
 
-    def add_transfusion(self, content):
+    def add_transfusion(self, content, drugs):
         try:
-            transfusion = Transfusion(
-                nurseId=content['nurseId'],
-                patientId=content['patientId'],
-                startTime=content['startTime'],
-                status=content['status'],
-                vein=content['vein'],
-                drug=content['drug'],
-                dose=content['dose'],
-                tool=content['tool'],
-                rate=content['rate'],
-                info=content['info'],
-            )
+            transfusion = Transfusion(**content)
             db.session.add(transfusion)
+            db.session.flush()
+            for drug in drugs:
+                drug['transfusionId'] = transfusion.id
+                db.session.add(TransfusionDrug(**drug))
+
             db.session.commit()
             return transfusion.id, True
         except Exception as e:

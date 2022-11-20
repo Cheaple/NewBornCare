@@ -11,6 +11,4 @@ class Check(db.Model):
     transfusionId = db.Column(db.Integer, nullable=False, doc="输液记录")
 
     time = db.Column(db.Integer, nullable=False, doc="巡视时间")
-    dose = db.Column(db.Integer, nullable=False, doc="药量")
-    rate = db.Column(db.Integer, nullable=False, doc="滴速（滴/秒）")
     info = db.Column(db.String, nullable=True, doc="其他情况")

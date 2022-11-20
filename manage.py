@@ -59,14 +59,29 @@ def init_db():
         nurseId=1,
         patientId=1,
         startTime=toTimestamp(datetime.now()),
+        name="葡萄糖",
         status=1,
-
         vein=2,
-        drug=3,
-        dose=200,
         tool=1,
-        rate=3,
         info="心跳较快"
+    )
+
+    drug = models.TransfusionDrug(
+        transfusionId = 1,
+        startTime=toTimestamp(datetime.now()),
+        rate = 8,
+        drug=1,
+        dose=200,
+        status = 0,
+    )
+
+    drug2 = models.TransfusionDrug(
+        transfusionId = 1,
+        startTime=toTimestamp(datetime.now()),
+        rate = 10,
+        drug=2,
+        dose=300,
+        status = 1,
     )
 
     check = models.Check(
@@ -74,8 +89,6 @@ def init_db():
         patientId=1,
         transfusionId=1,
         time=toTimestamp(datetime.now()),
-        dose=100,
-        rate=3,
         info="心跳正常"
     )
 
@@ -83,6 +96,8 @@ def init_db():
     db.session.add(nurse)
     db.session.add(patient)
     db.session.add(transfusion)
+    db.session.add(drug)
+    db.session.add(drug2)
     db.session.add(check)
 
     # commit the changes
