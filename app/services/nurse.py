@@ -56,16 +56,17 @@ class NurseService():
             count = [dict(zip(result.keys(), result))
                      for result in count_result]
 
-            return nurse_list, count[0]['count'], True
+            return nurse_list, count[0]['count'], "ok", True
 
         except Exception as e:
             print(e)
-            return [], 0, False
+            return [], 0, "error", False
 
     def get_nurse(self, id):
         try:
             result = db.session.query(
                 Nurse.id,
+                Nurse.username,
                 Nurse.name,
                 Nurse.gender,
                 Nurse.tel,
@@ -74,10 +75,10 @@ class NurseService():
             ).filter(Nurse.id == id).first()
             if result is None:
                 return "nurse not found", False
-            return dict(zip(result.keys(), result)), True
+            return dict(zip(result.keys(), result)), "ok", True
         except Exception as e:
             print(e)
-            return "errors", False
+            return None, "error", False
 
     def add_nurse(self, content):
         try:
@@ -92,7 +93,32 @@ class NurseService():
             )
             db.session.add(nurse)
             db.session.commit()
-            return nurse.id, True
+            return nurse.id, "ok", True
         except Exception as e:
             print(e)
-            return 0, False
+            return 0, "username already exists", False
+
+    def update_nurse(self, id, content):
+        try:
+            nurse = Nurse.query.get(id)
+
+            if 'username' in content:
+                nurse.username = str(content['username'])
+            if 'password' in content:
+                nurse.password = encipher(str(content['password']))
+            if 'name' in content:
+                nurse.name = content['name']
+            if 'gender' in content:
+                nurse.gender = content['gender']
+            if 'tel' in content:
+                nurse.tel = content['tel']
+            if 'department' in content:
+                nurse.department = content['department']
+            if 'status' in content:
+                nurse.status = content['status']
+
+            db.session.commit()
+            return nurse.id, "ok", True
+        except Exception as e:
+            print(e)
+            return 0, "error", False

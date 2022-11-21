@@ -1,5 +1,6 @@
 from app.extensions import db
 from app.models import Patient
+from app.utils import encipher
 
 
 class PatientService():
@@ -44,11 +45,11 @@ class PatientService():
             count = [dict(zip(result.keys(), result))
                      for result in count_result]
 
-            return patient_list, count[0]['count'], True
+            return patient_list, count[0]['count'], "ok", True
 
         except Exception as e:
             print(e)
-            return [], 0, False
+            return [], 0, "error", False
 
     def get_patient(self, id):
         try:
@@ -70,11 +71,11 @@ class PatientService():
                 Patient.bed
             ).filter(Patient.id == id).first()
             if result is None:
-                return "patient not found", False
-            return dict(zip(result.keys(), result)), True
+                return None, "patient not found", False
+            return dict(zip(result.keys(), result)), "ok", True
         except Exception as e:
             print(e)
-            return "errors", False
+            return None, "errors", False
 
     def add_patient(self, content):
         try:
@@ -95,7 +96,56 @@ class PatientService():
             )
             db.session.add(patient)
             db.session.commit()
-            return patient.id, True
+            return patient.id, "ok", True
         except Exception as e:
             print(e)
-            return 0, False
+            return 0, "error", False
+
+    def update_patient(self, id, content):
+        try:
+            patient = Patient.query.get(id)
+
+            if 'name' in content:
+                patient.name = content['name']
+            if 'gender' in content:
+                patient.gender = content['gender']
+            if 'birthdate' in content:
+                patient.birthdate = content['birthdate']
+            # if 'palmprint' in content:
+                # patient.palmprint = content['palmprint']
+            
+            if 'guardian' in content:
+                patient.guardian = content['guardian']
+            if 'guardianId' in content:
+                patient.guardianId = content['guardianId']
+            if 'relation' in content:
+                patient.relation = content['relation']
+            if 'tel' in content:
+                patient.tel = content['tel']
+
+            if 'status' in content:
+                patient.status = content['status']
+            if 'inDate' in content:
+                patient.inDate = content['inDate']
+            if 'outDate' in content:
+                patient.outDate = content['outDate']
+            if 'department' in content:
+                patient.department = content['department']
+            if 'room' in content:
+                patient.room = content['room']
+            if 'bed' in content:
+                patient.bed = content['bed']
+
+            if 'allergy' in content:
+                patient.allergy = content['allergy']
+            
+            # if 'username' in content:
+                # patient.username = str(content['username'])
+            # if 'password' in content:
+                # patient.password = encipher(str(content['password']))
+
+            db.session.commit()
+            return patient.id, "ok", True
+        except Exception as e:
+            print(e)
+            return 0, "error", False

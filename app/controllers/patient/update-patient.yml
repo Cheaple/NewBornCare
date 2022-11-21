@@ -1,0 +1,73 @@
+parameters:
+  - name: id
+    in: path
+    type: integer
+    required: true
+  - name: name
+    in: body
+    type: string
+    required: false
+  - name: gender
+    in: body
+    type: integer
+    required: false
+  - name: birthdate
+    in: body
+    type: integer
+    required: false
+  - name: palmprint
+    in: body
+    type: object
+    required: false
+  - name: guardian
+    in: body
+    type: string
+    required: false
+  - name: guardianId
+    in: body
+    type: string
+    required: false
+  - name: relation
+    in: body
+    type: integer
+    required: false
+  - name: tel
+    in: body
+    type: integer
+    required: false
+  - name: status
+    in: body
+    type: integer
+    required: false
+  - name: inDate
+    in: body
+    type: integer
+    requird: false
+  - name: department
+    in: body
+    type: integer
+    required: false
+  - name: room
+    in: body
+    type: integer
+    required: false
+  - name: bed
+    in: body
+    type: integer
+    required: false
+  - name: allergy
+    in: body
+    type: string
+    required: false
+definitions:
+  PatientAdd:
+    type: object
+    properties:
+      message:
+        type: string
+      id:
+        type: integer
+responses:
+  200:
+    schema:
+      $ref: '#/definitions/PatientAdd'

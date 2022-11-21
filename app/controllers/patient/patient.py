@@ -25,14 +25,14 @@ def get_patient_list():
         request.args.get('department'))
     # TODO: 添加department之外的其他的搜索条件
 
-    patients, count, result = service.get_patient_list(dep)
+    patients, count, msg, result = service.get_patient_list(dep)
     if result:
         return jsonify({
             'patient': patients,
             'count': count
         }), 200
     else:
-        return jsonify({'message': "error"}), 500
+        return jsonify({'message': msg}), 500
 
 
 @bp.route('/api/patient/<int:patientId>', methods=['GET'])
@@ -41,11 +41,11 @@ def get_patient(patientId):
     '''
     获取患者的完整基本信息
     '''
-    patient, result = service.get_patient(patientId)
+    patient, msg, result = service.get_patient(patientId)
     if result:
         return jsonify(patient), 200
     else:
-        return jsonify({'message': patient}), 500
+        return jsonify({'message': msg}), 500
 
 
 @bp.route('/api/patient/add', methods=['POST'])
@@ -75,14 +75,43 @@ def add_patient():
         if 'allergy' not in content:
             content['allergy'] = None
 
-        id, result = service.add_patient(content)
+        id, msg, result = service.add_patient(content)
 
         if result:
             return jsonify({
                 'id': id,
-                'message': "ok"
+                'message': msg
             }), 200
         else:
-            return jsonify({'message': "error"}), 500
+            return jsonify({'message': msg}), 500
+    except KeyError:
+        return jsonify({'message': "bad arguments"}), 400
+
+@bp.route('/api/patient/update/<int:patientId>', methods=['PATCH'])
+@swag_from('update-patient.yml')
+def update_patient(patientId):
+    '''
+    修改护士
+    '''
+    try:
+        content = request.get_json()
+        # print(content)
+        if content is None:
+            return jsonify({'message': "bad arguments"}), 400
+
+        # TODO: 参数检测
+        # key, passed = patient_params_check(content)
+        # if not passed:
+            # return jsonify({'message': "invalid arguments: " + key}), 400
+
+        id, msg, result = service.update_patient(patientId, content)
+
+        if result:
+            return jsonify({
+                'id': id,
+                'message': msg
+            }), 200
+        else:
+            return jsonify({'message': msg}), 500
     except KeyError:
         return jsonify({'message': "bad arguments"}), 400

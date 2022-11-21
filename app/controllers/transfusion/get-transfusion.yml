@@ -1,6 +1,6 @@
 parameters:
   - name: id
-    in: query
+    in: path
     type: integer
     required: true
 

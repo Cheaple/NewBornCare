@@ -62,14 +62,14 @@ def get_nurse_list():
         request.args.get('department'))
     # TODO: 添加department之外的其他的搜索条件
 
-    nurses, count, result = service.get_nurse_list(dep)
+    nurses, count, msg, result = service.get_nurse_list(dep)
     if result:
         return jsonify({
             'nurse': nurses,
             'count': count
         }), 200
     else:
-        return jsonify({'message': "error"}), 500
+        return jsonify({'message': msg}), 500
 
 
 @bp.route('/api/nurse/<int:nurseId>', methods=['GET'])
@@ -78,11 +78,11 @@ def get_nurse(nurseId):
     '''
     获取护士的完整基本信息
     '''
-    nurse, result = service.get_nurse(nurseId)
+    nurse, msg, result = service.get_nurse(nurseId)
     if result:
         return jsonify(nurse), 200
     else:
-        return jsonify({'message': nurse}), 500
+        return jsonify({'message': msg}), 500
 
 
 @bp.route('/api/nurse/add', methods=['POST'])
@@ -93,7 +93,7 @@ def add_nurse():
     """
     try:
         content = request.get_json()
-        print(content)
+        # print(content)
         if content is None:
             return jsonify({'message': "bad arguments"}), 400
 
@@ -104,14 +104,43 @@ def add_nurse():
         if 'status' not in content:
             content['status'] = 1
 
-        id, result = service.add_nurse(content)
+        id, msg, result = service.add_nurse(content)
 
         if result:
             return jsonify({
                 'id': id,
-                'message': "ok"
+                'message': msg
             }), 200
         else:
-            return jsonify({'message': "username already exists"}), 500
+            return jsonify({'message': msg}), 500
+    except KeyError:
+        return jsonify({'message': "bad arguments"}), 400
+
+@bp.route('/api/nurse/update/<int:nurseId>', methods=['PATCH'])
+@swag_from('update-nurse.yml')
+def update_nurse(nurseId):
+    '''
+    修改护士
+    '''
+    try:
+        content = request.get_json()
+        # print(content)
+        if content is None:
+            return jsonify({'message': "bad arguments"}), 400
+
+        # TODO: 参数检测
+        # key, passed = nurse_params_check(content)
+        # if not passed:
+            # return jsonify({'message': "invalid arguments: " + key}), 400
+
+        id, msg, result = service.update_nurse(nurseId, content)
+
+        if result:
+            return jsonify({
+                'id': id,
+                'message': msg
+            }), 200
+        else:
+            return jsonify({'message': msg}), 500
     except KeyError:
         return jsonify({'message': "bad arguments"}), 400
