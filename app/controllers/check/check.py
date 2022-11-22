@@ -23,7 +23,7 @@ def get_check_list():
     '''
     patientId = request.args.get('patientId')
     transfusionId = request.args.get('transfusionId')
-    checks, count, result = service.get_check_list(
+    checks, count, msg, result = service.get_check_list(
         patientId=patientId, transfusionId=transfusionId)
     if result:
         return jsonify({
@@ -31,7 +31,7 @@ def get_check_list():
             'count': count
         }), 200
     else:
-        return jsonify({'message': "error"}), 500
+        return jsonify({'message': msg}), 500
 
 
 @bp.route('/api/check/<int:checkId>', methods=['GET'])
@@ -40,11 +40,11 @@ def get_check(checkId):
     '''
     获取巡视记录的完整信息
     '''
-    check, result = service.get_check(checkId)
+    check, msg, result = service.get_check(checkId)
     if result:
         return jsonify(check), 200
     else:
-        return jsonify({'message': check}), 500
+        return jsonify({'message': msg}), 500
 
 
 @bp.route('/api/check/add', methods=['POST'])
@@ -68,14 +68,43 @@ def add_check():
         if 'info' not in content:
             content['info'] = None
 
-        id, result = service.add_check(content)
+        id, msg, result = service.add_check(content)
 
         if result:
             return jsonify({
                 'id': id,
-                'message': "ok"
+                'message': msg
             }), 200
         else:
-            return jsonify({'message': "error"}), 500
+            return jsonify({'message': msg}), 500
+    except KeyError:
+        return jsonify({'message': "bad arguments"}), 400
+
+@bp.route('/api/check/update/<int:checkId>', methods=['PATCH'])
+@swag_from('update-check.yml')
+def update_check(checkId):
+    '''
+    修改护士
+    '''
+    try:
+        content = request.get_json()
+        # print(content)
+        if content is None:
+            return jsonify({'message': "bad arguments"}), 400
+
+        # TODO: 参数检测
+        # key, passed = check_params_check(content)
+        # if not passed:
+            # return jsonify({'message': "invalid arguments: " + key}), 400
+
+        id, msg, result = service.update_check(checkId, content)
+
+        if result:
+            return jsonify({
+                'id': id,
+                'message': msg
+            }), 200
+        else:
+            return jsonify({'message': msg}), 500
     except KeyError:
         return jsonify({'message': "bad arguments"}), 400

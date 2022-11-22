@@ -42,11 +42,11 @@ class CheckService():
             count = [dict(zip(result.keys(), result))
                      for result in count_result]
 
-            return check_list, count[0]['count'], True
+            return check_list, count[0]['count'],"ok", True
 
         except Exception as e:
             print(e)
-            return [], 0, False
+            return [], 0, "error", False
 
     def get_check(self, id):
         try:
@@ -59,11 +59,11 @@ class CheckService():
                 Check.info,
             ).filter(Check.id == id).first()
             if result is None:
-                return "check not found", False
+                return None, "check not found", False
             return dict(zip(result.keys(), result)), True
         except Exception as e:
             print(e)
-            return "errors", False
+            return None, "error", False
 
     def add_check(self, content):
         try:
@@ -77,7 +77,20 @@ class CheckService():
             )
             db.session.add(check)
             db.session.commit()
-            return check.id, True
+            return check.id, "ok", True
         except Exception as e:
             print(e)
-            return 0, False
+            return 0, "error", False
+
+    def update_check(self, id, content):
+        try:
+            check = Check.query.get(id)
+
+            if 'info' in content:
+                check.info = content['info']
+
+            db.session.commit()
+            return check.id, "ok", True
+        except Exception as e:
+            print(e)
+            return 0, "error", False

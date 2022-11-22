@@ -32,7 +32,7 @@ parameters:
     type: integer
     required: false
 definitions:
-  NurseAdd:
+  NurseUpdate:
     type: object
     properties:
       message:
@@ -42,4 +42,4 @@ definitions:
 responses:
   200:
     schema:
-      $ref: '#/definitions/NurseAdd'
+      $ref: '#/definitions/NurseUpdate'

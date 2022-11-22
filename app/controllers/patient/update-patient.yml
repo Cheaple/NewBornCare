@@ -60,7 +60,7 @@ parameters:
     type: string
     required: false
 definitions:
-  PatientAdd:
+  PatientUpdate:
     type: object
     properties:
       message:
@@ -70,4 +70,4 @@ definitions:
 responses:
   200:
     schema:
-      $ref: '#/definitions/PatientAdd'
+      $ref: '#/definitions/PatientUpdate'

@@ -75,7 +75,7 @@ class PatientService():
             return dict(zip(result.keys(), result)), "ok", True
         except Exception as e:
             print(e)
-            return None, "errors", False
+            return None, "error", False
 
     def add_patient(self, content):
         try:

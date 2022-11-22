@@ -1,0 +1,21 @@
+parameters:
+  - name: id
+    in: path
+    type: integer
+    required: true
+  - name: info
+    in: body
+    type: string
+    required: false
+definitions:
+  CheckUpdate:
+    type: object
+    properties:
+      message:
+        type: string
+      id:
+        type: integer
+responses:
+  200:
+    schema:
+      $ref: '#/definitions/CheckUpdate'

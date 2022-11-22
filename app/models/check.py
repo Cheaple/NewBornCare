@@ -5,10 +5,10 @@ class Check(db.Model):
     '''
     Check for Patients
     '''
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    nurseId = db.Column(db.Integer, nullable=False, doc="巡视护士")
-    patientId = db.Column(db.Integer, nullable=False, doc="病人")
-    transfusionId = db.Column(db.Integer, nullable=False, doc="输液记录")
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)  # immutable
+    nurseId = db.Column(db.Integer, nullable=False, doc="巡视护士")  # immutatble
+    patientId = db.Column(db.Integer, nullable=False, doc="病人")  # immutable
+    transfusionId = db.Column(db.Integer, nullable=False, doc="输液记录")  # immutable
 
-    time = db.Column(db.Integer, nullable=False, doc="巡视时间")
+    time = db.Column(db.Integer, nullable=False, doc="巡视时间")  # immutable
     info = db.Column(db.String, nullable=True, doc="其他情况")
