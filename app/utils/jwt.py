@@ -18,21 +18,10 @@ def generate(payload, expiry=None):
     return token.decode()
 
 
-def verify():
-    '''
-    Verify token at the beginning of each request.
-    '''
-    g.user_id = None
-    g.user_name = None
-
-    token = request.headers.get('jwt')
-    if token:
-        salt = current_app.config.get('JWT_SALT', '')
-        try:
-            payload = jwt.decode(token, salt, algorithm=['HS256'])
-        except jwt.PyJWTError:
-            payload = None
-
-        if payload:
-            g.user = payload.get('user')
-            g.id = payload.get('id')
+def verify(token):
+    salt = current_app.config.get('JWT_SALT', '')
+    try:
+        payload = jwt.decode(token, salt, algorithm=['HS256'])
+    except jwt.PyJWTError:
+        payload = None
+    return payload

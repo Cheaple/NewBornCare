@@ -4,6 +4,7 @@ from flask import Blueprint, jsonify, request
 
 from app.services import NurseService
 from app.utils import jwt
+from app.utils.middleware import login_required
 
 bp = Blueprint(
     'nurse',
@@ -29,8 +30,9 @@ def login():
 
         if result:
             token = jwt.generate({
-                "user": "admin",
-                "id": nurse.id
+                "userType": "nurse",
+                "userId": nurse.id,
+                "userDepartment": nurse.department
             })
             return jsonify({
                 "jwt": token,
@@ -54,6 +56,7 @@ def logout():
 
 @bp.route('/api/nurse', methods=['GET'])
 @swag_from('get-nurse-list.yml')
+@login_required
 def get_nurse_list():
     '''
     获取护士列表

@@ -5,7 +5,7 @@ from flask import Flask
 from app.configs import configs
 from app.controllers import blueprints
 from app.extensions import db, swagger
-from app.utils.jwt import verify
+from app.utils.middleware import jwt_authentication
 
 
 def create_app(config_name=None):
@@ -14,7 +14,7 @@ def create_app(config_name=None):
 
     app = Flask(__name__)
     app.config.from_object(configs[config_name])
-    app.before_request(verify)
+    app.before_request(jwt_authentication)
 
     # init extensions
     db.init_app(app)

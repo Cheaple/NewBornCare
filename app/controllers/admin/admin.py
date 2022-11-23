@@ -29,8 +29,9 @@ def login():
 
         if result:
             token = jwt.generate({
-                "user": "admin",
-                "id": admin.id
+                "userType": "admin",
+                "userId": admin.id,
+                "userDepartment": admin.department
             })
             return jsonify({
                 "jwt": token,
