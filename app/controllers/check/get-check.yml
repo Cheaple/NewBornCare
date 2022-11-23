@@ -1,5 +1,5 @@
 parameters:
-  - name: id
+  - name: checkId
     in: path
     type: integer
     required: true

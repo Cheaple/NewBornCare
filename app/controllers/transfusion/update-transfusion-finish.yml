@@ -1,0 +1,8 @@
+parameters:
+  - name: transfusionId
+    in: path
+    type: integer
+    required: true
+responses:
+  200:
+    description: "ok finish"

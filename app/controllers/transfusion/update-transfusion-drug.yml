@@ -1,39 +1,40 @@
 parameters:
-  - name: nurseId
+  - name: transfusionId
     in: path
     type: integer
     required: true
+  - name: drugSeq
+    in: path
+    type: integer
+    required: true
+  
+  - name: seq
+    in: body
+    type: integer
+    required: false
+  - name: drug
+    in: body
+    type: integer
+    required: false 
+  - name: dose
+    in: body
+    type: integer
+    required: false 
+  - name: rate
+    in: body
+    type: integer
+    required: false 
+  - name: startTime
+    in: body
+    type: integer
+    required: false
 
-  - name: username
-    in: body
-    type: string
-    required: false
-  - name: password
-    in: body
-    type: string
-    required: false
-  - name: name
-    in: body
-    type: string
-    required: false
-  - name: gender
-    in: body
-    type: integer
-    required: false
-  - name: tel
-    in: body
-    type: integer
-    required: false
-  - name: department
-    in: body
-    type: integer
-    required: false
   - name: status
     in: body
-    type: integer
+    type: string
     required: false
 definitions:
-  NurseUpdate:
+  TransfusionDrugUpdate:
     type: object
     properties:
       message:
@@ -43,4 +44,4 @@ definitions:
 responses:
   200:
     schema:
-      $ref: '#/definitions/NurseUpdate'
+      $ref: '#/definitions/TransfusionDrugUpdate'

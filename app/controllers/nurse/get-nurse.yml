@@ -1,5 +1,5 @@
 parameters:
-  - name: id
+  - name: nurseId
     in: path
     type: integer
     required: true

@@ -1,8 +1,9 @@
 parameters:
-  - name: id
+  - name: patientId
     in: path
     type: integer
     required: true
+
   - name: name
     in: body
     type: string

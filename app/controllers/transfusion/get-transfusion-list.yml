@@ -27,6 +27,8 @@ definitions:
             type: integer
           status:
             type: integer
+          drugCnt:
+            type: integer
           vein:
             type: integer
           tool:

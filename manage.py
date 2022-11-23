@@ -61,6 +61,7 @@ def init_db():
         startTime=toTimestamp(datetime.now()),
         name="葡萄糖",
         status=1,
+        drugCnt=2,
         vein=2,
         tool=1,
         info="心跳较快"
@@ -68,20 +69,22 @@ def init_db():
 
     drug = models.TransfusionDrug(
         transfusionId = 1,
+        seq = 1,
         startTime=toTimestamp(datetime.now()),
         rate = 8,
         drug=1,
         dose=200,
-        status = 0,
+        status = 1,
     )
 
     drug2 = models.TransfusionDrug(
         transfusionId = 1,
+        seq = 2,
         startTime=toTimestamp(datetime.now()),
         rate = 10,
         drug=2,
         dose=300,
-        status = 1,
+        status = 0,
     )
 
     check = models.Check(

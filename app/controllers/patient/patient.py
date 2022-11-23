@@ -91,7 +91,7 @@ def add_patient():
 @swag_from('update-patient.yml')
 def update_patient(patientId):
     '''
-    修改护士
+    修改患者
     '''
     try:
         content = request.get_json()

@@ -84,7 +84,7 @@ def add_check():
 @swag_from('update-check.yml')
 def update_check(checkId):
     '''
-    修改护士
+    修改巡视记录
     '''
     try:
         content = request.get_json()

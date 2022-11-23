@@ -1,12 +1,9 @@
 parameters:
-  - name: nurseId
-    in: body
+  - name: transfusionId
+    in: path
     type: integer
     required: true
-  - name: patientId
-    in: body
-    type: integer
-    required: true
+
   - name: name
     in: body
     type: string
@@ -15,37 +12,23 @@ parameters:
     in: body
     type: integer
     required: false
+  - name: finishTime
+    in: body
+    type: integer
+    required: false
 
   - name: vein
     in: body
     type: integer
-    required: true  
+    required: false  
   - name: tool
     in: body
     type: integer
-    required: true
+    required: false
   - name: info
     in: body
     type: string
     required: false
-
-  - name: drug
-    in: body
-    type: object
-    properties:
-      seq:
-        type: integer
-      drug:
-        type: integer
-      dose:
-        type: integer
-      rate:
-        type: integer
-      startTime:
-        type: integer
-      status:
-        type: integer
-    required: true
 
   - name: status
     in: body
@@ -53,7 +36,7 @@ parameters:
     required: false
     
 definitions:
-  TransfusionAdd:
+  TransfusionUpdate:
     type: object
     properties:
       message:
@@ -63,4 +46,4 @@ definitions:
 responses:
   200:
     schema:
-      $ref: '#/definitions/TransfusionAdd'
+      $ref: '#/definitions/TransfusionUpdate'

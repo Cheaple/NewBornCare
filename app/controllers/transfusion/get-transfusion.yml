@@ -1,5 +1,5 @@
 parameters:
-  - name: id
+  - name: patientId
     in: path
     type: integer
     required: true
@@ -22,6 +22,8 @@ definitions:
         type: integer
       status:
         type: integer
+      drugCnt:
+        type: integer
       vein:
         type: integer
       tool:
@@ -32,6 +34,8 @@ definitions:
         type: object
         properties:
           id:
+            type: integer
+          seq:
             type: integer
           drug:
             type: integer
