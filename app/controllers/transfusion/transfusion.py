@@ -5,6 +5,7 @@ from flask import Blueprint, jsonify, request
 
 from app.services import TransfusionService
 from app.utils import toTimestamp
+from app.utils.middleware import login_required
 
 bp = Blueprint(
     'transfusion',
@@ -17,6 +18,7 @@ service = TransfusionService()
 
 @bp.route('/api/transfusion', methods=['GET'])
 @swag_from('get-transfusion-list.yml')
+@login_required(["admin", "nurse", "patient"])
 def get_transfusion_list():
     '''
     获取患者的输液记录列表
@@ -34,6 +36,7 @@ def get_transfusion_list():
 
 @bp.route('/api/transfusion/<int:transfusionId>', methods=['GET'])
 @swag_from('get-transfusion.yml')
+@login_required(["admin", "nurse", "patient"])
 def get_transfusion(transfusionId):
     '''
     获取输液记录的完整信息
@@ -47,6 +50,7 @@ def get_transfusion(transfusionId):
 
 @bp.route('/api/transfusion/add', methods=['POST'])
 @swag_from('add-transfusion.yml')
+@login_required(["admin", "nurse"])
 def add_transfusion():
     """
     添加输液记录
@@ -90,6 +94,7 @@ def add_transfusion():
 
 @bp.route('/api/transfusion/update/<int:transfusionId>', methods=['PATCH'])
 @swag_from('update-transfusion.yml')
+@login_required(["admin", "nurse"])
 def update_transfusion(transfusionId):
     '''
     修改输液记录
@@ -119,6 +124,7 @@ def update_transfusion(transfusionId):
 
 @bp.route('/api/transfusion/update/<int:transfusionId>/<drugSeq>', methods=['PATCH'])
 @swag_from('update-transfusion-drug.yml')
+@login_required(["admin", "nurse"])
 def update_transfusion_drug(transfusionId, drugSeq):
     '''
     修改输液记录的药物
@@ -148,6 +154,7 @@ def update_transfusion_drug(transfusionId, drugSeq):
 
 @bp.route('/api/transfusion/update/<int:transfusionId>/next', methods=['PATCH'])
 @swag_from('update-transfusion-next.yml')
+@login_required(["admin", "nurse"])
 def update_transfusion_next(transfusionId):
     '''
     修改输液记录：换药
@@ -164,6 +171,7 @@ def update_transfusion_next(transfusionId):
 
 @bp.route('/api/transfusion/update/<int:transfusionId>/finish', methods=['PATCH'])
 @swag_from('update-transfusion-finish.yml')
+@login_required(["admin", "nurse"])
 def update_transfusion_finish(transfusionId):
     '''
     修改输液记录：完成输液

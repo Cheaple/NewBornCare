@@ -56,7 +56,7 @@ def logout():
 
 @bp.route('/api/nurse', methods=['GET'])
 @swag_from('get-nurse-list.yml')
-@login_required
+@login_required(["admin", "nurse"])
 def get_nurse_list():
     '''
     获取护士列表
@@ -77,6 +77,7 @@ def get_nurse_list():
 
 @bp.route('/api/nurse/<int:nurseId>', methods=['GET'])
 @swag_from('get-nurse.yml')
+@login_required(["admin", "nurse"])
 def get_nurse(nurseId):
     '''
     获取护士的完整基本信息
@@ -90,6 +91,7 @@ def get_nurse(nurseId):
 
 @bp.route('/api/nurse/add', methods=['POST'])
 @swag_from('add-nurse.yml')
+@login_required(["admin", "nurse"])
 def add_nurse():
     """
     添加护士
@@ -121,6 +123,7 @@ def add_nurse():
 
 @bp.route('/api/nurse/update/<int:nurseId>', methods=['PATCH'])
 @swag_from('update-nurse.yml')
+@login_required(["admin", "nurse"])
 def update_nurse(nurseId):
     '''
     修改护士

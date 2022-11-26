@@ -4,3 +4,4 @@ from .check import Check
 from .nurse import Nurse
 from .patient import Patient
 from .transfusion import Transfusion, TransfusionDrug
+from .options import Department, Vein, Tool, Drug

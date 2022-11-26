@@ -5,6 +5,7 @@ from flask import Blueprint, jsonify, request
 
 from app.services import PatientService
 from app.utils import toTimestamp
+from app.utils.middleware import login_required
 
 bp = Blueprint(
     'patient',
@@ -17,6 +18,7 @@ service = PatientService()
 
 @bp.route('/api/patient', methods=['GET'])
 @swag_from('get-patient-list.yml')
+@login_required(["admin", "nurse"])
 def get_patient_list():
     '''
     获取患者列表
@@ -37,6 +39,7 @@ def get_patient_list():
 
 @bp.route('/api/patient/<int:patientId>', methods=['GET'])
 @swag_from('get-patient.yml')
+@login_required(["admin", "nurse", "patient"])
 def get_patient(patientId):
     '''
     获取患者的完整基本信息
@@ -50,6 +53,7 @@ def get_patient(patientId):
 
 @bp.route('/api/patient/add', methods=['POST'])
 @swag_from('add-patient.yml')
+@login_required(["admin", "nurse"])
 def add_patient():
     """
     添加患者
@@ -89,6 +93,7 @@ def add_patient():
 
 @bp.route('/api/patient/update/<int:patientId>', methods=['PATCH'])
 @swag_from('update-patient.yml')
+@login_required(["admin", "nurse"])
 def update_patient(patientId):
     '''
     修改患者

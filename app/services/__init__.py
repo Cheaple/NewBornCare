@@ -4,3 +4,5 @@ from .check import CheckService
 from .nurse import NurseService
 from .patient import PatientService
 from .transfusion import TransfusionService
+
+from .options.department import DepartmentService

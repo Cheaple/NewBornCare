@@ -5,6 +5,7 @@ from flask import Blueprint, jsonify, request
 
 from app.services import CheckService
 from app.utils import toTimestamp
+from app.utils.middleware import login_required
 
 bp = Blueprint(
     'check',
@@ -17,6 +18,7 @@ service = CheckService()
 
 @bp.route('/api/check', methods=['GET'])
 @swag_from('get-check-list.yml')
+@login_required(["admin", "nurse", "patient"])
 def get_check_list():
     '''
     获取某个患者或某次输液记录的巡视记录列表
@@ -36,6 +38,7 @@ def get_check_list():
 
 @bp.route('/api/check/<int:checkId>', methods=['GET'])
 @swag_from('get-check.yml')
+@login_required(["admin", "nurse", "patient"])
 def get_check(checkId):
     '''
     获取巡视记录的完整信息
@@ -49,6 +52,7 @@ def get_check(checkId):
 
 @bp.route('/api/check/add', methods=['POST'])
 @swag_from('add-check.yml')
+@login_required(["admin", "nurse"])
 def add_check():
     """
     添加输液记录
@@ -82,6 +86,7 @@ def add_check():
 
 @bp.route('/api/check/update/<int:checkId>', methods=['PATCH'])
 @swag_from('update-check.yml')
+@login_required(["admin", "nurse"])
 def update_check(checkId):
     '''
     修改巡视记录

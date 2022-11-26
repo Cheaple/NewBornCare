@@ -74,7 +74,7 @@ class NurseService():
                 Nurse.status,
             ).filter(Nurse.id == id).first()
             if result is None:
-                return "nurse not found", False
+                return None, "nurse not found", False
             return dict(zip(result.keys(), result)), "ok", True
         except Exception as e:
             print(e)
