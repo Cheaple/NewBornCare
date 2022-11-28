@@ -1,6 +1,7 @@
 from sqlalchemy import and_
 
 from app.models import Admin
+from app.utils import encipher
 
 
 class AdminService():
@@ -9,7 +10,7 @@ class AdminService():
             admin = Admin.query.filter(
                 and_(
                     Admin.username == username,
-                    Admin.password == password)).first()
+                    Admin.password == encipher(password))).first()
             if admin is None:
                 return "Administrator not found", False
             return admin, True

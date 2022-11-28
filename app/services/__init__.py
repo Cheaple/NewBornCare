@@ -5,4 +5,4 @@ from .nurse import NurseService
 from .patient import PatientService
 from .transfusion import TransfusionService
 
-from .options.department import DepartmentService
+from .options import DepartmentService, VeinService, ToolService, DrugService

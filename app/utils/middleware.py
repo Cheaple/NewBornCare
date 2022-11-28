@@ -1,4 +1,5 @@
-from flask import request, g
+from flask import request, g, current_app
+
 from .jwt import verify
 
 import functools
@@ -26,6 +27,8 @@ def login_required(user = ["admin", "nurse", "patient"]):
     def login(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
+            if current_app.config.get('TYPE') == "dev":
+                return func(*args, **kwargs)
             if not g.userId:
                 return {'message': 'Unauthorized'}, 401
             if g.userType not in user:

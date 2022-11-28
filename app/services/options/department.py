@@ -26,7 +26,7 @@ class DepartmentService():
             return department.id, "ok", True
         except Exception as e:
             print(e)
-            return 0, "username already exists", False
+            return 0, "department already exists", False
 
     def update_department(self, id, name = None):
         try:

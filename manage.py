@@ -3,6 +3,7 @@ import os
 from datetime import datetime
 
 from flask_script import Manager, Server
+from flask_migrate import Migrate, MigrateCommand
 
 from app import create_app, db, models
 from app.utils import config, encipher, toTimestamp
@@ -15,13 +16,52 @@ port = config.get_yaml('app.PORT')
 manager = Manager(app)
 manager.add_command('runserver', Server(host=host, port=port))
 
+migrate = Migrate(app, db)
+manager.add_command('db', MigrateCommand)
+
 @manager.command
 def init_db():
     """Init Database"""
     # recreate the database and the db table
     db.drop_all()
     db.create_all()
+    init_options()
+    init_test_data()
 
+
+def init_options():
+    '''
+    init options
+    '''
+    import csv
+
+    with open("data\\department.csv", encoding="utf-8") as csvfile:
+        csv_reader = csv.reader(csvfile)
+        #header = next(csv_reader)
+        for row in csv_reader:
+            db.session.add(models.Department(name=row[0]))
+    with open("data\\vein.csv", encoding="utf-8") as csvfile:
+        csv_reader = csv.reader(csvfile)
+        #header = next(csv_reader)
+        for row in csv_reader:
+            db.session.add(models.Vein(name=row[0]))
+    with open("data\\tool.csv", encoding="utf-8") as csvfile:
+        csv_reader = csv.reader(csvfile)
+        #header = next(csv_reader)
+        for row in csv_reader:
+            db.session.add(models.Tool(name=row[0]))
+    with open("data\\drug.csv", encoding="utf-8") as csvfile:
+        csv_reader = csv.reader(csvfile)
+        #header = next(csv_reader)
+        for row in csv_reader:
+            db.session.add(models.Drug(name=row[0]))
+            
+    db.session.commit()
+
+def init_test_data():
+    '''
+    init test data
+    '''
     admin = models.Admin(
         username='admin',
         password=encipher('admin'),
@@ -36,7 +76,7 @@ def init_db():
         name='测试护士',
         gender=1,
         tel=19912345678,
-        department=1,
+        department=3,
         status=1)
 
     patient = models.Patient(
@@ -50,7 +90,7 @@ def init_db():
         tel=19972644417,
         status=1,
         inDate=toTimestamp(datetime.now()),
-        department=1,
+        department=3,
         room=234,
         bed=3
     )
@@ -80,7 +120,6 @@ def init_db():
     drug2 = models.TransfusionDrug(
         transfusionId = 1,
         seq = 2,
-        startTime=toTimestamp(datetime.now()),
         rate = 10,
         drug=2,
         dose=300,
@@ -88,7 +127,7 @@ def init_db():
     )
 
     check = models.Check(
-        nurseId=10,
+        nurseId=1,
         patientId=1,
         transfusionId=1,
         time=toTimestamp(datetime.now()),
@@ -106,6 +145,6 @@ def init_db():
     # commit the changes
     db.session.commit()
 
-
+    
 if __name__ == '__main__':
     manager.run()

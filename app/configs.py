@@ -14,7 +14,7 @@ class Config(object):
 
     # JWT config
     JWT_SALT = config.get_yaml('jwt.SALT', 'newborn')
-    JWT_EXPIRY = config.get_yaml('jwt.EXPIRY', 24)
+    JWT_EXPIRY = config.get_yaml('jwt.EXPIRY', 72)
 
 
 class DevelopmentConfig(Config):
