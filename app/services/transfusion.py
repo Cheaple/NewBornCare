@@ -103,6 +103,8 @@ class TransfusionService():
     def update_transfusion(self, id, content):
         try:
             transfusion = Transfusion.query.get(id)
+            if transfusion is None:
+                return 0, "transfusion not found", False
 
             if 'name' in content:
                 transfusion.name = content['name']
@@ -131,7 +133,9 @@ class TransfusionService():
             drug = TransfusionDrug.query.filter(
                 TransfusionDrug.transfusionId == tId,
                 TransfusionDrug.seq == drugSeq
-            ).one()
+            ).first()
+            if drug is None:
+                return 0, "drug not found", False
 
             if 'seq' in content:
                 drug.seq = content['seq']

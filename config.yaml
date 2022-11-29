@@ -2,7 +2,7 @@ cache:
   CACHE_TYPE: simple
 jwt:
   SALT: thss
-  EXPIRY: 24  # HOURS
+  EXPIRY: 72  # HOURS
 app:
   ENCRY_SALT: cheaple
   ENV: dev
