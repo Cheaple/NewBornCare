@@ -4,8 +4,8 @@ from flasgger import swag_from
 from flask import Blueprint, jsonify, request
 
 from app.services import DepartmentService, VeinService, ToolService, DrugService
-from app.utils import toTimestamp
-from app.utils.middleware import login_required
+
+from app.controllers.access_control import login_required
 
 bp = Blueprint(
     'options',
@@ -19,7 +19,7 @@ toolService = ToolService()
 drugService = DrugService()
 
 @bp.route('/api/list', methods=['GET'])
-@swag_from('get-list.yml')
+@swag_from('options/get-list.yml')
 @login_required(["admin", "nurse"])
 def get_list():
     '''

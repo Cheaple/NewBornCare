@@ -4,7 +4,7 @@ from flasgger import swag_from
 from flask import Blueprint, jsonify, request
 
 from app.services import VeinService
-from app.utils.middleware import login_required
+from app.controllers.access_control import login_required
 
 bp = Blueprint(
     'vein',
@@ -16,7 +16,7 @@ veinService = VeinService()
 
 
 @bp.route('/api/list/vein', methods=['GET'])
-@swag_from('get-vein-list.yml')
+@swag_from('options/get-vein-list.yml')
 @login_required(["admin", "nurse", "patient"])
 def get_vein_list():
     '''
@@ -29,7 +29,7 @@ def get_vein_list():
         return jsonify({'message': msg}), 500
 
 @bp.route('/api/list/vein/add', methods=['POST'])
-@swag_from('add-vein.yml')
+@swag_from('options/add-vein.yml')
 @login_required(["admin"])
 def add_vein():
     '''
@@ -46,7 +46,7 @@ def add_vein():
         return jsonify({'message': msg}), 500
 
 @bp.route('/api/list/vein/update/<int:veinId>', methods=['PATCH'])
-@swag_from('update-vein.yml')
+@swag_from('options/update-vein.yml')
 @login_required(["admin"])
 def update_vein(veinId):
     '''

@@ -1,0 +1,14 @@
+definitions:
+  DepartmentList:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string        
+responses:
+  200:
+    schema:
+      $ref: '#/definitions/DepartmentList'

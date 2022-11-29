@@ -4,7 +4,7 @@ from flask import Blueprint, jsonify, request
 
 from app.services import NurseService
 from app.utils import jwt
-from app.utils.middleware import login_required
+from app.controllers.access_control import login_required
 
 bp = Blueprint(
     'nurse',
@@ -55,7 +55,7 @@ def logout():
 
 
 @bp.route('/api/nurse', methods=['GET'])
-@swag_from('get-nurse-list.yml')
+@swag_from('nurse/get-nurse-list.yml')
 @login_required(["admin", "nurse"])
 def get_nurse_list():
     '''
@@ -76,7 +76,7 @@ def get_nurse_list():
 
 
 @bp.route('/api/nurse/<int:nurseId>', methods=['GET'])
-@swag_from('get-nurse.yml')
+@swag_from('nurse/get-nurse.yml')
 @login_required(["admin", "nurse"])
 def get_nurse(nurseId):
     '''
@@ -90,7 +90,7 @@ def get_nurse(nurseId):
 
 
 @bp.route('/api/nurse/add', methods=['POST'])
-@swag_from('add-nurse.yml')
+@swag_from('nurse/add-nurse.yml')
 @login_required(["admin", "nurse"])
 def add_nurse():
     """
@@ -122,7 +122,7 @@ def add_nurse():
         return jsonify({'message': "bad arguments"}), 400
 
 @bp.route('/api/nurse/update/<int:nurseId>', methods=['PATCH'])
-@swag_from('update-nurse.yml')
+@swag_from('nurse/update-nurse.yml')
 @login_required(["admin", "nurse"])
 def update_nurse(nurseId):
     '''

@@ -4,7 +4,7 @@ from flasgger import swag_from
 from flask import Blueprint, jsonify, request
 
 from app.services import DepartmentService
-from app.utils.middleware import login_required
+from app.controllers.access_control import login_required
 
 bp = Blueprint(
     'department',
@@ -16,7 +16,7 @@ departmentService = DepartmentService()
 
 
 @bp.route('/api/list/department', methods=['GET'])
-@swag_from('get-department-list.yml')
+@swag_from('options/get-department-list.yml')
 @login_required(["admin", "nurse", "patient"])
 def get_department_list():
     '''
@@ -29,7 +29,7 @@ def get_department_list():
         return jsonify({'message': msg}), 500
 
 @bp.route('/api/list/department/add', methods=['POST'])
-@swag_from('add-department.yml')
+@swag_from('options/add-department.yml')
 @login_required(["admin"])
 def add_department():
     '''
@@ -46,7 +46,7 @@ def add_department():
         return jsonify({'message': msg}), 500
 
 @bp.route('/api/list/department/update/<int:departmentId>', methods=['PATCH'])
-@swag_from('update-department.yml')
+@swag_from('options/update-department.yml')
 @login_required(["admin"])
 def update_department(departmentId):
     '''

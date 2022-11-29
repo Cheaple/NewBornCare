@@ -1,0 +1,22 @@
+parameters:
+  - name: departmentId
+    in: path
+    type: integer
+    required: true
+  - name: name
+    in: body
+    type: string
+    required: true
+
+definitions:
+  DepartmentUpdate:
+    type: object
+    properties:
+      message:
+        type: string
+      id:
+        type: integer
+responses:
+  200:
+    schema:
+      $ref: '#/definitions/DepartmentUpdate'

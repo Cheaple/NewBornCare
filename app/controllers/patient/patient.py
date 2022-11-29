@@ -5,7 +5,7 @@ from flask import Blueprint, jsonify, request
 
 from app.services import PatientService
 from app.utils import toTimestamp
-from app.utils.middleware import login_required
+from app.controllers.access_control import login_required
 
 bp = Blueprint(
     'patient',
@@ -17,7 +17,7 @@ service = PatientService()
 
 
 @bp.route('/api/patient', methods=['GET'])
-@swag_from('get-patient-list.yml')
+@swag_from('patient/get-patient-list.yml')
 @login_required(["admin", "nurse"])
 def get_patient_list():
     '''
@@ -38,7 +38,7 @@ def get_patient_list():
 
 
 @bp.route('/api/patient/<int:patientId>', methods=['GET'])
-@swag_from('get-patient.yml')
+@swag_from('patient/get-patient.yml')
 @login_required(["admin", "nurse", "patient"])
 def get_patient(patientId):
     '''
@@ -52,7 +52,7 @@ def get_patient(patientId):
 
 
 @bp.route('/api/patient/add', methods=['POST'])
-@swag_from('add-patient.yml')
+@swag_from('patient/add-patient.yml')
 @login_required(["admin", "nurse"])
 def add_patient():
     """
@@ -92,7 +92,7 @@ def add_patient():
         return jsonify({'message': "bad arguments"}), 400
 
 @bp.route('/api/patient/update/<int:patientId>', methods=['PATCH'])
-@swag_from('update-patient.yml')
+@swag_from('patient/update-patient.yml')
 @login_required(["admin", "nurse"])
 def update_patient(patientId):
     '''

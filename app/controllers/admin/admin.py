@@ -5,6 +5,8 @@ from flask import Blueprint, jsonify, request
 from app.services import AdminService
 from app.utils import jwt
 
+from app.controllers.access_control import login_required
+
 bp = Blueprint(
     'admin',
     __name__,

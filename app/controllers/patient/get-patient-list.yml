@@ -10,15 +10,17 @@ definitions:
     properties:
       count:
         type: integer
-      patients:
-        type: object
-        properties:
-          id:
-            type: integer
-          name:
-            type: string
-          gender:
-            type: integer
+      patient:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            gender:
+              type: integer
           
 responses:
   200:

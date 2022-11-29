@@ -31,22 +31,24 @@ definitions:
       info:
         type: string
       drug:
-        type: object
-        properties:
-          id:
-            type: integer
-          seq:
-            type: integer
-          drug:
-            type: integer
-          dose:
-            type: integer
-          rate:
-            type: integer
-          startTime:
-            type: integer
-          status:
-            type: integer
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: integer
+            seq:
+              type: integer
+            drug:
+              type: integer
+            dose:
+              type: integer
+            rate:
+              type: integer
+            startTime:
+              type: integer
+            status:
+              type: integer
 responses:
   200:
     schema:

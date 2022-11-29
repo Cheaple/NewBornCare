@@ -10,21 +10,23 @@ definitions:
     properties:
       count:
         type: integer
-      nurses:
-        type: object
-        properties:
-          id:
-            type: integer
-          name:
-            type: string
-          gender:
-            type: integer
-          tel:
-            type: integer
-          department:
-            type: integer
-          status:
-            type: integer
+      nurse:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            gender:
+              type: integer
+            tel:
+              type: integer
+            department:
+              type: integer
+            status:
+              type: integer
           
 responses:
   200:

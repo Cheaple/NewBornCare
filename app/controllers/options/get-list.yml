@@ -1,0 +1,45 @@
+definitions:
+  List:
+    type: object
+    properties:
+      department:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+      vein:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+      tool:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+      drug:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+          
+responses:
+  200:
+    schema:
+      $ref: '#/definitions/List'

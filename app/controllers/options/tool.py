@@ -4,7 +4,7 @@ from flasgger import swag_from
 from flask import Blueprint, jsonify, request
 
 from app.services import ToolService
-from app.utils.middleware import login_required
+from app.controllers.access_control import login_required
 
 bp = Blueprint(
     'tool',
@@ -16,7 +16,7 @@ toolService = ToolService()
 
 
 @bp.route('/api/list/tool', methods=['GET'])
-@swag_from('get-tool-list.yml')
+@swag_from('options/get-tool-list.yml')
 @login_required(["admin", "nurse", "patient"])
 def get_tool_list():
     '''
@@ -29,7 +29,7 @@ def get_tool_list():
         return jsonify({'message': msg}), 500
 
 @bp.route('/api/list/tool/add', methods=['POST'])
-@swag_from('add-tool.yml')
+@swag_from('options/add-tool.yml')
 @login_required(["admin"])
 def add_tool():
     '''
@@ -46,7 +46,7 @@ def add_tool():
         return jsonify({'message': msg}), 500
 
 @bp.route('/api/list/tool/update/<int:toolId>', methods=['PATCH'])
-@swag_from('update-tool.yml')
+@swag_from('options/update-tool.yml')
 @login_required(["admin"])
 def update_tool(toolId):
     '''

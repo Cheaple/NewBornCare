@@ -1,0 +1,18 @@
+parameters:
+  - name: name
+    in: body
+    type: string
+    required: true
+  
+definitions:
+  VeinAdd:
+    type: object
+    properties:
+      message:
+        type: string
+      id:
+        type: integer
+responses:
+  200:
+    schema:
+      $ref: '#/definitions/VeinAdd'

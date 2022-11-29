@@ -1,0 +1,22 @@
+parameters:
+  - name: toolId
+    in: path
+    type: integer
+    required: true
+  - name: name
+    in: body
+    type: string
+    required: true
+
+definitions:
+  ToolUpdate:
+    type: object
+    properties:
+      message:
+        type: string
+      id:
+        type: integer
+responses:
+  200:
+    schema:
+      $ref: '#/definitions/ToolUpdate'

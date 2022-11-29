@@ -5,7 +5,7 @@ from flask import Blueprint, jsonify, request
 
 from app.services import CheckService
 from app.utils import toTimestamp
-from app.utils.middleware import login_required
+from app.controllers.access_control import login_required
 
 bp = Blueprint(
     'check',
@@ -17,7 +17,7 @@ service = CheckService()
 
 
 @bp.route('/api/check', methods=['GET'])
-@swag_from('get-check-list.yml')
+@swag_from('check/get-check-list.yml')
 @login_required(["admin", "nurse", "patient"])
 def get_check_list():
     '''
@@ -37,7 +37,7 @@ def get_check_list():
 
 
 @bp.route('/api/check/<int:checkId>', methods=['GET'])
-@swag_from('get-check.yml')
+@swag_from('check/get-check.yml')
 @login_required(["admin", "nurse", "patient"])
 def get_check(checkId):
     '''
@@ -51,7 +51,7 @@ def get_check(checkId):
 
 
 @bp.route('/api/check/add', methods=['POST'])
-@swag_from('add-check.yml')
+@swag_from('check/add-check.yml')
 @login_required(["admin", "nurse"])
 def add_check():
     """
@@ -85,7 +85,7 @@ def add_check():
         return jsonify({'message': "bad arguments"}), 400
 
 @bp.route('/api/check/update/<int:checkId>', methods=['PATCH'])
-@swag_from('update-check.yml')
+@swag_from('check/update-check.yml')
 @login_required(["admin", "nurse"])
 def update_check(checkId):
     '''

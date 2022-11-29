@@ -14,21 +14,23 @@ definitions:
     properties:
       count:
         type: integer
-      transfusions:
-        type: object
-        properties:
-          id:
-            type: integer
-          patientId:
-            type: integer
-          nurseId:
-            type: integer
-          transfusionId:
-            type: integer
-          time:
-            type: integer
-          info:
-            type: string
+      check:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: integer
+            patientId:
+              type: integer
+            nurseId:
+              type: integer
+            transfusionId:
+              type: integer
+            time:
+              type: integer
+            info:
+              type: string
           
 responses:
   200:

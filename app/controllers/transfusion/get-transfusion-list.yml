@@ -10,31 +10,33 @@ definitions:
     properties:
       count:
         type: integer
-      transfusions:
-        type: object
-        properties:
-          id:
-            type: integer
-          patientId:
-            type: integer
-          nurseId:
-            type: integer
-          name:
-            type: string
-          startTime:
-            type: integer
-          finishTime:
-            type: integer
-          status:
-            type: integer
-          drugCnt:
-            type: integer
-          vein:
-            type: integer
-          tool:
-            type: integer
-          info:
-            type: string
+      transfusion:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: integer
+            patientId:
+              type: integer
+            nurseId:
+              type: integer
+            name:
+              type: string
+            startTime:
+              type: integer
+            finishTime:
+              type: integer
+            status:
+              type: integer
+            drugCnt:
+              type: integer
+            vein:
+              type: integer
+            tool:
+              type: integer
+            info:
+              type: string
           
 responses:
   200:

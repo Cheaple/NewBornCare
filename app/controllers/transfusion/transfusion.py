@@ -5,7 +5,7 @@ from flask import Blueprint, jsonify, request
 
 from app.services import TransfusionService
 from app.utils import toTimestamp
-from app.utils.middleware import login_required
+from app.controllers.access_control import login_required
 
 bp = Blueprint(
     'transfusion',
@@ -17,7 +17,7 @@ service = TransfusionService()
 
 
 @bp.route('/api/transfusion', methods=['GET'])
-@swag_from('get-transfusion-list.yml')
+@swag_from('transfusion/get-transfusion-list.yml')
 @login_required(["admin", "nurse", "patient"])
 def get_transfusion_list():
     '''
@@ -35,7 +35,7 @@ def get_transfusion_list():
 
 
 @bp.route('/api/transfusion/<int:transfusionId>', methods=['GET'])
-@swag_from('get-transfusion.yml')
+@swag_from('transfusion/get-transfusion.yml')
 @login_required(["admin", "nurse", "patient"])
 def get_transfusion(transfusionId):
     '''
@@ -49,7 +49,7 @@ def get_transfusion(transfusionId):
 
 
 @bp.route('/api/transfusion/add', methods=['POST'])
-@swag_from('add-transfusion.yml')
+@swag_from('transfusion/add-transfusion.yml')
 @login_required(["admin", "nurse"])
 def add_transfusion():
     """
@@ -93,7 +93,7 @@ def add_transfusion():
         return jsonify({'message': msg}), 400
 
 @bp.route('/api/transfusion/update/<int:transfusionId>', methods=['PATCH'])
-@swag_from('update-transfusion.yml')
+@swag_from('transfusion/update-transfusion.yml')
 @login_required(["admin", "nurse"])
 def update_transfusion(transfusionId):
     '''
@@ -123,7 +123,7 @@ def update_transfusion(transfusionId):
         return jsonify({'message': "bad arguments"}), 400
 
 @bp.route('/api/transfusion/update/<int:transfusionId>/<drugSeq>', methods=['PATCH'])
-@swag_from('update-transfusion-drug.yml')
+@swag_from('transfusion/update-transfusion-drug.yml')
 @login_required(["admin", "nurse"])
 def update_transfusion_drug(transfusionId, drugSeq):
     '''
@@ -153,7 +153,7 @@ def update_transfusion_drug(transfusionId, drugSeq):
         return jsonify({'message': "bad arguments"}), 400
 
 @bp.route('/api/transfusion/update/<int:transfusionId>/next', methods=['PATCH'])
-@swag_from('update-transfusion-next.yml')
+@swag_from('transfusion/update-transfusion-next.yml')
 @login_required(["admin", "nurse"])
 def update_transfusion_next(transfusionId):
     '''
@@ -170,7 +170,7 @@ def update_transfusion_next(transfusionId):
         return jsonify({'message': msg}), 500
 
 @bp.route('/api/transfusion/update/<int:transfusionId>/finish', methods=['PATCH'])
-@swag_from('update-transfusion-finish.yml')
+@swag_from('transfusion/update-transfusion-finish.yml')
 @login_required(["admin", "nurse"])
 def update_transfusion_finish(transfusionId):
     '''

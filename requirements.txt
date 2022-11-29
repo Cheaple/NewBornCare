@@ -1,10 +1,11 @@
-pyjwt==1.7.1
-scrypt==0.8.18
+flasgger==0.9.5
 flask==1.1.4
+flask_migrate==2.5.3
 flask-SQLAlchemy==2.5.1
 flask_script==2.0.6
+gunicorn==20.1.0
 jinja2==2.10.1
 markupsafe==2.0.1
+pyjwt==1.7.1
 pytest==7.1.2
-flasgger==0.9.5
-gunicorn==20.1.0
+scrypt==0.8.18
