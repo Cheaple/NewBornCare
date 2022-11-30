@@ -5,7 +5,8 @@ class Config(object):
     """
     General Configs
     """
-    SALT = "abcde"
+    SALT = config.get_yaml('app.ENCRY_SALT', 'cheaple')
+    ENV = config.get_yaml('app.ENV', 'development')
 
     # SQLALCHEMY DATABASE config
     SQLALCHEMY_DATABASE_URI = config.get_yaml('db.MYSQL', '')
@@ -23,6 +24,7 @@ class DevelopmentConfig(Config):
     """
     TYPE = 'dev'
     DEBUG = True
+    ENV = 'development'
 
 
 class ProductionConfig(Config):

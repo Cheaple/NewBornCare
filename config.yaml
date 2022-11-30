@@ -5,7 +5,7 @@ jwt:
   EXPIRY: 72  # HOURS
 app:
   ENCRY_SALT: cheaple
-  ENV: dev
+  ENV: development
   SECRET: 2018cheaple011660
   HOST: localhost
   PORT: 5000

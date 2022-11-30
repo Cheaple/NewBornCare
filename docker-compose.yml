@@ -21,6 +21,8 @@ services:
     restart: always
     build: .
     container_name: app
+    environment:
+      - TYPE=dev
     command: >
       bash -c
       "gunicorn -w4 -b 0.0.0.0:5000  manage:app"
