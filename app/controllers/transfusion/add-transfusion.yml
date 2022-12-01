@@ -31,20 +31,22 @@ parameters:
 
   - name: drug
     in: body
-    type: object
-    properties:
-      seq:
-        type: integer
-      drug:
-        type: integer
-      dose:
-        type: integer
-      rate:
-        type: integer
-      startTime:
-        type: integer
-      status:
-        type: integer
+    type: array
+    items:
+      type: object
+      properties:
+        seq:
+          type: integer
+        drug:
+          type: integer
+        dose:
+          type: integer
+        rate:
+          type: integer
+        startTime:
+          type: integer
+        status:
+          type: integer
     required: true
 
   - name: status

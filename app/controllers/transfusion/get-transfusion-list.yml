@@ -10,7 +10,7 @@ definitions:
     properties:
       count:
         type: integer
-      transfusion:
+      transfusions:
         type: array
         items:
           type: object
