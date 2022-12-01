@@ -24,7 +24,7 @@ class Patient(db.Model):
     tel = db.Column(db.Integer, nullable=False, doc='监护人联系方式')
 
     # 住院信息
-    status = db.Column(db.Integer, nullable=False, doc='住院状态')  # 0: 已出院
+    status = db.Column(db.Integer, nullable=False, doc='住院状态')  # 0: 已出院  1: 正在住院
     inDate = db.Column(db.Integer, nullable=False, doc='入院日期')
     outDate = db.Column(db.Integer, doc='出院日期')
     department = db.Column(db.Integer, nullable=False, doc='科室（通常是儿科）')

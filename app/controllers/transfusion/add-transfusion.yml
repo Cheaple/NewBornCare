@@ -19,30 +19,38 @@ parameters:
   - name: vein
     in: body
     type: integer
+    description: 静脉
     required: true  
   - name: tool
     in: body
     type: integer
+    description: 输液工具
     required: true
   - name: info
     in: body
     type: string
+    description: 其他信息
     required: false
 
   - name: drug
     in: body
     type: array
+    description: 输液药品的列表
     items:
       type: object
       properties:
         seq:
           type: integer
+          description: 药品在本次输液中的序号
         drug:
           type: integer
+          description: 药品（id）
         dose:
           type: integer
+          description: 剂量
         rate:
           type: integer
+          description: 速率
         startTime:
           type: integer
         status:
@@ -52,6 +60,7 @@ parameters:
   - name: status
     in: body
     type: integer
+    description: 输液状态（-1：已中止；0：已完成；n：正进行到第 n 个药品）
     required: false
     
 definitions:

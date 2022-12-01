@@ -12,26 +12,37 @@ definitions:
         type: integer
       patientId:
         type: integer
+        description: 病人 id
       nurseId:
         type: integer
+        description: 护士 id
       name:
         type: string
+        description: 输液治疗名称（默认为第一个药品的名称）
       startTime:
         type: integer
+        description: 开始时间
       finishTime:
         type: integer
+        description: 结束时间
       status:
         type: integer
+        description: 输液状态（-1：已中止；0：已完成；n：正进行到第 n 个药品）
       drugCnt:
         type: integer
+        description: 药品数量（drug 列表的长度）
       vein:
         type: integer
+        description: 静脉
       tool:
         type: integer
+        description: 工具
       info:
         type: string
+        description: 其他信息
       drug:
         type: array
+        description: 药品列表
         items:
           type: object
           properties:
@@ -39,16 +50,22 @@ definitions:
               type: integer
             seq:
               type: integer
+              description: 该药品在本次输液治疗中的序号
             drug:
               type: integer
+              description: 药品（id）
             dose:
               type: integer
+              description: 剂量
             rate:
               type: integer
+              description: 速率
             startTime:
               type: integer
+              description: 开始时间
             status:
               type: integer
+              description: 该药品的输液状态（-1：已中止；0：已完成；1：进行中）
 responses:
   200:
     schema:
