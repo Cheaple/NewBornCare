@@ -45,7 +45,7 @@ class PatientService():
             count = [dict(zip(result.keys(), result))
                      for result in count_result]
 
-            return patient_list, count[0]['count'], "ok", True
+            return patient_list, count[0]['count'], "ok get patient list", True
 
         except Exception as e:
             print(e)
@@ -72,7 +72,7 @@ class PatientService():
             ).filter(Patient.id == id).first()
             if result is None:
                 return None, "patient not found", False
-            return dict(zip(result.keys(), result)), "ok", True
+            return dict(zip(result.keys(), result)), "ok get patient", True
         except Exception as e:
             print(e)
             return None, "error", False
@@ -96,7 +96,7 @@ class PatientService():
             )
             db.session.add(patient)
             db.session.commit()
-            return patient.id, "ok", True
+            return patient.id, "ok add patient", True
         except Exception as e:
             print(e)
             return 0, "error", False
@@ -104,6 +104,8 @@ class PatientService():
     def update_patient(self, id, content):
         try:
             patient = Patient.query.get(id)
+            if patient is None:
+                return 0, "patient not found", False
 
             if 'name' in content:
                 patient.name = content['name']
@@ -145,7 +147,7 @@ class PatientService():
                 # patient.password = encipher(str(content['password']))
 
             db.session.commit()
-            return patient.id, "ok", True
+            return patient.id, "ok update patient", True
         except Exception as e:
             print(e)
             return 0, "error", False

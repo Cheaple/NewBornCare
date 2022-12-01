@@ -56,7 +56,7 @@ class NurseService():
             count = [dict(zip(result.keys(), result))
                      for result in count_result]
 
-            return nurse_list, count[0]['count'], "ok", True
+            return nurse_list, count[0]['count'], "ok get nurse list", True
 
         except Exception as e:
             print(e)
@@ -75,7 +75,7 @@ class NurseService():
             ).filter(Nurse.id == id).first()
             if result is None:
                 return None, "nurse not found", False
-            return dict(zip(result.keys(), result)), "ok", True
+            return dict(zip(result.keys(), result)), "ok get nurse", True
         except Exception as e:
             print(e)
             return None, "error", False
@@ -93,7 +93,7 @@ class NurseService():
             )
             db.session.add(nurse)
             db.session.commit()
-            return nurse.id, "ok", True
+            return nurse.id, "ok add nurse", True
         except Exception as e:
             print(e)
             return 0, "username already exists", False
@@ -101,6 +101,8 @@ class NurseService():
     def update_nurse(self, id, content):
         try:
             nurse = Nurse.query.get(id)
+            if nurse is None:
+                return 0, "nurse not found", False
 
             if 'username' in content:
                 nurse.username = str(content['username'])
@@ -118,7 +120,7 @@ class NurseService():
                 nurse.status = content['status']
 
             db.session.commit()
-            return nurse.id, "ok", True
+            return nurse.id, "ok update nurse", True
         except Exception as e:
             print(e)
             return 0, "error", False
