@@ -53,11 +53,64 @@ def logout():
     pass
 
 
-@bp.route('/api/admin/staff', methods=['PATCH'])
-def staff_list():
-    pass
+@bp.route('/api/admin/add', methods=['POST'])
+@swag_from('admin/add-admin.yml')
+@login_required(["admin"])
+def add_admin():
+    """
+    添加管理员
+    """
+    try:
+        content = request.get_json()
+        # print(content)
+        if content is None:
+            return jsonify({'message': "bad arguments"}), 400
 
+        # TODO: 参数检测
+        # key, passed = admin_params_check(content)
+        # if not passed:
+            # return jsonify({'message': "invalid arguments: " + key}), 400
+        if 'status' not in content:
+            content['status'] = 1
 
-@bp.route('/api/admin/patient', methods=['PATCH'])
-def patient_list():
-    pass
+        id, msg, result = service.add_admin(content)
+
+        if result:
+            return jsonify({
+                'id': id,
+                'message': msg
+            }), 200
+        else:
+            return jsonify({'message': msg}), 500
+    except KeyError:
+        return jsonify({'message': "bad arguments"}), 400
+
+@bp.route('/api/admin/update/<int:adminId>', methods=['PATCH'])
+@swag_from('admin/update-admin.yml')
+@login_required(["admin"])
+def update_admin(adminId):
+    '''
+    修改管理员
+    '''
+    try:
+        content = request.get_json()
+        # print(content)
+        if content is None:
+            return jsonify({'message': "bad arguments"}), 400
+
+        # TODO: 参数检测
+        # key, passed = admin_params_check(content)
+        # if not passed:
+            # return jsonify({'message': "invalid arguments: " + key}), 400
+
+        id, msg, result = service.update_admin(adminId, content)
+
+        if result:
+            return jsonify({
+                'id': id,
+                'message': msg
+            }), 200
+        else:
+            return jsonify({'message': msg}), 500
+    except KeyError:
+        return jsonify({'message': "bad arguments"}), 400

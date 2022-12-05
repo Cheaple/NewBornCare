@@ -1,0 +1,33 @@
+parameters:
+  - name: username
+    in: body
+    type: string
+    required: true
+  - name: password
+    in: body
+    type: string
+    required: true
+  - name: name
+    in: body
+    type: string
+    required: true
+  - name: department
+    in: body
+    type: integer
+    required: true
+  - name: status
+    in: body
+    type: integer
+    required: false
+definitions:
+  AdminAdd:
+    type: object
+    properties:
+      message:
+        type: string
+      id:
+        type: integer
+responses:
+  200:
+    schema:
+      $ref: '#/definitions/AdminAdd'
