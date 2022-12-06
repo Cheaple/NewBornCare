@@ -21,6 +21,12 @@ class AdminService():
 
     def add_admin(self, content):
         try:
+            admin = Admin.query.filter(
+                Admin.username == content['username']
+            ).first()
+            if admin is not None:
+                return 0, "username already exists", False
+
             admin = Admin(
                 username=str(content['username']),
                 password=encipher(str(content['password'])),

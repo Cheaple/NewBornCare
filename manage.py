@@ -1,12 +1,19 @@
 # -*- coding: utf-8 -*-
+import coverage
 import os
 from datetime import datetime
 
-from flask_script import Manager, Server
-from flask_migrate import Migrate, MigrateCommand
+import unittest
 
-from app import create_app, db, models
-from app.utils import config, encipher, toTimestamp
+from flask_script import Manager, Server
+# from flask_migrate import Migrate, MigrateCommand
+
+from app import create_app, db
+from app.utils import config
+from app.init_db import init_test_data, init_options
+
+COV=coverage.coverage(branch=True,include='app/*')
+COV.start()
 
 app = create_app(os.getenv('TYPE', 'default'))
 
@@ -16,8 +23,26 @@ port = config.get_yaml('app.PORT')
 manager = Manager(app)
 manager.add_command('runserver', Server(host=host, port=port))
 
-migrate = Migrate(app, db)
-manager.add_command('db', MigrateCommand)
+# migrate = Migrate(app, db)
+# manager.add_command('db', MigrateCommand)
+
+@manager.command
+def test(filter=None):
+    """Run the unit tests"""
+    loader = unittest.TestLoader()
+    loader.testNamePatterns = [filter+"*"] if filter is not None else None
+    tests = loader.discover('tests')
+    unittest.TextTestRunner(verbosity=2).run(tests)
+
+    COV.stop()
+    COV.save()
+    print('Coverage:')
+    COV.report()
+    basedir = os.path.abspath(os.path.dirname("backend"))
+    covdir = os.path.join(basedir, 'test_report')
+    COV.html_report(directory=covdir)
+    
+    print('HTML version: file://%s/index.html' % covdir)
 
 @manager.command
 def init_db():
@@ -27,123 +52,6 @@ def init_db():
     db.create_all()
     init_options()
     init_test_data()
-
-
-def init_options():
-    '''
-    init options
-    '''
-    import csv
-
-    with open("data\\department.csv", encoding="utf-8") as csvfile:
-        csv_reader = csv.reader(csvfile)
-        #header = next(csv_reader)
-        for row in csv_reader:
-            db.session.add(models.Department(name=row[0]))
-    with open("data\\vein.csv", encoding="utf-8") as csvfile:
-        csv_reader = csv.reader(csvfile)
-        #header = next(csv_reader)
-        for row in csv_reader:
-            db.session.add(models.Vein(name=row[0]))
-    with open("data\\tool.csv", encoding="utf-8") as csvfile:
-        csv_reader = csv.reader(csvfile)
-        #header = next(csv_reader)
-        for row in csv_reader:
-            db.session.add(models.Tool(name=row[0]))
-    with open("data\\drug.csv", encoding="utf-8") as csvfile:
-        csv_reader = csv.reader(csvfile)
-        #header = next(csv_reader)
-        for row in csv_reader:
-            db.session.add(models.Drug(name=row[0]))
-            
-    db.session.commit()
-
-def init_test_data():
-    '''
-    init test data
-    '''
-    admin = models.Admin(
-        username='admin',
-        password=encipher('admin'),
-        name='测试管理员',
-        department=0,
-        status=1
-    )
-
-    nurse = models.Nurse(
-        username='nurse',
-        password=encipher('nurse'),
-        name='测试护士',
-        gender=1,
-        tel=19912345678,
-        department=3,
-        status=1)
-
-    patient = models.Patient(
-        name='测试患儿',
-        gender=0,
-        birthdate=toTimestamp(datetime(2022, 11, 1, 12, 0, 0)),
-        # palmprint=,
-        guardian="患儿父",
-        guardianId="42100220000725141x",
-        relation=1,
-        tel=19972644417,
-        status=1,
-        inDate=toTimestamp(datetime.now()),
-        department=3,
-        room=234,
-        bed=3
-    )
-
-    transfusion = models.Transfusion(
-        nurseId=1,
-        patientId=1,
-        startTime=toTimestamp(datetime.now()),
-        name="葡萄糖",
-        status=1,
-        drugCnt=2,
-        vein=2,
-        tool=1,
-        info="心跳较快"
-    )
-
-    drug = models.TransfusionDrug(
-        transfusionId = 1,
-        seq = 1,
-        startTime=toTimestamp(datetime.now()),
-        rate = 8,
-        drug=1,
-        dose=200,
-        status = 1,
-    )
-
-    drug2 = models.TransfusionDrug(
-        transfusionId = 1,
-        seq = 2,
-        rate = 10,
-        drug=2,
-        dose=300,
-        status = 0,
-    )
-
-    check = models.Check(
-        nurseId=1,
-        patientId=1,
-        transfusionId=1,
-        time=toTimestamp(datetime.now()),
-        info="心跳正常"
-    )
-
-    db.session.add(admin)
-    db.session.add(nurse)
-    db.session.add(patient)
-    db.session.add(transfusion)
-    db.session.add(drug)
-    db.session.add(drug2)
-    db.session.add(check)
-
-    # commit the changes
-    db.session.commit()
 
     
 if __name__ == '__main__':

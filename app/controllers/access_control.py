@@ -9,8 +9,6 @@ def login_required(user = ["admin", "nurse", "patient"]):
     def login(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
-            print(current_app.config.get('TYPE'))
-            print()
             if current_app.config.get('TYPE') == "dev":
                 return func(*args, **kwargs)
             if not g.userId:

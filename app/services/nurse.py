@@ -82,6 +82,12 @@ class NurseService():
 
     def add_nurse(self, content):
         try:
+            nurse = Nurse.query.filter(
+                Nurse.username == content['username']
+            ).first()
+            if nurse is not None:
+                return 0, "username already exists", False
+
             nurse = Nurse(
                 username=str(content['username']),
                 password=encipher(str(content['password'])),
