@@ -49,6 +49,7 @@ def login():
 
 
 @bp.route('/api/admin/logout', methods=['PATCH'])
+@login_required(["admin"])
 def logout():
     pass
 

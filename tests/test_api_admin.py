@@ -45,6 +45,12 @@ class TestApiAdmin(flask_unittest.ClientTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(json_data['name'], "测试管理员")
 
+    def test_admin_logout(self, client):
+        """
+        验证登出
+        """
+        pass
+
     def test_admin_add(self, client):
         """
         验证注册管理员账户

@@ -50,6 +50,7 @@ def login():
 
 
 @bp.route('/api/nurse/logout', methods=['PATCH'])
+@login_required(["nurse"])
 def logout():
     pass
 
