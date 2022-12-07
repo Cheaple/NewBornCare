@@ -7,7 +7,7 @@ from app.utils import encipher
 
 class NurseService():
     def get_nurse_with_password(self, username, password):
-        print(username, password)
+        # print(username, password)
         try:
             nurse = Nurse.query.filter(
                 and_(
