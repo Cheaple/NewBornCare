@@ -14,7 +14,7 @@ parameters:
   - name: gender
     in: body
     type: integer
-    required: true
+    required: false
   - name: tel
     in: body
     type: integer

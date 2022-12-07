@@ -1,1 +1,2 @@
 from .admin import admin_add_params_check, admin_update_params_check
+from .nurse import nurse_add_params_check, nurse_update_params_check

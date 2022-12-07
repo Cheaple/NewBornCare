@@ -4,6 +4,7 @@ from flask import Blueprint, jsonify, request
 
 from app.services import NurseService
 from app.utils import jwt
+from app.checkers import nurse_add_params_check, nurse_update_params_check
 from app.controllers.access_control import login_required
 
 bp = Blueprint(
@@ -103,12 +104,10 @@ def add_nurse():
         if content is None:
             return jsonify({'message': "bad arguments"}), 400
 
-        # TODO: 参数检测
-        # key, passed = nurse_params_check(content)
-        # if not passed:
-            # return jsonify({'message': "invalid arguments: " + key}), 400
-        if 'status' not in content:
-            content['status'] = 1
+        # 检查参数
+        key, passed = nurse_add_params_check(content)
+        if not passed:
+            return jsonify({'message': "invalid arguments: " + key}), 400
 
         id, msg, result = service.add_nurse(content)
 
@@ -135,10 +134,10 @@ def update_nurse(nurseId):
         if content is None:
             return jsonify({'message': "bad arguments"}), 400
 
-        # TODO: 参数检测
-        # key, passed = nurse_params_check(content)
-        # if not passed:
-            # return jsonify({'message': "invalid arguments: " + key}), 400
+        # 检查参数
+        key, passed = nurse_update_params_check(content)
+        if not passed:
+            return jsonify({'message': "invalid arguments: " + key}), 400
 
         id, msg, result = service.update_nurse(nurseId, content)
 
