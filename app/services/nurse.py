@@ -14,11 +14,11 @@ class NurseService():
                     Nurse.username == username,
                     Nurse.password == encipher(password))).first()
             if nurse is None:
-                return "nurse not found or wrong password", False
-            return nurse, True
+                return None, "nurse not found or wrong password", False
+            return nurse, "ok get nurse", True
         except Exception as e:
             print(e)
-            return "errors", False
+            return None, "errors", False
 
     def get_nurse_list(self, department=0):
         try:

@@ -8,7 +8,7 @@ parameters:
     type: string
     required: true
 definitions:
-  Nurse:
+  NurseLogin:
     type: object
     properties:
       jwt:
@@ -28,7 +28,7 @@ definitions:
 responses:
   200:
     schema:
-      $ref: '#/definitions/Nurse'
+      $ref: '#/definitions/NurseLogin'
     examples:
       jwt: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2Njc3NDMzOTYsInVzZXIiOiJhZG1pbiIsImlkIjoxfQ.9t7Cz730T8KHZtLGcLSNYSi8OYoRalWDKARGHiOdNM4"
       id: 1

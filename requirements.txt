@@ -1,8 +1,10 @@
+coverage
 flasgger==0.9.5
 flask==1.1.4
 flask_migrate==2.5.3
 flask-SQLAlchemy==2.5.1
 flask_script==2.0.6
+flask_unittest
 gunicorn==20.1.0
 jinja2==2.10.1
 markupsafe==2.0.1

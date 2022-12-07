@@ -4,7 +4,7 @@ from flasgger import swag_from
 from flask import Blueprint, jsonify, request
 
 from app.services import PatientService
-from app.utils import toTimestamp
+from app.utils import toTimestamp, jwt
 from app.controllers.access_control import login_required
 
 bp = Blueprint(
@@ -15,6 +15,37 @@ bp = Blueprint(
 
 service = PatientService()
 
+@bp.route('/api/patient/login', methods=['POST'])
+@swag_from('login.yml')
+def login():
+    """
+    Login
+    """
+    try:
+        content = request.get_json()
+        if content is None:
+            return jsonify({'message': "bad arguments"}), 400
+        patient, msg, result = service.get_patient_with_password(
+            content['username'], content['password'])
+
+        if result:
+            token = jwt.generate({
+                "userType": "patient",
+                "userId": patient["id"],
+                "userDepartment": patient["department"]
+            })
+            patient["jwt"] = token
+            return jsonify(patient), 200
+        else:
+            return jsonify({'message': msg}), 500
+    except KeyError:
+        return jsonify({'message': 'bad arguments'}), 400
+
+
+@bp.route('/api/patient/logout', methods=['PATCH'])
+@login_required(["patient"])
+def logout():
+    pass
 
 @bp.route('/api/patient', methods=['GET'])
 @swag_from('patient/get-patient-list.yml')

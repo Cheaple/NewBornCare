@@ -55,6 +55,8 @@ def init_test_data():
         status=1)
 
     patient = models.Patient(
+        username='patient',
+        password=encipher('patient'),
         name='测试患儿',
         gender=0,
         birthdate=toTimestamp(datetime(2022, 11, 1, 12, 0, 0)),

@@ -1,0 +1,52 @@
+parameters:
+  - name: username
+    in: body
+    type: string
+    required: true
+  - name: password
+    in: body
+    type: string
+    required: true
+definitions:
+  PatientLogin:
+    type: object
+    properties:
+      jwt:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      gender:
+        type: integer
+      birthdate:
+        type: integer
+      palmprint:
+        type: binary
+      guardian:
+        type: string
+      guardianId:
+        type: string
+      relation:
+        type: integer
+      tel:
+        type: integer
+      status:
+        type: integer
+      inDate:
+        type: integer
+      outDate:
+        type: integer
+      department:
+        type: integer
+      room:
+        type: integer
+      bed:
+        type: integer
+      allergy:
+        type: string
+  
+responses:
+  200:
+    schema:
+      $ref: '#/definitions/PatientLogin'

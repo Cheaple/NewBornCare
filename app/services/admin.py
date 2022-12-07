@@ -13,11 +13,11 @@ class AdminService():
                     Admin.username == username,
                     Admin.password == encipher(password))).first()
             if admin is None:
-                return "Administrator not found", False
-            return admin, True
+                return None, "Administrator not found", False
+            return admin, "ok get admin", True
         except Exception as e:
             print(e)
-            return "errors", False
+            return None, "errors", False
 
     def add_admin(self, content):
         try:

@@ -1,9 +1,41 @@
+from sqlalchemy import and_
+
 from app.extensions import db
 from app.models import Patient
 from app.utils import encipher
 
 
 class PatientService():
+    def get_patient_with_password(self, username, password):
+        print(username, password)
+        try:
+            result = db.session.query(
+                Patient.id,
+                Patient.name,
+                Patient.gender,
+                Patient.birthdate,
+                Patient.palmprint,
+                Patient.guardian,
+                Patient.guardianId,
+                Patient.relation,
+                Patient.tel,
+                Patient.status,
+                Patient.inDate,
+                Patient.outDate,
+                Patient.department,
+                Patient.room,
+                Patient.bed
+            ).filter(and_(
+                    Patient.username == username,
+                    Patient.password == encipher(password))).first()
+            if result is None:
+                return None, "patient not found or wrong password", False
+            print(type(result))
+            return dict(zip(result.keys(), result)), "ok get patient", True
+        except Exception as e:
+            print(e)
+            return None, "errors", False
+
     def get_patient_list(self, department=0):
         try:
             where_clause = "WHERE status <> 0 "

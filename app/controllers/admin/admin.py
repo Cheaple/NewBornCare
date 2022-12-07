@@ -26,7 +26,7 @@ def login():
         content = request.get_json()
         if content is None:
             return jsonify({'message': "bad arguments"}), 400
-        admin, result = service.get_user_with_password(
+        admin, msg, result = service.get_user_with_password(
             content['username'], content['password'])
 
         if result:
@@ -43,7 +43,7 @@ def login():
                 "department": admin.department,
             }), 200
         else:
-            return jsonify({'message': admin}), 500
+            return jsonify({'message': msg}), 500
     except KeyError:
         return jsonify({'message': "bad arguments"}), 400
 
