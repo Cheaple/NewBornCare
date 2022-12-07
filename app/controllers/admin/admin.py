@@ -5,6 +5,7 @@ from flask import Blueprint, jsonify, request
 from app.services import AdminService
 from app.utils import jwt
 
+from app.checkers import admin_add_params_check, admin_update_params_check
 from app.controllers.access_control import login_required
 
 bp = Blueprint(
@@ -67,12 +68,11 @@ def add_admin():
         if content is None:
             return jsonify({'message': "bad arguments"}), 400
 
-        # TODO: 参数检测
-        # key, passed = admin_params_check(content)
-        # if not passed:
-            # return jsonify({'message': "invalid arguments: " + key}), 400
-        if 'status' not in content:
-            content['status'] = 1
+        # 检查参数
+        key, passed = admin_add_params_check(content)
+        if not passed:
+            return jsonify({'message': "invalid arguments: " + key}), 400
+
 
         id, msg, result = service.add_admin(content)
 
@@ -99,10 +99,10 @@ def update_admin(adminId):
         if content is None:
             return jsonify({'message': "bad arguments"}), 400
 
-        # TODO: 参数检测
-        # key, passed = admin_params_check(content)
-        # if not passed:
-            # return jsonify({'message': "invalid arguments: " + key}), 400
+        # 检查参数
+        key, passed = admin_update_params_check(content)
+        if not passed:
+            return jsonify({'message': "invalid arguments: " + key}), 400
 
         id, msg, result = service.update_admin(adminId, content)
 

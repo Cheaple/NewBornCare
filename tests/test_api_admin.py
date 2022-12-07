@@ -62,9 +62,10 @@ class TestApiAdmin(flask_unittest.ClientTestCase):
         json_data = json.loads(response.data)
         self.assertEqual(response.status_code, 401)
         
+
         '''使用错误的信息进行注册，检查返回值为失败'''
         data = {
-            "username": "admin",
+            "username": "admin1",
             "password": "admin1",
             "name": "测试管理员1号",
             "department": 1,
@@ -75,14 +76,14 @@ class TestApiAdmin(flask_unittest.ClientTestCase):
             headers={"Authorization": self.jwt}
         )
         json_data = json.loads(response.data)
-        self.assertEqual(response.status_code, 500)
+        self.assertEqual(response.status_code, 400)
+
 
         '''使用正确的信息进行注册，检查返回值为成功'''
         data = {
             "username": "admin1",
-            "password": "admin1",
-            "name": "测试管理员1号",
-            "department": 1,
+            "password": "Administrator1",
+            "name": "测试管理员一号",
         }
         response = client.post(
             "/api/admin/add",
@@ -91,6 +92,22 @@ class TestApiAdmin(flask_unittest.ClientTestCase):
         )
         json_data = json.loads(response.data)
         self.assertEqual(response.status_code, 200)
+
+
+        '''使用重复的用户名进行注册，检查返回值为失败'''
+        data = {
+            "username": "admin1",
+            "password": "Administrator1",
+            "name": "测试管理员一号",
+        }
+        response = client.post(
+            "/api/admin/add",
+            json=data, 
+            headers={"Authorization": self.jwt}
+        )
+        json_data = json.loads(response.data)
+        self.assertEqual(response.status_code, 500)
+
 
     def test_admin_update(self, client):
         """
@@ -103,28 +120,22 @@ class TestApiAdmin(flask_unittest.ClientTestCase):
         json_data = json.loads(response.data)
         self.assertEqual(response.status_code, 401)
         
-        """
         '''使用错误的信息进行更新，检查返回值为失败'''
         data = {
-            "username": "admin",
-            "password": "admin1",
-            "name": "测试管理员1号",
-            "department": 1,
+            "name": "测试管理员0号",
+            "department": 0,
         }
         response = client.patch(
             "/api/admin/update/1",
-            json=data,
+            json=data, 
             headers={"Authorization": self.jwt}
         )
         json_data = json.loads(response.data)
-        self.assertEqual(response.status_code, 500)
-        """
+        self.assertEqual(response.status_code, 400)
 
         '''使用正确的信息进行更新，检查返回值为成功'''
         data = {
-            "username": "admin",
-            "password": "admin",
-            "name": "测试管理员0号",
+            "name": "测试管理员零号",
             "department": 0,
         }
         response = client.patch(

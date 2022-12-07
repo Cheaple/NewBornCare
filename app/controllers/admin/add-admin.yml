@@ -14,7 +14,7 @@ parameters:
   - name: department
     in: body
     type: integer
-    required: true
+    required: false
   - name: status
     in: body
     type: integer
