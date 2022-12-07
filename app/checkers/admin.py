@@ -51,15 +51,8 @@ def admin_update_params_check(content):
 
     if "name" in content and re.search(
         r"^[\u4e00-\u9fa5]{2,10}$",
-        content["name"]
-    ) is None:
+        content["name"]) is None:
         # 长度为2-10的汉字串
         return "name", False
-
-    if "department" not in content:
-        content['department'] = 0
-
-    if 'status' not in content:
-        content['status'] = 1
 
     return "ok", True
