@@ -1,4 +1,12 @@
 parameters:
+  - name: username
+    in: body
+    type: string
+    required: false
+  - name: password
+    in: body
+    type: string
+    required: false
   - name: name
     in: body
     type: string
@@ -15,6 +23,7 @@ parameters:
     in: body
     type: object
     required: false
+
   - name: guardian
     in: body
     type: string
@@ -31,6 +40,7 @@ parameters:
     in: body
     type: integer
     required: true
+    
   - name: status
     in: body
     type: integer
@@ -42,7 +52,7 @@ parameters:
   - name: department
     in: body
     type: integer
-    required: true
+    required: false
   - name: room
     in: body
     type: integer

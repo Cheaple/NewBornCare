@@ -36,11 +36,16 @@ parameters:
     in: body
     type: integer
     required: false
+
   - name: status
     in: body
     type: integer
     required: false
   - name: inDate
+    in: body
+    type: integer
+    requird: false
+  - name: outDate
     in: body
     type: integer
     requird: false

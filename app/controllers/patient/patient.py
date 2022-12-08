@@ -6,6 +6,7 @@ from flask import Blueprint, jsonify, request
 from app.services import PatientService
 from app.utils import toTimestamp, jwt
 from app.controllers.access_control import login_required
+from app.checkers import patient_add_params_check, patient_update_params_check
 
 bp = Blueprint(
     'patient',
@@ -95,20 +96,11 @@ def add_patient():
         if content is None:
             return jsonify({'message': "bad arguments"}), 400
 
-        # TODO: 参数检测
-        # key, passed = patient_params_check(content)
-        # if not passed:
-            # return jsonify({'message': "invalid arguments: " + key}), 400
-        if 'status' not in content:
-            content['status'] = 1
-        if 'inDate' not in content:
-            content['inDate'] = toTimestamp(datetime.now())
-        if 'room' not in content:
-            content['room'] = None
-        if 'bed' not in content:
-            content['bed'] = None
-        if 'allergy' not in content:
-            content['allergy'] = None
+        # 检查参数
+        key, passed = patient_add_params_check(content)
+        if not passed:
+            return jsonify({'message': "invalid arguments: " + key}), 400
+        
 
         id, msg, result = service.add_patient(content)
 
@@ -135,10 +127,10 @@ def update_patient(patientId):
         if content is None:
             return jsonify({'message': "bad arguments"}), 400
 
-        # TODO: 参数检测
-        # key, passed = patient_params_check(content)
-        # if not passed:
-            # return jsonify({'message': "invalid arguments: " + key}), 400
+        # 检查参数
+        key, passed = patient_update_params_check(content)
+        if not passed:
+            return jsonify({'message': "invalid arguments: " + key}), 400
 
         id, msg, result = service.update_patient(patientId, content)
 
