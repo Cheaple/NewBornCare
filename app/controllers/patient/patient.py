@@ -92,7 +92,6 @@ def add_patient():
     """
     try:
         content = request.get_json()
-        print(content)
         if content is None:
             return jsonify({'message': "bad arguments"}), 400
 

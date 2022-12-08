@@ -4,7 +4,7 @@ import flask_unittest
 from app import create_app, db, models
 from app.init_db import init_test_data
 
-class TestApiAdmin(flask_unittest.ClientTestCase):
+class TestApiPatient(flask_unittest.ClientTestCase):
     
     app = create_app('test')
     jwt = None
@@ -17,8 +17,8 @@ class TestApiAdmin(flask_unittest.ClientTestCase):
         db.create_all()
         init_test_data()
 
-        data = {"username": "admin", "password": "admin"}
-        response = client.post("/api/admin/login", json=data)
+        data = {"username": "nurse", "password": "nurse"}
+        response = client.post("/api/nurse/login", json=data)
         json_data = json.loads(response.data)
         self.jwt = json_data["jwt"]
 
@@ -27,51 +27,55 @@ class TestApiAdmin(flask_unittest.ClientTestCase):
         db.drop_all()
         self.app_context.pop()
 
-    def test_admin_login(self, client):
+    def test_patient_login(self, client):
         """
         验证登陆
         """
 
         '''使用错误的信息进行登录，检查返回值为失败'''
-        data = {"username": "admin", "password": "wrong_pw"}
-        response = client.post("/api/admin/login", json=data)
+        data = {"username": "patient", "password": "wrong_pw"}
+        response = client.post("/api/patient/login", json=data)
         json_data = json.loads(response.data)
         self.assertEqual(response.status_code, 500)
 
         '''使用正确的信息进行登录，检查返回值为成功'''
-        data = {"username": "admin", "password": "admin"}
-        response = client.post("/api/admin/login", json=data)
+        data = {
+            "username": "patient",
+            "password": "patient"
+        }
+        response = client.post("/api/patient/login", json=data)
         json_data = json.loads(response.data)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(json_data['name'], "测试管理员")
+        self.assertEqual(json_data['name'], "测试患儿")
 
-    def test_admin_logout(self, client):
+    def test_patient_logout(self, client):
         """
         验证登出
         """
         pass
 
-    def test_admin_add(self, client):
+    def test_patient_add(self, client):
         """
-        验证注册管理员账户
+        验证注册患者账户
         """
 
         '''未登陆，检查返回值为失败'''
         data = {}
-        response = client.post("/api/admin/add", json=data)
+        response = client.post("/api/patient/add", json=data)
         json_data = json.loads(response.data)
         self.assertEqual(response.status_code, 401)
         
 
         '''使用错误的信息进行注册，检查返回值为失败'''
         data = {
-            "username": "admin1",
-            "password": "admin1",
-            "name": "测试管理员1号",
+            "username": "patient1",
+            "password": "patient1",
+            "gender": 1,
+            "name": "测试患者1号",
             "department": 1,
         }
         response = client.post(
-            "/api/admin/add",
+            "/api/patient/add",
             json=data,
             headers={"Authorization": self.jwt}
         )
@@ -81,12 +85,24 @@ class TestApiAdmin(flask_unittest.ClientTestCase):
 
         '''使用正确的信息进行注册，检查返回值为成功'''
         data = {
-            "username": "admin1",
-            "password": "Administrator1",
-            "name": "测试管理员一号",
+            "username": "patient1",
+            "password": "Patient100",
+            "name": "测试患者一号",
+            "gender": 1,
+            "birthdate": 1667275200,
+            
+            "guardian": "孩子爹",
+            "guardianId": "42100220220101000x",
+            "relation": "1",
+            "tel": 13100000000,
+
+            "department": "1",
+            "room": "6",
+
+            "allergy": "花粉"
         }
         response = client.post(
-            "/api/admin/add",
+            "/api/patient/add",
             json=data, 
             headers={"Authorization": self.jwt}
         )
@@ -96,12 +112,24 @@ class TestApiAdmin(flask_unittest.ClientTestCase):
 
         '''使用重复的用户名进行注册，检查返回值为失败'''
         data = {
-            "username": "admin1",
-            "password": "Administrator1",
-            "name": "测试管理员一号",
+            "username": "patient1",
+            "password": "Patient100",
+            "name": "测试患者一号",
+            "gender": 1,
+            "birthdate": 1667275200,
+            
+            "guardian": "孩子爹",
+            "guardianId": "42100220220101000x",
+            "relation": "1",
+            "tel": 13100000000,
+
+            "department": "1",
+            "room": "6",
+
+            "allergy": "花粉"
         }
         response = client.post(
-            "/api/admin/add",
+            "/api/patient/add",
             json=data, 
             headers={"Authorization": self.jwt}
         )
@@ -109,24 +137,23 @@ class TestApiAdmin(flask_unittest.ClientTestCase):
         self.assertEqual(response.status_code, 500)
 
 
-    def test_admin_update(self, client):
+    def test_patient_update(self, client):
         """
-        验证更新管理员信息
+        验证更新患者信息
         """
 
         '''未登陆，检查返回值为失败'''
         data = {}
-        response = client.patch("/api/admin/update/1", json=data)
+        response = client.patch("/api/patient/update/1", json=data)
         json_data = json.loads(response.data)
         self.assertEqual(response.status_code, 401)
         
         '''使用错误的信息进行更新，检查返回值为失败'''
         data = {
-            "name": "测试管理员0号@",
-            "department": 0,
+            "status": "-1",
         }
         response = client.patch(
-            "/api/admin/update/1",
+            "/api/patient/update/1",
             json=data, 
             headers={"Authorization": self.jwt}
         )
@@ -135,11 +162,10 @@ class TestApiAdmin(flask_unittest.ClientTestCase):
 
         '''使用正确的信息进行更新，检查返回值为成功'''
         data = {
-            "name": "测试管理员0号",
-            "department": 0,
+            "status": "0",
         }
         response = client.patch(
-            "/api/admin/update/1",
+            "/api/patient/update/1",
             json=data, 
             headers={"Authorization": self.jwt}
         )

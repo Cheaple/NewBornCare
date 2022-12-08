@@ -124,7 +124,7 @@ class TestApiNurse(flask_unittest.ClientTestCase):
         
         '''使用错误的信息进行更新，检查返回值为失败'''
         data = {
-            "name": "测试护士0号",
+            "name": "测试护士0号@",
         }
         response = client.patch(
             "/api/nurse/update/1",
@@ -136,7 +136,7 @@ class TestApiNurse(flask_unittest.ClientTestCase):
 
         '''使用正确的信息进行更新，检查返回值为成功'''
         data = {
-            "name": "测试护士零号",
+            "name": "测试护士0号",
         }
         response = client.patch(
             "/api/nurse/update/1",

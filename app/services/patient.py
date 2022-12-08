@@ -7,7 +7,6 @@ from app.utils import encipher
 
 class PatientService():
     def get_patient_with_password(self, username, password):
-        print(username, password)
         try:
             result = db.session.query(
                 Patient.id,
@@ -30,7 +29,6 @@ class PatientService():
                     Patient.password == encipher(password))).first()
             if result is None:
                 return None, "patient not found or wrong password", False
-            print(type(result))
             return dict(zip(result.keys(), result)), "ok get patient", True
         except Exception as e:
             print(e)
@@ -100,7 +98,8 @@ class PatientService():
                 Patient.outDate,
                 Patient.department,
                 Patient.room,
-                Patient.bed
+                Patient.bed,
+                Patient.allergy
             ).filter(Patient.id == id).first()
             if result is None:
                 return None, "patient not found", False
@@ -111,6 +110,12 @@ class PatientService():
 
     def add_patient(self, content):
         try:
+            patient = Patient.query.filter(
+                Patient.username == content['username']
+            ).first()
+            if patient is not None:
+                return 0, "username already exists", False
+
             patient = Patient(
                 name=content['name'],
                 gender=content['gender'],
@@ -124,7 +129,10 @@ class PatientService():
                 inDate=content['inDate'],
                 department=content['department'],
                 room=content['room'],
-                bed=content['bed']
+                bed=content['bed'],
+                allergy=content['allergy'],
+                username=content['username'],
+                password=encipher(str(content['password']))
             )
             db.session.add(patient)
             db.session.commit()
