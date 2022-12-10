@@ -5,6 +5,7 @@ from flask import Blueprint, jsonify, request
 
 from app.services import TransfusionService
 from app.utils import toTimestamp
+from app.checkers import transfusion_add_params_check, transfusion_update_params_check, transfusion_drug_update_params_check
 from app.controllers.access_control import login_required
 
 bp = Blueprint(
@@ -61,25 +62,14 @@ def add_transfusion():
         if content is None:
             return jsonify({'message': "bad arguments"}), 400
 
-        # TODO: 参数检测
-        # key, passed = transfusion_params_transfusion(content)
-        # if not passed:
-            # return jsonify({'message': "invalid arguments: " + key}), 400
-        content['drugCnt'] = len(content['drug'])
-        if 'name' not in content:
-            content['name'] = ', '.join([d['drug'] for d in content['drug']])
-        if 'startTime' not in content:
-            content['startTime'] = toTimestamp(datetime.now())
-        if 'status' not in content:
-            content['status'] = 1
-        if 'info' not in content:
-            content['info'] = None
+        # 参数检查
+        key, passed = transfusion_add_params_check(content)
+        if not passed:
+            return jsonify({'message': "invalid arguments: " + key}), 400
+        
 
         drugs = content['drug']
         del content['drug']
-        if 'status' not in drugs[0]:
-            drugs[0]['status'] = 1
-
         id, msg, result = service.add_transfusion(content, drugs)
 
         if result:
@@ -90,7 +80,7 @@ def add_transfusion():
         else:
             return jsonify({'message': msg}), 500
     except KeyError:
-        return jsonify({'message': msg}), 400
+        return jsonify({'message': "bad arguments"}), 400
 
 @bp.route('/api/transfusion/update/<int:transfusionId>', methods=['PATCH'])
 @swag_from('transfusion/update-transfusion.yml')
@@ -105,10 +95,10 @@ def update_transfusion(transfusionId):
         if content is None:
             return jsonify({'message': "bad arguments"}), 400
 
-        # TODO: 参数检测
-        # key, passed = transfusion_params_transfusion(content)
-        # if not passed:
-            # return jsonify({'message': "invalid arguments: " + key}), 400
+        # 参数检查
+        key, passed = transfusion_update_params_check(content)
+        if not passed:
+            return jsonify({'message': "invalid arguments: " + key}), 400
 
         id, msg, result = service.update_transfusion(transfusionId, content)
 
@@ -119,7 +109,8 @@ def update_transfusion(transfusionId):
             }), 200
         else:
             return jsonify({'message': msg}), 500
-    except KeyError:
+    except KeyError as e:
+        print(e)
         return jsonify({'message': "bad arguments"}), 400
 
 @bp.route('/api/transfusion/update/<int:transfusionId>/<drugSeq>', methods=['PATCH'])
@@ -135,10 +126,10 @@ def update_transfusion_drug(transfusionId, drugSeq):
         if content is None:
             return jsonify({'message': "bad arguments"}), 400
 
-        # TODO: 参数检测
-        # key, passed = transfusion_params_transfusion(content)
-        # if not passed:
-            # return jsonify({'message': "invalid arguments: " + key}), 400
+        # 参数检查
+        key, passed = transfusion_drug_update_params_check(content)
+        if not passed:
+            return jsonify({'message': "invalid arguments: " + key}), 400
 
         id, msg, result = service.update_transfusion_drug(transfusionId, drugSeq, content)
 

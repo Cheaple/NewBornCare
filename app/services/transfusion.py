@@ -120,6 +120,7 @@ class TransfusionService():
                 transfusion.info = content['info']
 
             if 'status' in content:
+                # 0：已完成  1：进行中  2：未开始  -1：中止
                 transfusion.status = content['status']
 
             db.session.commit()

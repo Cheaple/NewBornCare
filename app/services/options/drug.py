@@ -18,6 +18,16 @@ class DrugService():
             print(e)
             return None, "error", False
 
+    def get_drug_name(self, id):
+        try:
+            drug = Drug.query.filter(Drug.id == id).first()
+            if drug is None:
+                return None
+            return drug.name
+        except Exception as e:
+            print(e)
+            return None
+
     def add_drug(self, name):
         try:
             drug = Drug(name = name)
