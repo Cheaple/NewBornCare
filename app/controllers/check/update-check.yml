@@ -3,7 +3,11 @@ parameters:
     in: path
     type: integer
     required: true
-    
+  
+  - name: time
+    in: body
+    type: integer
+    required: false
   - name: info
     in: body
     type: string

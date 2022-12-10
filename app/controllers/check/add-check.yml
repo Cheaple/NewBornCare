@@ -1,8 +1,4 @@
 parameters:
-  - name: id
-    in: body
-    type: integer
-    required: true
   - name: nurseId
     in: body
     type: integer
@@ -14,11 +10,11 @@ parameters:
   - name: transfusionId
     in: body
     type: integer
-    required: true
+    required: false
   - name: time
     in: body
     type: integer
-    required: true
+    required: false
   - name: info
     in: body
     type: string

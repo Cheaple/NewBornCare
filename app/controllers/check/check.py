@@ -6,6 +6,7 @@ from flask import Blueprint, jsonify, request
 from app.services import CheckService
 from app.utils import toTimestamp
 from app.controllers.access_control import login_required
+from app.checkers import check_add_params_check, check_update_params_check
 
 bp = Blueprint(
     'check',
@@ -59,18 +60,14 @@ def add_check():
     """
     try:
         content = request.get_json()
-        print(content)
+        # print(content)
         if content is None:
             return jsonify({'message': "bad arguments"}), 400
 
-        # TODO: 参数检测
-        # key, passed = check_params_check(content)
-        # if not passed:
-            # return jsonify({'message': "invalid arguments: " + key}), 400
-        if 'time' not in content:
-            content['time'] = toTimestamp(datetime.now())
-        if 'info' not in content:
-            content['info'] = None
+        # 参数检测
+        key, passed = check_add_params_check(content)
+        if not passed:
+            return jsonify({'message': "invalid arguments: " + key}), 400
 
         id, msg, result = service.add_check(content)
 
@@ -97,10 +94,9 @@ def update_check(checkId):
         if content is None:
             return jsonify({'message': "bad arguments"}), 400
 
-        # TODO: 参数检测
-        # key, passed = check_params_check(content)
-        # if not passed:
-            # return jsonify({'message': "invalid arguments: " + key}), 400
+        key, passed = check_update_params_check(content)
+        if not passed:
+            return jsonify({'message': "invalid arguments: " + key}), 400
 
         id, msg, result = service.update_check(checkId, content)
 

@@ -90,6 +90,8 @@ class CheckService():
 
             if 'info' in content:
                 check.info = content['info']
+            if 'time' in content:
+                check.time = content['time']
 
             db.session.commit()
             return check.id, "ok update check", True
