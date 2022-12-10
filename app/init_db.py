@@ -91,7 +91,7 @@ def init_test_data():
         rate = 8,
         drug=1,
         dose=200,
-        status = 1,
+        status = 1,  # 进行中
     )
 
     drug2 = models.TransfusionDrug(
@@ -100,7 +100,7 @@ def init_test_data():
         rate = 10,
         drug=2,
         dose=300,
-        status = 0,
+        status = 2,  # 未开始
     )
 
     check = models.Check(
