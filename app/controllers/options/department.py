@@ -35,7 +35,7 @@ def add_department():
     '''
     添加科室
     '''
-    content = request.form.to_dict()
+    content = request.get_json()
     id, msg, result = departmentService.add_department(content["name"])
     if result:
         return jsonify({
@@ -52,7 +52,7 @@ def update_department(departmentId):
     '''
     更新科室
     '''
-    content = request.form.to_dict()
+    content = request.get_json()
     id, msg, result = departmentService.update_department(departmentId, content["name"])
     if result:
         return jsonify({

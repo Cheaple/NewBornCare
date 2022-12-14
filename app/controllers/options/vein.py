@@ -35,7 +35,7 @@ def add_vein():
     '''
     添加科室
     '''
-    content = request.form.to_dict()
+    content = request.get_json()
     id, msg, result = veinService.add_vein(content["name"])
     if result:
         return jsonify({
@@ -52,7 +52,7 @@ def update_vein(veinId):
     '''
     更新科室
     '''
-    content = request.form.to_dict()
+    content = request.get_json()
     id, msg, result = veinService.update_vein(veinId, content["name"])
     if result:
         return jsonify({

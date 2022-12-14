@@ -110,11 +110,12 @@ class PatientService():
 
     def add_patient(self, content):
         try:
-            patient = Patient.query.filter(
-                Patient.username == content['username']
-            ).first()
-            if patient is not None:
-                return 0, "username already exists", False
+            if 'username' in content:
+                patient = Patient.query.filter(
+                    Patient.username == content['username']
+                ).first()
+                if patient is not None:
+                    return 0, "username already exists", False
 
             patient = Patient(
                 name=content['name'],
@@ -131,9 +132,13 @@ class PatientService():
                 room=content['room'],
                 bed=content['bed'],
                 allergy=content['allergy'],
-                username=content['username'],
-                password=encipher(str(content['password']))
             )
+
+            if 'username' in content:
+                patient.username = str(content['username'])
+            if 'password' in content:
+                patient.password = encipher(str(content['password']))
+                
             db.session.add(patient)
             db.session.commit()
             return patient.id, "ok add patient", True
@@ -181,10 +186,10 @@ class PatientService():
             if 'allergy' in content:
                 patient.allergy = content['allergy']
             
-            # if 'username' in content:
-                # patient.username = str(content['username'])
-            # if 'password' in content:
-                # patient.password = encipher(str(content['password']))
+            if 'username' in content:
+                patient.username = str(content['username'])
+            if 'password' in content:
+                patient.password = encipher(str(content['password']))
 
             db.session.commit()
             return patient.id, "ok update patient", True

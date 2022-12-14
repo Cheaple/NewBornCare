@@ -35,7 +35,7 @@ def add_tool():
     '''
     添加科室
     '''
-    content = request.form.to_dict()
+    content = request.get_json()
     id, msg, result = toolService.add_tool(content["name"])
     if result:
         return jsonify({
@@ -52,7 +52,7 @@ def update_tool(toolId):
     '''
     更新科室
     '''
-    content = request.form.to_dict()
+    content = request.get_json()
     id, msg, result = toolService.update_tool(toolId, content["name"])
     if result:
         return jsonify({

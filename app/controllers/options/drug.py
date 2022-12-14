@@ -35,7 +35,7 @@ def add_drug():
     '''
     添加科室
     '''
-    content = request.form.to_dict()
+    content = request.get_json()
     id, msg, result = drugService.add_drug(content["name"])
     if result:
         return jsonify({
@@ -52,7 +52,7 @@ def update_drug(drugId):
     '''
     更新科室
     '''
-    content = request.form.to_dict()
+    content = request.get_json()
     id, msg, result = drugService.update_drug(drugId, content["name"])
     if result:
         return jsonify({

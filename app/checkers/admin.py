@@ -12,7 +12,7 @@ def admin_add_params_check(content):
         return "username", False
 
     if "password" not in content or re.search(
-        r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)"
+        r"^(?=.*[a-zA-Z])(?=.*\d)"
             r"[A-Za-z\d\`\~\!\@\#\$\%\^\&\*\(\)\_\-\+\=\[\]\{\}\\\|\;\:\'\"\,\.\/\<\>\?]{8,15}$",
         content["password"]) is None:
         # ⻓度8-15的字符串，由⼤写、⼩写字⺟、数字和标点符号组成且必须包含前三种类型

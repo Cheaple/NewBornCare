@@ -35,5 +35,5 @@ class Patient(db.Model):
     allergy = db.Column(db.String, doc='过敏信息')
 
     # 账号密码，用于监护人登录
-    username = db.Column(db.String(20), unique=True, doc='用户名')
-    password = db.Column(db.String(20), doc='密码')
+    username = db.Column(db.String(20), nullable=True, unique=True, doc='用户名')
+    password = db.Column(db.String(20), nullable=True, doc='密码')
