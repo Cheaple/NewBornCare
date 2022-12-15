@@ -65,7 +65,7 @@ definitions:
               description: 开始时间
             status:
               type: integer
-              description: 该药品的输液状态（-1：已中止；0：已完成；1：进行中）
+              description: 该药品的输液状态（-1：已中止；0：已完成；1：进行中；2：未开始）
 responses:
   200:
     schema:
