@@ -1,6 +1,7 @@
 import os
 
 from flask import Flask
+from flask_cors import CORS
 
 from app.configs import configs
 from app.controllers import blueprints
@@ -14,6 +15,7 @@ def create_app(config_name=None):
         config_name = os.getenv('TYPE', 'default')
     
     app = Flask(__name__)
+    CORS(app, supports_credentials=True)
     app.config.from_object(configs[config_name])
     app.before_request(jwt_authentication)
 
