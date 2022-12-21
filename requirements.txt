@@ -1,4 +1,4 @@
-coverage
+coverage==6.4.4
 flasgger==0.9.5
 flask==1.1.4
 flask_migrate==2.5.3
@@ -11,3 +11,4 @@ markupsafe==2.0.1
 pyjwt==1.7.1
 pytest==7.1.2
 scrypt==0.8.18
+flask_cors

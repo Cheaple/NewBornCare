@@ -1,0 +1,37 @@
+.u-popup-slot {
+  width: 100vw;
+  flex: auto;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.tips {
+  width: 100%;
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #333333;
+  margin-top: 25rpx;
+  align-items: center;
+  text-align: center;
+}
+
+.form {
+  max-width: 263px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 52rpx;
+  margin-bottom: 52rpx;
+  background-color: #ffffff;
+  font-size: 26rpx;
+  padding: 10rpx;
+  justify-content: center;
+  align-items: center
+}
+
+.confirm-button {
+  max-width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+}

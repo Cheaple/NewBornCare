@@ -28,7 +28,7 @@ services:
       "gunicorn -w4 -b 0.0.0.0:5000  manage:app"
     volumes:
       - .:/code
-      - static-volume:/code/app/static
+      - static-volume:/code/app/templates/static
       - templates-volume:/code/app/templates
     expose:
       - 5000
