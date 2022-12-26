@@ -23,20 +23,23 @@ class PatientService():
                 Patient.outDate,
                 Patient.department,
                 Patient.room,
-                Patient.bed
+                Patient.bed,
+                Patient.ifExist
             ).filter(and_(
                     Patient.username == username,
                     Patient.password == encipher(password))).first()
-            if result is None:
+            if result is None or result.ifExist is False:
                 return None, "patient not found or wrong password", False
-            return dict(zip(result.keys(), result)), "ok get patient", True
+            patient = dict(zip(result.keys(), result))
+            del patient["ifExist"]
+            return patient, "ok get patient", True
         except Exception as e:
             print(e)
             return None, "errors", False
 
     def get_patient_list(self, department=0):
         try:
-            where_clause = "WHERE status <> 0 "
+            where_clause = "WHERE ifExist IS TRUE AND status <> 0 "
             if department != 0:
                 where_clause += ("AND department = " + str(department))
 
@@ -99,11 +102,14 @@ class PatientService():
                 Patient.department,
                 Patient.room,
                 Patient.bed,
-                Patient.allergy
+                Patient.allergy,
+                Patient.ifExist
             ).filter(Patient.id == id).first()
-            if result is None:
+            if result is None or result.ifExist is False:
                 return None, "patient not found", False
-            return dict(zip(result.keys(), result)), "ok get patient", True
+            patient = dict(zip(result.keys(), result))
+            del patient["ifExist"]
+            return patient, "ok get patient", True
         except Exception as e:
             print(e)
             return None, "error", False

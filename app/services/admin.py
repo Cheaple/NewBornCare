@@ -12,8 +12,8 @@ class AdminService():
                 and_(
                     Admin.username == username,
                     Admin.password == encipher(password))).first()
-            if admin is None:
-                return None, "Administrator not found", False
+            if admin is None or admin.ifExist is False:
+                return None, "Administrator not found or wrong password", False
             return admin, "ok get admin", True
         except Exception as e:
             print(e)
@@ -26,7 +26,6 @@ class AdminService():
             ).first()
             if admin is not None:
                 return 0, "username already exists", False
-
             admin = Admin(
                 username=str(content['username']),
                 password=encipher(str(content['password'])),
@@ -45,7 +44,7 @@ class AdminService():
         try:
             admin = Admin.query.get(id)
             if admin is None:
-                return 0, "admin not found", False
+                return 0, "Administrator not found", False
 
             if 'username' in content:
                 admin.username = str(content['username'])

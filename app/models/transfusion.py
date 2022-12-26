@@ -1,5 +1,7 @@
 from app.extensions import db
 
+from sqlalchemy import text
+
 
 class Transfusion(db.Model):
     '''
@@ -20,6 +22,8 @@ class Transfusion(db.Model):
 
     # 0: 已完成  -1: 中止  n: 正进行到阶段 n (n > 1)
     status = db.Column(db.Integer, nullable=False,doc='输液状态')
+
+    ifExist = db.Column(db.Boolean, nullable=False, server_default=text('True'), doc='记录是否存在')
 
 class TransfusionDrug(db.Model):
     '''

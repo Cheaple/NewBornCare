@@ -13,7 +13,7 @@ class NurseService():
                 and_(
                     Nurse.username == username,
                     Nurse.password == encipher(password))).first()
-            if nurse is None:
+            if nurse is None or nurse.ifExist is False:
                 return None, "nurse not found or wrong password", False
             return nurse, "ok get nurse", True
         except Exception as e:
@@ -22,7 +22,7 @@ class NurseService():
 
     def get_nurse_list(self, department=0):
         try:
-            where_clause = "WHERE status <> 0 "
+            where_clause = "WHERE ifExist IS TRUE AND status <> 0 "
             if department != 0:
                 where_clause += ("AND department = " + str(department))
 
@@ -73,7 +73,7 @@ class NurseService():
                 Nurse.department,
                 Nurse.status,
             ).filter(Nurse.id == id).first()
-            if result is None:
+            if result is None or result.ifExist is False:
                 return None, "nurse not found", False
             return dict(zip(result.keys(), result)), "ok get nurse", True
         except Exception as e:

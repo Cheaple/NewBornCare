@@ -115,3 +115,33 @@ def update_admin(adminId):
             return jsonify({'message': msg}), 500
     except KeyError:
         return jsonify({'message': "bad arguments"}), 400
+
+@bp.route('/api/admin/delete/<int:adminId>', methods=['PATCH'])
+@swag_from('admin/delete-admin.yml')
+@login_required(["admin"])
+def delete_admin(adminId):
+    '''
+    修改管理员
+    '''
+    try:
+        content = request.get_json()
+        # print(content)
+        if content is None:
+            return jsonify({'message': "bad arguments"}), 400
+
+        # 检查参数
+        key, passed = admin_update_params_check(content)
+        if not passed:
+            return jsonify({'message': "invalid arguments: " + key}), 400
+
+        id, msg, result = service.update_admin(adminId, content)
+
+        if result:
+            return jsonify({
+                'id': id,
+                'message': msg
+            }), 200
+        else:
+            return jsonify({'message': msg}), 500
+    except KeyError:
+        return jsonify({'message': "bad arguments"}), 400

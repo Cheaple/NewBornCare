@@ -1,5 +1,6 @@
 from app.extensions import db
 
+from sqlalchemy import text
 
 class Patient(db.Model):
     '''
@@ -37,3 +38,5 @@ class Patient(db.Model):
     # 账号密码，用于监护人登录
     username = db.Column(db.String(20), nullable=True, unique=True, doc='用户名')
     password = db.Column(db.String(20), nullable=True, doc='密码')
+
+    ifExist = db.Column(db.Boolean, nullable=False, server_default=text('True'), doc='记录是否存在')

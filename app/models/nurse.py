@@ -1,5 +1,6 @@
 from app.extensions import db
 
+from sqlalchemy import text
 
 class Nurse(db.Model):
     '''
@@ -16,3 +17,5 @@ class Nurse(db.Model):
 
     # 0: 离职  1: 在职  ...
     status = db.Column(db.Integer, nullable=False, doc='工作状态')
+
+    ifExist = db.Column(db.Boolean, nullable=False, server_default=text('True'), doc='记录是否存在')

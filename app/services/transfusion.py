@@ -7,7 +7,7 @@ from app.utils import toTimestamp
 class TransfusionService():
     def get_transfusion_list(self, patientId):
         try:
-            where_clause = "WHERE patientId = " + str(patientId)
+            where_clause = "WHERE ifExist IS TRUE AND patientId = " + str(patientId)
 
             # TODO: list是否应该返回所有信息？
             content_base = '''
@@ -65,7 +65,7 @@ class TransfusionService():
                 Transfusion.tool,
                 Transfusion.info,
             ).filter(Transfusion.id == id).first()
-            if result is None:
+            if result is None or result.ifExist is False:
                 return "transfusion not found", False
 
             drugs = db.session.query(
