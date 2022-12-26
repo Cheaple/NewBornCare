@@ -57,10 +57,13 @@ class CheckService():
                 Check.transfusionId,
                 Check.time,
                 Check.info,
+                Check.ifExist
             ).filter(Check.id == id).first()
             if result is None or result.ifExist is False:
                 return None, "check not found", False
-            return dict(zip(result.keys(), result)), "ok get check", True
+            check = dict(zip(result.keys(), result))
+            del check["ifExist"]
+            return check, "ok get check", True
         except Exception as e:
             print(e)
             return None, "error", False
@@ -95,6 +98,20 @@ class CheckService():
 
             db.session.commit()
             return check.id, "ok update check", True
+        except Exception as e:
+            print(e)
+            return 0, "error", False
+
+    def delete_check(self, id):
+        try:
+            check = Check.query.get(id)
+            if check is None:
+                return 0, "Administrator not found", False
+
+            check.ifExist = False
+
+            db.session.commit()
+            return check.id, "ok delete check", True
         except Exception as e:
             print(e)
             return 0, "error", False

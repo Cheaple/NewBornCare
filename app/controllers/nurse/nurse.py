@@ -150,3 +150,23 @@ def update_nurse(nurseId):
             return jsonify({'message': msg}), 500
     except KeyError:
         return jsonify({'message': "bad arguments"}), 400
+
+@bp.route('/api/nurse/delete/<int:nurseId>', methods=['PATCH'])
+@swag_from('nurse/delete-nurse.yml')
+@login_required(["admin"])
+def delete_nurse(nurseId):
+    '''
+    删除护士
+    '''
+    try:
+        id, msg, result = service.delete_nurse(nurseId)
+
+        if result:
+            return jsonify({
+                'id': id,
+                'message': msg
+            }), 200
+        else:
+            return jsonify({'message': msg}), 500
+    except KeyError:
+        return jsonify({'message': "bad arguments"}), 400

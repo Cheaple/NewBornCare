@@ -202,3 +202,17 @@ class PatientService():
         except Exception as e:
             print(e)
             return 0, "error", False
+
+    def delete_patient(self, id):
+        try:
+            patient = Patient.query.get(id)
+            if patient is None:
+                return 0, "Administrator not found", False
+
+            patient.ifExist = False
+
+            db.session.commit()
+            return patient.id, "ok delete patient", True
+        except Exception as e:
+            print(e)
+            return 0, "error", False

@@ -109,3 +109,24 @@ def update_check(checkId):
             return jsonify({'message': msg}), 500
     except KeyError:
         return jsonify({'message': "bad arguments"}), 400
+
+
+@bp.route('/api/check/delete/<int:checkId>', methods=['PATCH'])
+@swag_from('check/delete-check.yml')
+@login_required(["admin"])
+def delete_check(checkId):
+    '''
+    删除巡视记录
+    '''
+    try:
+        id, msg, result = service.delete_check(checkId)
+
+        if result:
+            return jsonify({
+                'id': id,
+                'message': msg
+            }), 200
+        else:
+            return jsonify({'message': msg}), 500
+    except KeyError:
+        return jsonify({'message': "bad arguments"}), 400

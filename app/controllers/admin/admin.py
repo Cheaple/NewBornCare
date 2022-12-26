@@ -121,20 +121,10 @@ def update_admin(adminId):
 @login_required(["admin"])
 def delete_admin(adminId):
     '''
-    修改管理员
+    删除管理员
     '''
     try:
-        content = request.get_json()
-        # print(content)
-        if content is None:
-            return jsonify({'message': "bad arguments"}), 400
-
-        # 检查参数
-        key, passed = admin_update_params_check(content)
-        if not passed:
-            return jsonify({'message': "invalid arguments: " + key}), 400
-
-        id, msg, result = service.update_admin(adminId, content)
+        id, msg, result = service.delete_admin(adminId)
 
         if result:
             return jsonify({

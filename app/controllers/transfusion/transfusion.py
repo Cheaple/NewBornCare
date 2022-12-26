@@ -176,3 +176,23 @@ def update_transfusion_finish(transfusionId):
         }), 200
     else:
         return jsonify({'message': msg}), 500
+
+@bp.route('/api/transfusion/delete/<int:transfusionId>', methods=['PATCH'])
+@swag_from('transfusion/delete-transfusion.yml')
+@login_required(["admin"])
+def delete_transfusion(transfusionId):
+    '''
+    删除输液记录
+    '''
+    try:
+        id, msg, result = service.delete_transfusion(transfusionId)
+
+        if result:
+            return jsonify({
+                'id': id,
+                'message': msg
+            }), 200
+        else:
+            return jsonify({'message': msg}), 500
+    except KeyError:
+        return jsonify({'message': "bad arguments"}), 400

@@ -72,10 +72,13 @@ class NurseService():
                 Nurse.tel,
                 Nurse.department,
                 Nurse.status,
+                Nurse.ifExist
             ).filter(Nurse.id == id).first()
             if result is None or result.ifExist is False:
                 return None, "nurse not found", False
-            return dict(zip(result.keys(), result)), "ok get nurse", True
+            nurse = dict(zip(result.keys(), result))
+            del nurse["ifExist"]
+            return nurse, "ok get nurse", True
         except Exception as e:
             print(e)
             return None, "error", False
@@ -127,6 +130,20 @@ class NurseService():
 
             db.session.commit()
             return nurse.id, "ok update nurse", True
+        except Exception as e:
+            print(e)
+            return 0, "error", False
+
+    def delete_nurse(self, id):
+        try:
+            nurse = Nurse.query.get(id)
+            if nurse is None:
+                return 0, "Administrator not found", False
+
+            nurse.ifExist = False
+
+            db.session.commit()
+            return nurse.id, "ok delete nurse", True
         except Exception as e:
             print(e)
             return 0, "error", False

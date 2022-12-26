@@ -64,9 +64,10 @@ class TransfusionService():
                 Transfusion.vein,
                 Transfusion.tool,
                 Transfusion.info,
+                Transfusion.ifExist
             ).filter(Transfusion.id == id).first()
             if result is None or result.ifExist is False:
-                return "transfusion not found", False
+                return None, "transfusion not found", False
 
             drugs = db.session.query(
                 TransfusionDrug.id,
@@ -79,6 +80,7 @@ class TransfusionService():
             ).filter(TransfusionDrug.transfusionId == id).all()
 
             transfusion = dict(zip(result.keys(), result))
+            del transfusion["ifExist"]
             transfusion["drug"] = [dict(zip(row.keys(), row)) for row in drugs]
             return transfusion, "ok get transfusion", True
         except Exception as e:
@@ -207,6 +209,20 @@ class TransfusionService():
             
             db.session.commit()
             return transfusion.id, msg, True
+        except Exception as e:
+            print(e)
+            return 0, "error", False
+
+    def delete_transfusion(self, id):
+        try:
+            transfusion = Transfusion.query.get(id)
+            if transfusion is None:
+                return 0, "Administrator not found", False
+
+            transfusion.ifExist = False
+
+            db.session.commit()
+            return transfusion.id, "ok delete transfusion", True
         except Exception as e:
             print(e)
             return 0, "error", False

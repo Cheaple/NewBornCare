@@ -142,3 +142,23 @@ def update_patient(patientId):
             return jsonify({'message': msg}), 500
     except KeyError:
         return jsonify({'message': "bad arguments"}), 400
+
+@bp.route('/api/patient/delete/<int:patientId>', methods=['PATCH'])
+@swag_from('patient/delete-patient.yml')
+@login_required(["admin"])
+def delete_patient(patientId):
+    '''
+    删除患者
+    '''
+    try:
+        id, msg, result = service.delete_patient(patientId)
+
+        if result:
+            return jsonify({
+                'id': id,
+                'message': msg
+            }), 200
+        else:
+            return jsonify({'message': msg}), 500
+    except KeyError:
+        return jsonify({'message': "bad arguments"}), 400
