@@ -1,0 +1,17 @@
+parameters:
+  - name: nurseId
+    in: path
+    type: integer
+    required: true
+definitions:
+  NurseDelete:
+    type: object
+    properties:
+      message:
+        type: string
+      id:
+        type: integer
+responses:
+  200:
+    schema:
+      $ref: '#/definitions/NurseDelete'

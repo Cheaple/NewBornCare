@@ -1,0 +1,17 @@
+parameters:
+  - name: checkId
+    in: path
+    type: integer
+    required: true
+definitions:
+  CheckDelete:
+    type: object
+    properties:
+      message:
+        type: string
+      id:
+        type: integer
+responses:
+  200:
+    schema:
+      $ref: '#/definitions/CheckDelete'
