@@ -2,13 +2,14 @@
 import coverage
 import os
 from datetime import datetime
+import pandas as pd
 
 import unittest
 
 from flask_script import Manager, Server
 # from flask_migrate import Migrate, MigrateCommand
 
-from app import create_app, db
+from app import create_app, db, meta
 from app.utils import config
 from app.init_db import init_test_data, init_options
 
@@ -52,6 +53,21 @@ def init_db():
     db.create_all()
     init_options()
     init_test_data()
+
+@manager.command
+def export_metadata():
+    writer = pd.ExcelWriter('data\\metadata.xlsx')
+    for t in meta.sorted_tables:
+        columns = []
+        for c in t.columns:
+            columns.append([c.name, c.doc, c.type, c.nullable, c.primary_key])
+        df = pd.DataFrame(columns)
+        df.columns = ["列名", "描述", "类型", "空值", "主键"]
+        df["空值"] = df["空值"].map({False: "No", True: "Yes"})
+        df["主键"] = df["主键"].map({False: "No", True: "Yes"})
+        df.to_excel(writer, sheet_name=t.name)
+    writer.save()
+
 
     
 if __name__ == '__main__':

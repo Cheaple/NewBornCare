@@ -5,7 +5,7 @@ from flask_cors import CORS
 
 from app.configs import configs
 from app.controllers import blueprints
-from app.extensions import db, swagger
+from app.extensions import db, swagger, meta
 from app.utils.middleware import jwt_authentication
 
 

@@ -7,7 +7,7 @@ class Patient(db.Model):
     Patient
     '''
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True, doc="患者编号")
 
     # 基本信息
     name = db.Column(db.String(20), nullable=False, doc='姓名')
@@ -22,15 +22,15 @@ class Patient(db.Model):
         db.Integer,
         nullable=False,
         doc='监护人与患者关系')  # 1: 父子; 2: 母子
-    tel = db.Column(db.Integer, nullable=False, doc='监护人联系方式')
+    tel = db.Column(db.Integer, nullable=False, doc='监护人手机号')
 
     # 住院信息
     status = db.Column(db.Integer, nullable=False, doc='住院状态')  # 0: 已出院  1: 正在住院
     inDate = db.Column(db.Integer, nullable=False, doc='入院日期')
     outDate = db.Column(db.Integer, doc='出院日期')
-    department = db.Column(db.Integer, nullable=False, doc='科室（通常是儿科）')
+    department = db.Column(db.Integer, nullable=False, doc='科室编号')
     room = db.Column(db.Integer, doc='病房号')
-    bed = db.Column(db.Integer, doc='床号')
+    bed = db.Column(db.Integer, doc='病床号')
 
     # 病患信息
     allergy = db.Column(db.String, doc='过敏信息')
