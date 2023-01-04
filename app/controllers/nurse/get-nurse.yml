@@ -2,6 +2,7 @@ parameters:
   - name: nurseId
     in: path
     type: integer
+    example: 3
     required: true
 
 definitions:
@@ -10,16 +11,22 @@ definitions:
     properties:
       id:
         type: integer
+        example: 10
       name:
         type: string
+        example: 陈护士
       gender:
         type: integer
+        example: 1
       tel:
         type: integer
+        example: 19900001111
       department:
         type: integer
+        example: 3
       status:
         type: integer
+        example: 0
 
 responses:
   200:

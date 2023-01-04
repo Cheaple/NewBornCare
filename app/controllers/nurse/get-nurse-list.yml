@@ -2,6 +2,7 @@ parameters:
   - name: department
     in: query
     type: integer
+    example: 10
     required: false
 
 definitions:
@@ -10,23 +11,11 @@ definitions:
     properties:
       count:
         type: integer
+        example: 1
       nurse:
         type: array
         items:
-          type: object
-          properties:
-            id:
-              type: integer
-            name:
-              type: string
-            gender:
-              type: integer
-            tel:
-              type: integer
-            department:
-              type: integer
-            status:
-              type: integer
+          $ref: '#/definitions/Nurse'
           
 responses:
   200:

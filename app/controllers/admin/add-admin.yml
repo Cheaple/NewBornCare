@@ -2,22 +2,22 @@ parameters:
   - name: username
     in: body
     type: string
+    example: admin001
     required: true
   - name: password
     in: body
     type: string
+    example: admin001
     required: true
   - name: name
     in: body
     type: string
+    example: 陈护士
     required: true
   - name: department
     in: body
     type: integer
-    required: false
-  - name: status
-    in: body
-    type: integer
+    example: 3
     required: false
 definitions:
   AdminAdd:
@@ -25,8 +25,10 @@ definitions:
     properties:
       message:
         type: string
+        example: "ok"
       id:
         type: integer
+        example: 10
 responses:
   200:
     schema:

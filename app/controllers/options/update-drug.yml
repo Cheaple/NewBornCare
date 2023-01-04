@@ -2,10 +2,12 @@ parameters:
   - name: drugId
     in: path
     type: integer
+    example: 5
     required: true
   - name: name
     in: body
     type: string
+    example: 头孢曲松
     required: true
 
 definitions:
@@ -14,8 +16,10 @@ definitions:
     properties:
       message:
         type: string
+        example: ok
       id:
         type: integer
+        example: 5
 responses:
   200:
     schema:

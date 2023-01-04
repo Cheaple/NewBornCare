@@ -3,41 +3,13 @@ definitions:
     type: object
     properties:
       department:
-        type: array
-        items:
-          type: object
-          properties:
-            id:
-              type: integer
-            name:
-              type: string
+        $ref: '#/definitions/DepartmentList'
       vein:
-        type: array
-        items:
-          type: object
-          properties:
-            id:
-              type: integer
-            name:
-              type: string
+        $ref: '#/definitions/VeinList'
       tool:
-        type: array
-        items:
-          type: object
-          properties:
-            id:
-              type: integer
-            name:
-              type: string
+        $ref: '#/definitions/ToolList'
       drug:
-        type: array
-        items:
-          type: object
-          properties:
-            id:
-              type: integer
-            name:
-              type: string
+        $ref: '#/definitions/DrugList'
           
 responses:
   200:

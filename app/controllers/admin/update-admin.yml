@@ -2,27 +2,33 @@ parameters:
   - name: adminId
     in: path
     type: integer
+    example: 10
     required: true
 
   - name: username
     in: body
     type: string
+    example: admin002
     required: false
   - name: password
     in: body
     type: string
+    example: admin002
     required: false
   - name: name
     in: body
     type: string
+    example: 王护士
     required: false
   - name: department
     in: body
     type: integer
+    example: 5
     required: false
   - name: status
     in: body
     type: integer
+    example: 1
     required: false
 definitions:
   AdminUpdate:
@@ -30,8 +36,10 @@ definitions:
     properties:
       message:
         type: string
+        example: "ok"
       id:
         type: integer
+        example: 10
 responses:
   200:
     schema:

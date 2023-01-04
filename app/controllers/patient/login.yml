@@ -13,6 +13,7 @@ definitions:
     properties:
       jwt:
         type: string
+        example: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2Njc3NDMzOTYsInVzZXIiOiJhZG1pbiIsImlkIjoxfQ.9t7Cz730T8KHZtLGcLSNYSi8OYoRalWDKARGHiOdNM4"
       id:
         type: integer
       name:

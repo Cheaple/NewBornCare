@@ -2,6 +2,7 @@ parameters:
   - name: adminId
     in: path
     type: integer
+    example: 10
     required: true
 definitions:
   AdminDelete:
@@ -9,8 +10,10 @@ definitions:
     properties:
       message:
         type: string
+        example: "ok"
       id:
         type: integer
+        example: 10
 responses:
   200:
     schema:

@@ -2,6 +2,7 @@ parameters:
   - name: name
     in: body
     type: string
+    example: 儿科综合
     required: true
   
 definitions:
@@ -10,8 +11,10 @@ definitions:
     properties:
       message:
         type: string
+        example: ok
       id:
         type: integer
+        example: 5
 responses:
   200:
     schema:

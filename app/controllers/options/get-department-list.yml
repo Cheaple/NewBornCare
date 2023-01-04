@@ -6,8 +6,10 @@ definitions:
       properties:
         id:
           type: integer
+          example: 1
         name:
-          type: string        
+          type: string       
+          example: 儿科综合
 responses:
   200:
     schema:

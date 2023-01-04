@@ -2,10 +2,12 @@ parameters:
   - name: username
     in: body
     type: string
+    example: nurse001
     required: true
   - name: password
     in: body
     type: string
+    example: nurse001
     required: true
 definitions:
   NurseLogin:
@@ -13,27 +15,26 @@ definitions:
     properties:
       jwt:
         type: string
+        example: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2Njc3NDMzOTYsInVzZXIiOiJhZG1pbiIsImlkIjoxfQ.9t7Cz730T8KHZtLGcLSNYSi8OYoRalWDKARGHiOdNM4"
       id:
         type: integer
+        example: 10
       username:
         type: string
+        example: nurse001
       name:
         type: string
+        example: 陈护士
       gender:
         type: integer
+        example: 1
       tel:
         type: integer
+        example: 19900001111
       department:
         type: integer
+        example: 3
 responses:
   200:
     schema:
       $ref: '#/definitions/NurseLogin'
-    examples:
-      jwt: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2Njc3NDMzOTYsInVzZXIiOiJhZG1pbiIsImlkIjoxfQ.9t7Cz730T8KHZtLGcLSNYSi8OYoRalWDKARGHiOdNM4"
-      id: 1
-      username: 'nurse'
-      name: '测试护士'
-      gender: 1
-      tel: 19912345678
-      department: 1

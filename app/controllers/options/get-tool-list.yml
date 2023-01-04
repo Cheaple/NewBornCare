@@ -6,8 +6,10 @@ definitions:
       properties:
         id:
           type: integer
+          example: 1
         name:
-          type: string        
+          type: string
+          example: 静脉留置针    
 responses:
   200:
     schema:
