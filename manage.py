@@ -2,7 +2,7 @@
 import coverage
 import os
 from datetime import datetime
-import pandas as pd
+# import pandas as pd
 
 import unittest
 
@@ -54,20 +54,20 @@ def init_db():
     init_options()
     init_test_data()
 
-@manager.command
-def export_metadata():
-    writer = pd.ExcelWriter('data\\metadata.xlsx')
-    for t in meta.sorted_tables:
-        columns = []
-        for c in t.columns:
-            # print([c.name, c.doc, c.type, c.nullable, c.primary_key, [k.target_fullname for k in c.foreign_keys]])
-            columns.append([c.name, c.doc, c.type, c.nullable, c.primary_key])
-        df = pd.DataFrame(columns)
-        df.columns = ["列名", "描述", "类型", "空值", "主键"]
-        df["空值"] = df["空值"].map({False: "No", True: "Yes"})
-        df["主键"] = df["主键"].map({False: "No", True: "Yes"})
-        df.to_excel(writer, sheet_name=t.name)
-    writer.save()
+# @manager.command
+# def export_metadata():
+#     writer = pd.ExcelWriter('data\\metadata.xlsx')
+#     for t in meta.sorted_tables:
+#         columns = []
+#         for c in t.columns:
+#             # print([c.name, c.doc, c.type, c.nullable, c.primary_key, [k.target_fullname for k in c.foreign_keys]])
+#             columns.append([c.name, c.doc, c.type, c.nullable, c.primary_key])
+#         df = pd.DataFrame(columns)
+#         df.columns = ["列名", "描述", "类型", "空值", "主键"]
+#         df["空值"] = df["空值"].map({False: "No", True: "Yes"})
+#         df["主键"] = df["主键"].map({False: "No", True: "Yes"})
+#         df.to_excel(writer, sheet_name=t.name)
+#     writer.save()
 
 
     
