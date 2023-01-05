@@ -60,6 +60,7 @@ def export_metadata():
     for t in meta.sorted_tables:
         columns = []
         for c in t.columns:
+            # print([c.name, c.doc, c.type, c.nullable, c.primary_key, [k.target_fullname for k in c.foreign_keys]])
             columns.append([c.name, c.doc, c.type, c.nullable, c.primary_key])
         df = pd.DataFrame(columns)
         df.columns = ["列名", "描述", "类型", "空值", "主键"]
