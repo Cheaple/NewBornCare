@@ -11,7 +11,7 @@ from flask_script import Manager, Server
 
 from app import create_app, db, meta
 from app.utils import config
-from app.init_db import init_test_data, init_options
+from app.init_db import init_data, init_test_data, init_prod_data, init_options
 
 COV=coverage.coverage(branch=True,include='app/*')
 COV.start()
@@ -46,13 +46,22 @@ def test(filter=None):
     print('HTML version: file://%s/index.html' % covdir)
 
 @manager.command
+def init_test_db():
+    """Init Database for Testing"""
+    # recreate the database and the db table
+    db.drop_all()
+    db.create_all()
+    init_options()
+    init_test_data()
+
+@manager.command
 def init_db():
     """Init Database"""
     # recreate the database and the db table
     db.drop_all()
     db.create_all()
     init_options()
-    init_test_data()
+    init_data()
 
 # @manager.command
 # def export_metadata():
