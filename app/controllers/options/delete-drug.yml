@@ -1,0 +1,17 @@
+parameters:
+  - name: drugId
+    in: path
+    type: integer
+    required: true
+definitions:
+  Delete:
+    type: object
+    properties:
+      message:
+        type: string
+      id:
+        type: integer
+responses:
+  200:
+    schema:
+      $ref: '#/definitions/Delete'

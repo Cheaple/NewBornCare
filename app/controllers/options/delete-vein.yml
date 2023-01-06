@@ -1,0 +1,9 @@
+parameters:
+  - name: veinId
+    in: path
+    type: integer
+    required: true
+responses:
+  200:
+    schema:
+      $ref: '#/definitions/Delete'

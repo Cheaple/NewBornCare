@@ -9,7 +9,7 @@ class DepartmentService():
             content_result = db.session.query(
                 Department.id,
                 Department.name,
-            ).all()
+            ).filter(Department.ifExist == True).all()
             department_list = [dict(zip(result.keys(), result))
                                for result in content_result]
             return department_list, "ok", True
@@ -34,6 +34,20 @@ class DepartmentService():
                 department.name = name
             db.session.commit()
             return department.id, "ok", True
+        except Exception as e:
+            print(e)
+            return 0, "error", False
+
+    def delete_department(self, id):
+        try:
+            department = Department.query.get(id)
+            if department is None:
+                return 0, "Department not found", False
+
+            department.ifExist = False
+
+            db.session.commit()
+            return department.id, "ok delete department", True
         except Exception as e:
             print(e)
             return 0, "error", False

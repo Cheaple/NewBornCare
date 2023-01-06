@@ -9,7 +9,7 @@ class VeinService():
             content_result = db.session.query(
                 Vein.id,
                 Vein.name,
-            ).all()
+            ).filter(Vein.ifExist == True).all()
             vein_list = [dict(zip(result.keys(), result))
                          for result in content_result]
             return vein_list, "ok", True
@@ -34,6 +34,20 @@ class VeinService():
                 vein.name = name
             db.session.commit()
             return vein.id, "ok", True
+        except Exception as e:
+            print(e)
+            return 0, "error", False
+
+    def delete_vein(self, id):
+        try:
+            vein = Vein.query.get(id)
+            if vein is None:
+                return 0, "Vein not found", False
+
+            vein.ifExist = False
+
+            db.session.commit()
+            return vein.id, "ok delete vein", True
         except Exception as e:
             print(e)
             return 0, "error", False

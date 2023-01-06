@@ -62,3 +62,24 @@ def update_tool(toolId):
         }), 200
     else:
         return jsonify({'message': msg}), 500
+
+
+@bp.route('/api/list/tool/delete/<int:toolId>', methods=['PATCH'])
+@swag_from('options/delete-tool.yml')
+@login_required(["admin"])
+def delete_tool(toolId):
+    '''
+    删除科室
+    '''
+    try:
+        id, msg, result = toolService.delete_tool(toolId)
+
+        if result:
+            return jsonify({
+                'id': id,
+                'message': msg
+            }), 200
+        else:
+            return jsonify({'message': msg}), 500
+    except KeyError:
+        return jsonify({'message': "bad arguments"}), 400

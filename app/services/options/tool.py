@@ -9,7 +9,7 @@ class ToolService():
             content_result = db.session.query(
                 Tool.id,
                 Tool.name,
-            ).all()
+            ).filter(Tool.ifExist == True).all()
             tool_list = [dict(zip(result.keys(), result))
                          for result in content_result]
             return tool_list, "ok", True
@@ -34,6 +34,20 @@ class ToolService():
                 tool.name = name
             db.session.commit()
             return tool.id, "ok", True
+        except Exception as e:
+            print(e)
+            return 0, "error", False
+
+    def delete_tool(self, id):
+        try:
+            tool = Tool.query.get(id)
+            if tool is None:
+                return 0, "Tool not found", False
+
+            tool.ifExist = False
+
+            db.session.commit()
+            return tool.id, "ok delete tool", True
         except Exception as e:
             print(e)
             return 0, "error", False

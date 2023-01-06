@@ -9,7 +9,7 @@ class DrugService():
             content_result = db.session.query(
                 Drug.id,
                 Drug.name,
-            ).all()
+            ).filter(Drug.ifExist == True).all()
             drug_list = [dict(zip(result.keys(), result))
                          for result in content_result]
             return drug_list, "ok", True
@@ -44,6 +44,20 @@ class DrugService():
                 drug.name = name
             db.session.commit()
             return drug.id, "ok", True
+        except Exception as e:
+            print(e)
+            return 0, "error", False
+
+    def delete_drug(self, id):
+        try:
+            drug = Drug.query.get(id)
+            if drug is None:
+                return 0, "Drug not found", False
+
+            drug.ifExist = False
+
+            db.session.commit()
+            return drug.id, "ok delete drug", True
         except Exception as e:
             print(e)
             return 0, "error", False

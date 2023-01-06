@@ -62,3 +62,23 @@ def update_drug(drugId):
         }), 200
     else:
         return jsonify({'message': msg}), 500
+
+@bp.route('/api/list/drug/delete/<int:drugId>', methods=['PATCH'])
+@swag_from('options/delete-drug.yml')
+@login_required(["admin"])
+def delete_drug(drugId):
+    '''
+    删除科室
+    '''
+    try:
+        id, msg, result = drugService.delete_drug(drugId)
+
+        if result:
+            return jsonify({
+                'id': id,
+                'message': msg
+            }), 200
+        else:
+            return jsonify({'message': msg}), 500
+    except KeyError:
+        return jsonify({'message': "bad arguments"}), 400
