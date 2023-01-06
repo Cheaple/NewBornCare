@@ -5,8 +5,8 @@ import unittest
 import coverage
 from flask_script import Manager, Server
 
-from app import create_app, db, meta
-from app.init_db import init_data, init_options, init_prod_data, init_test_data
+from app import create_app, db
+from app.init_db import init_data, init_options, init_test_data
 from app.utils import config
 
 # import pandas as pd

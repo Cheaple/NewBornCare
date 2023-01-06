@@ -1,4 +1,4 @@
-from flask import current_app, g, request
+from flask import g, request
 
 from .jwt import verify
 

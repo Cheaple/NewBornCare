@@ -7,7 +7,6 @@ from app.checkers import (transfusion_add_params_check,
                           transfusion_update_params_check)
 from app.controllers.access_control import login_required
 from app.services import TransfusionService
-from app.utils import toTimestamp
 
 bp = Blueprint(
     'transfusion',

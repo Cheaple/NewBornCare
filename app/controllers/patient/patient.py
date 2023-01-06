@@ -5,7 +5,7 @@ from flask import Blueprint, jsonify, request
 from app.checkers import patient_add_params_check, patient_update_params_check
 from app.controllers.access_control import login_required
 from app.services import PatientService
-from app.utils import jwt, toTimestamp
+from app.utils import jwt
 
 bp = Blueprint(
     'patient',

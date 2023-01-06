@@ -14,22 +14,22 @@ def init_options():
 
     with open("data/department.csv", encoding="utf-8") as csvfile:
         csv_reader = csv.reader(csvfile)
-        #header = next(csv_reader)
+        # header = next(csv_reader)
         for row in csv_reader:
             db.session.add(models.Department(name=row[0]))
     with open("data/vein.csv", encoding="utf-8") as csvfile:
         csv_reader = csv.reader(csvfile)
-        #header = next(csv_reader)
+        # header = next(csv_reader)
         for row in csv_reader:
             db.session.add(models.Vein(name=row[0]))
     with open("data/tool.csv", encoding="utf-8") as csvfile:
         csv_reader = csv.reader(csvfile)
-        #header = next(csv_reader)
+        # header = next(csv_reader)
         for row in csv_reader:
             db.session.add(models.Tool(name=row[0]))
     with open("data/drug.csv", encoding="utf-8") as csvfile:
         csv_reader = csv.reader(csvfile)
-        #header = next(csv_reader)
+        # header = next(csv_reader)
         for row in csv_reader:
             db.session.add(models.Drug(name=row[0]))
 

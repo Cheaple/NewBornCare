@@ -1,7 +1,7 @@
 import json
 
 import flask_unittest
-from app import create_app, db, models
+from app import create_app, db
 from app.init_db import init_test_data
 
 

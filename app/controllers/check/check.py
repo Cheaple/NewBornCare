@@ -5,7 +5,6 @@ from flask import Blueprint, jsonify, request
 from app.checkers import check_add_params_check, check_update_params_check
 from app.controllers.access_control import login_required
 from app.services import CheckService
-from app.utils import toTimestamp
 
 bp = Blueprint(
     'check',

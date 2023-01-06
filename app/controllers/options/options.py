@@ -1,6 +1,6 @@
 
 from flasgger import swag_from
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify
 
 from app.controllers.access_control import login_required
 from app.services import (DepartmentService, DrugService, ToolService,

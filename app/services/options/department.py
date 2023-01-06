@@ -1,4 +1,3 @@
-from sqlalchemy import and_
 
 from app.extensions import db
 from app.models import Department
