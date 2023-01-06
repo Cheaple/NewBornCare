@@ -1,10 +1,9 @@
-from datetime import datetime
 
 from flasgger import swag_from
 from flask import Blueprint, jsonify, request
 
-from app.services import DrugService
 from app.controllers.access_control import login_required
+from app.services import DrugService
 
 bp = Blueprint(
     'drug',
@@ -28,6 +27,7 @@ def get_drug_list():
     else:
         return jsonify({'message': msg}), 500
 
+
 @bp.route('/api/list/drug/add', methods=['POST'])
 @swag_from('options/add-drug.yml')
 @login_required(["admin"])
@@ -44,6 +44,7 @@ def add_drug():
         }), 200
     else:
         return jsonify({'message': msg}), 500
+
 
 @bp.route('/api/list/drug/update/<int:drugId>', methods=['PATCH'])
 @swag_from('options/update-drug.yml')

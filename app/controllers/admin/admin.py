@@ -2,11 +2,10 @@
 from flasgger import swag_from
 from flask import Blueprint, jsonify, request
 
-from app.services import AdminService
-from app.utils import jwt
-
 from app.checkers import admin_add_params_check, admin_update_params_check
 from app.controllers.access_control import login_required
+from app.services import AdminService
+from app.utils import jwt
 
 bp = Blueprint(
     'admin',
@@ -73,7 +72,6 @@ def add_admin():
         if not passed:
             return jsonify({'message': "invalid arguments: " + key}), 400
 
-
         id, msg, result = service.add_admin(content)
 
         if result:
@@ -85,6 +83,7 @@ def add_admin():
             return jsonify({'message': msg}), 500
     except KeyError:
         return jsonify({'message': "bad arguments"}), 400
+
 
 @bp.route('/api/admin/update/<int:adminId>', methods=['PATCH'])
 @swag_from('admin/update-admin.yml')
@@ -115,6 +114,7 @@ def update_admin(adminId):
             return jsonify({'message': msg}), 500
     except KeyError:
         return jsonify({'message': "bad arguments"}), 400
+
 
 @bp.route('/api/admin/delete/<int:adminId>', methods=['PATCH'])
 @swag_from('admin/delete-admin.yml')

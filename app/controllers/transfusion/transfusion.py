@@ -1,12 +1,13 @@
-from datetime import datetime
 
 from flasgger import swag_from
 from flask import Blueprint, jsonify, request
 
+from app.checkers import (transfusion_add_params_check,
+                          transfusion_drug_update_params_check,
+                          transfusion_update_params_check)
+from app.controllers.access_control import login_required
 from app.services import TransfusionService
 from app.utils import toTimestamp
-from app.checkers import transfusion_add_params_check, transfusion_update_params_check, transfusion_drug_update_params_check
-from app.controllers.access_control import login_required
 
 bp = Blueprint(
     'transfusion',
@@ -66,7 +67,6 @@ def add_transfusion():
         key, passed = transfusion_add_params_check(content)
         if not passed:
             return jsonify({'message': "invalid arguments: " + key}), 400
-        
 
         drugs = content['drug']
         del content['drug']
@@ -81,6 +81,7 @@ def add_transfusion():
             return jsonify({'message': msg}), 500
     except KeyError:
         return jsonify({'message': "bad arguments"}), 400
+
 
 @bp.route('/api/transfusion/update/<int:transfusionId>', methods=['PATCH'])
 @swag_from('transfusion/update-transfusion.yml')
@@ -113,7 +114,10 @@ def update_transfusion(transfusionId):
         print(e)
         return jsonify({'message': "bad arguments"}), 400
 
-@bp.route('/api/transfusion/update/<int:transfusionId>/<drugSeq>', methods=['PATCH'])
+
+@bp.route(
+    '/api/transfusion/update/<int:transfusionId>/<drugSeq>',
+    methods=['PATCH'])
 @swag_from('transfusion/update-transfusion-drug.yml')
 @login_required(["admin", "nurse"])
 def update_transfusion_drug(transfusionId, drugSeq):
@@ -131,7 +135,8 @@ def update_transfusion_drug(transfusionId, drugSeq):
         if not passed:
             return jsonify({'message': "invalid arguments: " + key}), 400
 
-        id, msg, result = service.update_transfusion_drug(transfusionId, drugSeq, content)
+        id, msg, result = service.update_transfusion_drug(
+            transfusionId, drugSeq, content)
 
         if result:
             return jsonify({
@@ -143,7 +148,10 @@ def update_transfusion_drug(transfusionId, drugSeq):
     except KeyError:
         return jsonify({'message': "bad arguments"}), 400
 
-@bp.route('/api/transfusion/update/<int:transfusionId>/next', methods=['PATCH'])
+
+@bp.route(
+    '/api/transfusion/update/<int:transfusionId>/next',
+    methods=['PATCH'])
 @swag_from('transfusion/update-transfusion-next.yml')
 @login_required(["admin", "nurse"])
 def update_transfusion_next(transfusionId):
@@ -160,7 +168,10 @@ def update_transfusion_next(transfusionId):
     else:
         return jsonify({'message': msg}), 500
 
-@bp.route('/api/transfusion/update/<int:transfusionId>/finish', methods=['PATCH'])
+
+@bp.route(
+    '/api/transfusion/update/<int:transfusionId>/finish',
+    methods=['PATCH'])
 @swag_from('transfusion/update-transfusion-finish.yml')
 @login_required(["admin", "nurse"])
 def update_transfusion_finish(transfusionId):
@@ -176,6 +187,7 @@ def update_transfusion_finish(transfusionId):
         }), 200
     else:
         return jsonify({'message': msg}), 500
+
 
 @bp.route('/api/transfusion/delete/<int:transfusionId>', methods=['PATCH'])
 @swag_from('transfusion/delete-transfusion.yml')

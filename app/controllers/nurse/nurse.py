@@ -2,10 +2,10 @@
 from flasgger import swag_from
 from flask import Blueprint, jsonify, request
 
-from app.services import NurseService
-from app.utils import jwt
 from app.checkers import nurse_add_params_check, nurse_update_params_check
 from app.controllers.access_control import login_required
+from app.services import NurseService
+from app.utils import jwt
 
 bp = Blueprint(
     'nurse',
@@ -121,6 +121,7 @@ def add_nurse():
     except KeyError:
         return jsonify({'message': "bad arguments"}), 400
 
+
 @bp.route('/api/nurse/update/<int:nurseId>', methods=['PATCH'])
 @swag_from('nurse/update-nurse.yml')
 @login_required(["admin", "nurse"])
@@ -150,6 +151,7 @@ def update_nurse(nurseId):
             return jsonify({'message': msg}), 500
     except KeyError:
         return jsonify({'message': "bad arguments"}), 400
+
 
 @bp.route('/api/nurse/delete/<int:nurseId>', methods=['PATCH'])
 @swag_from('nurse/delete-nurse.yml')

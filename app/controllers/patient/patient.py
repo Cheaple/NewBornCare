@@ -1,12 +1,11 @@
-from datetime import datetime
 
 from flasgger import swag_from
 from flask import Blueprint, jsonify, request
 
-from app.services import PatientService
-from app.utils import toTimestamp, jwt
-from app.controllers.access_control import login_required
 from app.checkers import patient_add_params_check, patient_update_params_check
+from app.controllers.access_control import login_required
+from app.services import PatientService
+from app.utils import jwt, toTimestamp
 
 bp = Blueprint(
     'patient',
@@ -15,6 +14,7 @@ bp = Blueprint(
 )
 
 service = PatientService()
+
 
 @bp.route('/api/patient/login', methods=['POST'])
 @swag_from('login.yml')
@@ -47,6 +47,7 @@ def login():
 @login_required(["patient"])
 def logout():
     pass
+
 
 @bp.route('/api/patient', methods=['GET'])
 @swag_from('patient/get-patient-list.yml')
@@ -99,7 +100,6 @@ def add_patient():
         key, passed = patient_add_params_check(content)
         if not passed:
             return jsonify({'message': "invalid arguments: " + key}), 400
-        
 
         id, msg, result = service.add_patient(content)
 
@@ -112,6 +112,7 @@ def add_patient():
             return jsonify({'message': msg}), 500
     except KeyError:
         return jsonify({'message': "bad arguments"}), 400
+
 
 @bp.route('/api/patient/update/<int:patientId>', methods=['PATCH'])
 @swag_from('patient/update-patient.yml')
@@ -142,6 +143,7 @@ def update_patient(patientId):
             return jsonify({'message': msg}), 500
     except KeyError:
         return jsonify({'message': "bad arguments"}), 400
+
 
 @bp.route('/api/patient/delete/<int:patientId>', methods=['PATCH'])
 @swag_from('patient/delete-patient.yml')

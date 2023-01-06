@@ -4,8 +4,9 @@ import flask_unittest
 from app import create_app, db, models
 from app.init_db import init_test_data
 
+
 class TestApiCheck(flask_unittest.ClientTestCase):
-    
+
     app = create_app('test')
     jwt = None
 
@@ -26,7 +27,7 @@ class TestApiCheck(flask_unittest.ClientTestCase):
         db.session.remove()
         db.drop_all()
         self.app_context.pop()
-        
+
     def test_check_add(self, client):
         """
         验证添加巡视记录
@@ -35,9 +36,8 @@ class TestApiCheck(flask_unittest.ClientTestCase):
         '''未登陆，检查返回值为失败'''
         data = {}
         response = client.post("/api/check/add", json=data)
-        json_data = json.loads(response.data)
+        json.loads(response.data)
         self.assertEqual(response.status_code, 401)
-        
 
         '''使用错误的信息进行添加，检查返回值为失败'''
         data = {
@@ -48,9 +48,8 @@ class TestApiCheck(flask_unittest.ClientTestCase):
             json=data,
             headers={"Authorization": self.jwt}
         )
-        json_data = json.loads(response.data)
+        json.loads(response.data)
         self.assertEqual(response.status_code, 400)
-
 
         '''使用正确的信息进行添加，检查返回值为成功'''
         data = {
@@ -61,13 +60,11 @@ class TestApiCheck(flask_unittest.ClientTestCase):
         }
         response = client.post(
             "/api/check/add",
-            json=data, 
+            json=data,
             headers={"Authorization": self.jwt}
         )
-        json_data = json.loads(response.data)
+        json.loads(response.data)
         self.assertEqual(response.status_code, 200)
-
-
 
     def test_check_update(self, client):
         """
@@ -77,19 +74,19 @@ class TestApiCheck(flask_unittest.ClientTestCase):
         '''未登陆，检查返回值为失败'''
         data = {}
         response = client.patch("/api/check/update/1", json=data)
-        json_data = json.loads(response.data)
+        json.loads(response.data)
         self.assertEqual(response.status_code, 401)
-        
+
         '''使用错误的信息进行更新，检查返回值为失败'''
         data = {
             "time": "11:20",
         }
         response = client.patch(
             "/api/check/update/1",
-            json=data, 
+            json=data,
             headers={"Authorization": self.jwt}
         )
-        json_data = json.loads(response.data)
+        json.loads(response.data)
         self.assertEqual(response.status_code, 400)
 
         '''使用正确的信息进行更新，检查返回值为成功'''
@@ -98,8 +95,8 @@ class TestApiCheck(flask_unittest.ClientTestCase):
         }
         response = client.patch(
             "/api/check/update/1",
-            json=data, 
+            json=data,
             headers={"Authorization": self.jwt}
         )
-        json_data = json.loads(response.data)
+        json.loads(response.data)
         self.assertEqual(response.status_code, 200)

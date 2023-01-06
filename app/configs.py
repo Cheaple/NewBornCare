@@ -1,5 +1,5 @@
-from pathlib import Path
 from app.utils import config
+
 
 class Config(object):
     """

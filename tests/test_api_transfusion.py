@@ -4,8 +4,9 @@ import flask_unittest
 from app import create_app, db, models
 from app.init_db import init_test_data
 
+
 class TestApiTransfusion(flask_unittest.ClientTestCase):
-    
+
     app = create_app('test')
     jwt = None
 
@@ -26,7 +27,7 @@ class TestApiTransfusion(flask_unittest.ClientTestCase):
         db.session.remove()
         db.drop_all()
         self.app_context.pop()
-        
+
     def test_transfusion_add(self, client):
         """
         验证添加输液记录
@@ -35,9 +36,8 @@ class TestApiTransfusion(flask_unittest.ClientTestCase):
         '''未登陆，检查返回值为失败'''
         data = {}
         response = client.post("/api/transfusion/add", json=data)
-        json_data = json.loads(response.data)
+        json.loads(response.data)
         self.assertEqual(response.status_code, 401)
-        
 
         '''使用错误的信息进行注册，检查返回值为失败'''
         data = {
@@ -49,9 +49,9 @@ class TestApiTransfusion(flask_unittest.ClientTestCase):
             "drug": [{
                 "drug": "葡萄糖",
                 "seq": 1,
-                "dose": 500,    
+                "dose": 500,
                 "rate": 3
-                }
+            }
             ]
         }
         response = client.post(
@@ -59,9 +59,8 @@ class TestApiTransfusion(flask_unittest.ClientTestCase):
             json=data,
             headers={"Authorization": self.jwt}
         )
-        json_data = json.loads(response.data)
+        json.loads(response.data)
         self.assertEqual(response.status_code, 400)
-
 
         '''使用正确的信息进行注册，检查返回值为成功'''
         data = {
@@ -73,20 +72,18 @@ class TestApiTransfusion(flask_unittest.ClientTestCase):
             "drug": [{
                 "drug": 3,
                 "seq": 1,
-                "dose": 500,    
+                "dose": 500,
                 "rate": 3
-                }
+            }
             ]
         }
         response = client.post(
             "/api/transfusion/add",
-            json=data, 
+            json=data,
             headers={"Authorization": self.jwt}
         )
-        json_data = json.loads(response.data)
+        json.loads(response.data)
         self.assertEqual(response.status_code, 200)
-
-
 
     def test_transfusion_update(self, client):
         """
@@ -96,19 +93,19 @@ class TestApiTransfusion(flask_unittest.ClientTestCase):
         '''未登陆，检查返回值为失败'''
         data = {}
         response = client.patch("/api/transfusion/update/1", json=data)
-        json_data = json.loads(response.data)
+        json.loads(response.data)
         self.assertEqual(response.status_code, 401)
-        
+
         '''使用错误的信息进行更新，检查返回值为失败'''
         data = {
             "status": "中止",
         }
         response = client.patch(
             "/api/transfusion/update/1",
-            json=data, 
+            json=data,
             headers={"Authorization": self.jwt}
         )
-        json_data = json.loads(response.data)
+        json.loads(response.data)
         self.assertEqual(response.status_code, 400)
 
         '''使用正确的信息进行更新，检查返回值为成功'''
@@ -117,10 +114,10 @@ class TestApiTransfusion(flask_unittest.ClientTestCase):
         }
         response = client.patch(
             "/api/transfusion/update/1",
-            json=data, 
+            json=data,
             headers={"Authorization": self.jwt}
         )
-        json_data = json.loads(response.data)
+        json.loads(response.data)
         self.assertEqual(response.status_code, 200)
 
     def test_transfusion_next(self, client):
@@ -131,16 +128,16 @@ class TestApiTransfusion(flask_unittest.ClientTestCase):
         '''未登陆，检查返回值为失败'''
         data = {}
         response = client.patch("/api/transfusion/update/1", json=data)
-        json_data = json.loads(response.data)
+        json.loads(response.data)
         self.assertEqual(response.status_code, 401)
-        
+
         '''换药，检查返回值为成功'''
         response = client.patch(
             "/api/transfusion/update/1/next",
-            json=data, 
+            json=data,
             headers={"Authorization": self.jwt}
         )
-        json_data = json.loads(response.data)
+        json.loads(response.data)
         self.assertEqual(response.status_code, 200)
 
     def test_transfusion_finish(self, client):
@@ -151,30 +148,28 @@ class TestApiTransfusion(flask_unittest.ClientTestCase):
         '''未登陆，检查返回值为失败'''
         data = {}
         response = client.patch("/api/transfusion/update/1", json=data)
-        json_data = json.loads(response.data)
+        json.loads(response.data)
         self.assertEqual(response.status_code, 401)
-        
+
         '''未到最后一个药品，无法完成输液，检查返回值为失败'''
         response = client.patch(
             "/api/transfusion/update/1/finish",
-            json=data, 
+            json=data,
             headers={"Authorization": self.jwt}
         )
-        json_data = json.loads(response.data)
+        json.loads(response.data)
         self.assertEqual(response.status_code, 500)
 
         '''完成输液，检查返回值为失败'''
         response = client.patch(
             "/api/transfusion/update/1/next",
-            json=data, 
+            json=data,
             headers={"Authorization": self.jwt}
         )
         response = client.patch(
             "/api/transfusion/update/1/finish",
-            json=data, 
+            json=data,
             headers={"Authorization": self.jwt}
         )
-        json_data = json.loads(response.data)
+        json.loads(response.data)
         self.assertEqual(response.status_code, 200)
-
-

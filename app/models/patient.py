@@ -1,13 +1,18 @@
+from sqlalchemy import text
+
 from app.extensions import db
 
-from sqlalchemy import text
 
 class Patient(db.Model):
     '''
     Patient
     '''
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True, doc="患者编号")
+    id = db.Column(
+        db.Integer,
+        primary_key=True,
+        autoincrement=True,
+        doc="患者编号")
 
     # 基本信息
     name = db.Column(db.String(20), nullable=False, doc='姓名')
@@ -25,7 +30,10 @@ class Patient(db.Model):
     tel = db.Column(db.Integer, nullable=False, doc='监护人手机号')
 
     # 住院信息
-    status = db.Column(db.Integer, nullable=False, doc='住院状态')  # 0: 已出院  1: 正在住院
+    status = db.Column(
+        db.Integer,
+        nullable=False,
+        doc='住院状态')  # 0: 已出院  1: 正在住院
     inDate = db.Column(db.Integer, nullable=False, doc='入院日期')
     outDate = db.Column(db.Integer, doc='出院日期')
     department = db.Column(db.Integer, nullable=False, doc='科室编号')
@@ -39,4 +47,8 @@ class Patient(db.Model):
     username = db.Column(db.String(20), nullable=True, unique=True, doc='用户名')
     password = db.Column(db.String(20), nullable=True, doc='密码')
 
-    ifExist = db.Column(db.Boolean, nullable=False, server_default=text('True'), doc='记录是否存在')
+    ifExist = db.Column(
+        db.Boolean,
+        nullable=False,
+        server_default=text('True'),
+        doc='记录是否存在')

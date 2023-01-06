@@ -1,6 +1,7 @@
-from flask import request, g, current_app
+from flask import current_app, g, request
 
 from .jwt import verify
+
 
 def jwt_authentication():
     '''

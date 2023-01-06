@@ -12,7 +12,7 @@ class VeinService():
                 Vein.name,
             ).all()
             vein_list = [dict(zip(result.keys(), result))
-                for result in content_result]
+                         for result in content_result]
             return vein_list, "ok", True
         except Exception as e:
             print(e)
@@ -20,7 +20,7 @@ class VeinService():
 
     def add_vein(self, name):
         try:
-            vein = Vein(name = name)
+            vein = Vein(name=name)
             db.session.add(vein)
             db.session.commit()
             return vein.id, "ok", True
@@ -28,7 +28,7 @@ class VeinService():
             print(e)
             return 0, "vein already exists", False
 
-    def update_vein(self, id, name = None):
+    def update_vein(self, id, name=None):
         try:
             vein = Vein.query.get(id)
             if name:

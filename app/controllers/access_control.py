@@ -1,8 +1,9 @@
-from flask import g, current_app
-
 import functools
 
-def login_required(user = ["admin", "nurse", "patient"]):
+from flask import current_app, g
+
+
+def login_required(user=["admin", "nurse", "patient"]):
     """
     用户必须登录装饰器
     """

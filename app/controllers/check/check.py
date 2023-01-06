@@ -1,12 +1,11 @@
-from datetime import datetime
 
 from flasgger import swag_from
 from flask import Blueprint, jsonify, request
 
+from app.checkers import check_add_params_check, check_update_params_check
+from app.controllers.access_control import login_required
 from app.services import CheckService
 from app.utils import toTimestamp
-from app.controllers.access_control import login_required
-from app.checkers import check_add_params_check, check_update_params_check
 
 bp = Blueprint(
     'check',
@@ -80,6 +79,7 @@ def add_check():
             return jsonify({'message': msg}), 500
     except KeyError:
         return jsonify({'message': "bad arguments"}), 400
+
 
 @bp.route('/api/check/update/<int:checkId>', methods=['PATCH'])
 @swag_from('check/update-check.yml')

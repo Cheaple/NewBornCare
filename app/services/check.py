@@ -7,9 +7,11 @@ class CheckService():
         try:
             where_clause = ""
             if patientId:
-                where_clause = "WHERE ifExist IS TRUE AND patientId = " + str(patientId)
+                where_clause = "WHERE ifExist IS TRUE AND patientId = " + \
+                    str(patientId)
             elif transfusionId:
-                where_clause = "WHERE ifExist IS TRUE AND transfusionId = " + str(transfusionId)
+                where_clause = "WHERE ifExist IS TRUE AND transfusionId = " + \
+                    str(transfusionId)
 
             # TODO: list是否应该返回所有信息？
             # Note: 'check' is a keyword in SQL
@@ -42,7 +44,7 @@ class CheckService():
             count = [dict(zip(result.keys(), result))
                      for result in count_result]
 
-            return check_list, count[0]['count'],"ok get check list", True
+            return check_list, count[0]['count'], "ok get check list", True
 
         except Exception as e:
             print(e)

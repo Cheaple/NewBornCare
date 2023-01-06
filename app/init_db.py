@@ -3,8 +3,9 @@ from datetime import datetime
 from random import choice, randint
 
 from app import models
-from app.utils import toTimestamp, encipher
 from app.extensions import db
+from app.utils import encipher, toTimestamp
+
 
 def init_options():
     '''
@@ -31,8 +32,9 @@ def init_options():
         #header = next(csv_reader)
         for row in csv_reader:
             db.session.add(models.Drug(name=row[0]))
-            
+
     db.session.commit()
+
 
 def init_test_data():
     '''
@@ -86,22 +88,22 @@ def init_test_data():
     )
 
     drug = models.TransfusionDrug(
-        transfusionId = 1,
-        seq = 1,
+        transfusionId=1,
+        seq=1,
         startTime=toTimestamp(datetime.now()),
-        rate = 8,
+        rate=8,
         drug=1,
         dose=200,
-        status = 1,  # 进行中
+        status=1,  # 进行中
     )
 
     drug2 = models.TransfusionDrug(
-        transfusionId = 1,
-        seq = 2,
-        rate = 10,
+        transfusionId=1,
+        seq=2,
+        rate=10,
         drug=2,
         dose=300,
-        status = 2,  # 未开始
+        status=2,  # 未开始
     )
 
     check = models.Check(
@@ -122,6 +124,7 @@ def init_test_data():
 
     # commit the changes
     db.session.commit()
+
 
 def init_prod_data():
     '''
@@ -161,7 +164,7 @@ def init_data():
     init data
     '''
 
-    def generate_name(gender = None):
+    def generate_name(gender=None):
         family_names = "赵钱孙李周吴郑王冯陈褚卫蒋沈韩杨朱秦尤许何吕施张孔曹严华金魏"\
             "陶姜戚谢邹喻柏水窦章云苏潘葛奚范彭郎鲁韦昌马苗凤花方俞任袁柳"
         female_names = "念倩幂辰慕蔚理霜依唐喻微紫盼语音杏晓葵媛采乐青月松彩碧蓉滢含"\
@@ -174,16 +177,18 @@ def init_data():
         if gender is None:
             gender = randint(0, 1) % 2 + 1
         if gender == 1:
-            name = family_names[randint(0, len(family_names) - 1)] + male_names[randint(0, len(male_names) - 1)]
+            name = family_names[randint(
+                0, len(family_names) - 1)] + male_names[randint(0, len(male_names) - 1)]
             if randint(0, 4) % 3 != 0:
                 name += male_names[randint(0, len(male_names) - 1)]
         else:
-            name = family_names[randint(0, len(family_names) - 1)] + female_names[randint(0, len(female_names) - 1)]
+            name = family_names[randint(
+                0, len(family_names) - 1)] + female_names[randint(0, len(female_names) - 1)]
             if randint(0, 4) % 3 != 0:
                 name += female_names[randint(0, len(female_names) - 1)]
         return name
 
-    def generate_time(now = None, days = 365):
+    def generate_time(now=None, days=365):
         if now is None:
             now = toTimestamp(datetime.now())
         return now - randint(1, days) * 24 * 3600
@@ -201,7 +206,14 @@ def init_data():
     numPatient = 200
 
     # Nurse
-    keys = ["username", "password", "name", "gender", "tel", "department", "status"]
+    keys = [
+        "username",
+        "password",
+        "name",
+        "gender",
+        "tel",
+        "department",
+        "status"]
     for i in range(1, numNurse + 1):
         values = [
             "nurse{:0>3d}".format(i),
@@ -218,22 +230,27 @@ def init_data():
 
     # Patient
     keys = [
-        "name", "gender", "birthdate", 
-        "guardian", "guardianId", "relation", "tel", 
-        "status", "inDate", "outDate", "department", "room", "bed", 
+        "name", "gender", "birthdate",
+        "guardian", "guardianId", "relation", "tel",
+        "status", "inDate", "outDate", "department", "room", "bed",
         "allergy",
-        "username", "password", 
+        "username", "password",
     ]
     for i in range(1, numPatient + 1):
         gender = i % 2 + 1
-        inDate = generate_time(days = 10)
+        inDate = generate_time(days=10)
         values = [
-            generate_name(gender), gender, generate_time(inDate, days = 3650),
-            generate_name(), str(randint(110000194910010001, 110000200312319999)), randint(1, 4), randint(13100000000, 19999999999),
-            1, inDate, None, randint(1, 5), randint(1, 20), choice([1, 2, 3, None]),
-            "无过敏",
-            "patient{:0>3d}".format(i), encipher("patient{:0>3d}".format(i)),    
-        ]
+            generate_name(gender), gender, generate_time(
+                inDate, days=3650), generate_name(), str(
+                randint(
+                    110000194910010001, 110000200312319999)), randint(
+                    1, 4), randint(
+                        13100000000, 19999999999), 1, inDate, None, randint(
+                            1, 5), randint(
+                                1, 20), choice(
+                                    [
+                                        1, 2, 3, None]), "无过敏", "patient{:0>3d}".format(i), encipher(
+                                            "patient{:0>3d}".format(i)), ]
         content = dict(zip(keys, values))
         # print(content)
         db.session.add(models.Patient(**content))
@@ -253,7 +270,7 @@ def init_data():
                 info="心跳较快"
             )
             drug1 = models.TransfusionDrug(
-                transfusionId = j * numPatient + i,
+                transfusionId=j * numPatient + i,
                 seq=1,
                 startTime=transfusion.startTime,
                 rate=randint(1, 8),
@@ -262,7 +279,7 @@ def init_data():
                 status=0,  # 已完成
             )
             drug2 = models.TransfusionDrug(
-                transfusionId = j * numPatient + i,
+                transfusionId=j * numPatient + i,
                 seq=2,
                 startTime=transfusion.startTime + 3600,
                 rate=randint(1, 8),
@@ -285,9 +302,5 @@ def init_data():
                 info="一切正常"
             )
             db.session.add(check)
-    
+
     db.session.commit()
-
-    
-    
-

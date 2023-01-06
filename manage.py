@@ -1,19 +1,21 @@
 # -*- coding: utf-8 -*-
-import coverage
 import os
-from datetime import datetime
-# import pandas as pd
-
 import unittest
 
+import coverage
 from flask_script import Manager, Server
-# from flask_migrate import Migrate, MigrateCommand
 
 from app import create_app, db, meta
+from app.init_db import init_data, init_options, init_prod_data, init_test_data
 from app.utils import config
-from app.init_db import init_data, init_test_data, init_prod_data, init_options
 
-COV=coverage.coverage(branch=True,include='app/*')
+# import pandas as pd
+
+
+# from flask_migrate import Migrate, MigrateCommand
+
+
+COV = coverage.coverage(branch=True, include='app/*')
 COV.start()
 
 app = create_app(os.getenv('TYPE', 'default'))
@@ -27,11 +29,12 @@ manager.add_command('runserver', Server(host=host, port=port))
 # migrate = Migrate(app, db)
 # manager.add_command('db', MigrateCommand)
 
+
 @manager.command
 def test(filter=None):
     """Run the unit tests"""
     loader = unittest.TestLoader()
-    loader.testNamePatterns = [filter+"*"] if filter is not None else None
+    loader.testNamePatterns = [filter + "*"] if filter is not None else None
     tests = loader.discover('tests')
     unittest.TextTestRunner(verbosity=2).run(tests)
 
@@ -42,8 +45,9 @@ def test(filter=None):
     basedir = os.path.abspath(os.path.dirname("backend"))
     covdir = os.path.join(basedir, 'test_report')
     COV.html_report(directory=covdir)
-    
+
     print('HTML version: file://%s/index.html' % covdir)
+
 
 @manager.command
 def init_test_db():
@@ -53,6 +57,7 @@ def init_test_db():
     db.create_all()
     init_options()
     init_test_data()
+
 
 @manager.command
 def init_db():
@@ -79,6 +84,5 @@ def init_db():
 #     writer.save()
 
 
-    
 if __name__ == '__main__':
     manager.run()

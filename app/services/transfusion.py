@@ -1,4 +1,5 @@
 from datetime import datetime
+
 from app.extensions import db
 from app.models import Transfusion, TransfusionDrug
 from app.utils import toTimestamp
@@ -7,7 +8,8 @@ from app.utils import toTimestamp
 class TransfusionService():
     def get_transfusion_list(self, patientId):
         try:
-            where_clause = "WHERE ifExist IS TRUE AND patientId = " + str(patientId)
+            where_clause = "WHERE ifExist IS TRUE AND patientId = " + \
+                str(patientId)
 
             # TODO: list是否应该返回所有信息？
             content_base = '''
@@ -155,7 +157,7 @@ class TransfusionService():
                 drug.status = content['status']
 
             db.session.commit()
-            
+
             return drug.id, "ok update drug", True
         except Exception as e:
             print(e)
@@ -175,9 +177,11 @@ class TransfusionService():
                 return 0, "already finished", False
 
             transfusion.status += 1
-            cur_drug = TransfusionDrug.query.filter_by(transfusionId = tId, seq = drugSeq).one()
+            cur_drug = TransfusionDrug.query.filter_by(
+                transfusionId=tId, seq=drugSeq).one()
             cur_drug.status = 0  # 将当前药物标记完成
-            next_drug = TransfusionDrug.query.filter_by(transfusionId = tId, seq = drugSeq + 1).one()
+            next_drug = TransfusionDrug.query.filter_by(
+                transfusionId=tId, seq=drugSeq + 1).one()
             next_drug.status = 1  # 将下一个药物标记开始
             next_drug.startTime = toTimestamp(datetime.now())
             msg = "ok change drug"
@@ -203,10 +207,11 @@ class TransfusionService():
 
             transfusion.status = 0
             transfusion.finishTime = toTimestamp(datetime.now())
-            cur_drug = TransfusionDrug.query.filter_by(transfusionId = tId, seq = drugSeq).one()
-            cur_drug.status = 0  # 将当前药物标记完成     
-            msg = "ok finish transfusion"       
-            
+            cur_drug = TransfusionDrug.query.filter_by(
+                transfusionId=tId, seq=drugSeq).one()
+            cur_drug.status = 0  # 将当前药物标记完成
+            msg = "ok finish transfusion"
+
             db.session.commit()
             return transfusion.id, msg, True
         except Exception as e:
@@ -226,5 +231,3 @@ class TransfusionService():
         except Exception as e:
             print(e)
             return 0, "error", False
-
-    

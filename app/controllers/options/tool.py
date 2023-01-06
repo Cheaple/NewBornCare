@@ -1,10 +1,9 @@
-from datetime import datetime
 
 from flasgger import swag_from
 from flask import Blueprint, jsonify, request
 
-from app.services import ToolService
 from app.controllers.access_control import login_required
+from app.services import ToolService
 
 bp = Blueprint(
     'tool',
@@ -28,6 +27,7 @@ def get_tool_list():
     else:
         return jsonify({'message': msg}), 500
 
+
 @bp.route('/api/list/tool/add', methods=['POST'])
 @swag_from('options/add-tool.yml')
 @login_required(["admin"])
@@ -44,6 +44,7 @@ def add_tool():
         }), 200
     else:
         return jsonify({'message': msg}), 500
+
 
 @bp.route('/api/list/tool/update/<int:toolId>', methods=['PATCH'])
 @swag_from('options/update-tool.yml')

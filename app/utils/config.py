@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+
 import yaml
 
 basedir = os.path.dirname(os.path.dirname(
@@ -14,6 +15,7 @@ def get_yaml(key, default=None):
     for i in key.split('.'):
         data = data.get(i, default)
     return data
+
 
 if __name__ == '__main__':
     print(settings)

@@ -4,8 +4,9 @@ import flask_unittest
 from app import create_app, db, models
 from app.init_db import init_test_data
 
+
 class TestApiNurse(flask_unittest.ClientTestCase):
-    
+
     app = create_app('test')
     jwt = None
 
@@ -49,7 +50,6 @@ class TestApiNurse(flask_unittest.ClientTestCase):
         """
         验证登出
         """
-        pass
 
     def test_nurse_add(self, client):
         """
@@ -59,9 +59,8 @@ class TestApiNurse(flask_unittest.ClientTestCase):
         '''未登陆，检查返回值为失败'''
         data = {}
         response = client.post("/api/nurse/add", json=data)
-        json_data = json.loads(response.data)
+        json.loads(response.data)
         self.assertEqual(response.status_code, 401)
-        
 
         '''使用错误的信息进行注册，检查返回值为失败'''
         data = {
@@ -75,9 +74,8 @@ class TestApiNurse(flask_unittest.ClientTestCase):
             json=data,
             headers={"Authorization": self.jwt}
         )
-        json_data = json.loads(response.data)
+        json.loads(response.data)
         self.assertEqual(response.status_code, 400)
-
 
         '''使用正确的信息进行注册，检查返回值为成功'''
         data = {
@@ -88,12 +86,11 @@ class TestApiNurse(flask_unittest.ClientTestCase):
         }
         response = client.post(
             "/api/nurse/add",
-            json=data, 
+            json=data,
             headers={"Authorization": self.jwt}
         )
-        json_data = json.loads(response.data)
+        json.loads(response.data)
         self.assertEqual(response.status_code, 200)
-
 
         '''使用重复的用户名进行注册，检查返回值为失败'''
         data = {
@@ -104,12 +101,11 @@ class TestApiNurse(flask_unittest.ClientTestCase):
         }
         response = client.post(
             "/api/nurse/add",
-            json=data, 
+            json=data,
             headers={"Authorization": self.jwt}
         )
-        json_data = json.loads(response.data)
+        json.loads(response.data)
         self.assertEqual(response.status_code, 500)
-
 
     def test_nurse_update(self, client):
         """
@@ -119,19 +115,19 @@ class TestApiNurse(flask_unittest.ClientTestCase):
         '''未登陆，检查返回值为失败'''
         data = {}
         response = client.patch("/api/nurse/update/1", json=data)
-        json_data = json.loads(response.data)
+        json.loads(response.data)
         self.assertEqual(response.status_code, 401)
-        
+
         '''使用错误的信息进行更新，检查返回值为失败'''
         data = {
             "name": "测试护士0号@",
         }
         response = client.patch(
             "/api/nurse/update/1",
-            json=data, 
+            json=data,
             headers={"Authorization": self.jwt}
         )
-        json_data = json.loads(response.data)
+        json.loads(response.data)
         self.assertEqual(response.status_code, 400)
 
         '''使用正确的信息进行更新，检查返回值为成功'''
@@ -140,10 +136,8 @@ class TestApiNurse(flask_unittest.ClientTestCase):
         }
         response = client.patch(
             "/api/nurse/update/1",
-            json=data, 
+            json=data,
             headers={"Authorization": self.jwt}
         )
-        json_data = json.loads(response.data)
+        json.loads(response.data)
         self.assertEqual(response.status_code, 200)
-
-

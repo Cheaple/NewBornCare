@@ -12,7 +12,7 @@ class ToolService():
                 Tool.name,
             ).all()
             tool_list = [dict(zip(result.keys(), result))
-                for result in content_result]
+                         for result in content_result]
             return tool_list, "ok", True
         except Exception as e:
             print(e)
@@ -20,7 +20,7 @@ class ToolService():
 
     def add_tool(self, name):
         try:
-            tool = Tool(name = name)
+            tool = Tool(name=name)
             db.session.add(tool)
             db.session.commit()
             return tool.id, "ok", True
@@ -28,7 +28,7 @@ class ToolService():
             print(e)
             return 0, "tool already exists", False
 
-    def update_tool(self, id, name = None):
+    def update_tool(self, id, name=None):
         try:
             tool = Tool.query.get(id)
             if name:

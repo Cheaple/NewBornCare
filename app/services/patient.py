@@ -26,8 +26,8 @@ class PatientService():
                 Patient.bed,
                 Patient.ifExist
             ).filter(and_(
-                    Patient.username == username,
-                    Patient.password == encipher(password))).first()
+                Patient.username == username,
+                Patient.password == encipher(password))).first()
             if result is None or result.ifExist is False:
                 return None, "patient not found or wrong password", False
             patient = dict(zip(result.keys(), result))
@@ -144,7 +144,7 @@ class PatientService():
                 patient.username = str(content['username'])
             if 'password' in content:
                 patient.password = encipher(str(content['password']))
-                
+
             db.session.add(patient)
             db.session.commit()
             return patient.id, "ok add patient", True
@@ -166,7 +166,7 @@ class PatientService():
                 patient.birthdate = content['birthdate']
             # if 'palmprint' in content:
                 # patient.palmprint = content['palmprint']
-            
+
             if 'guardian' in content:
                 patient.guardian = content['guardian']
             if 'guardianId' in content:
@@ -191,7 +191,7 @@ class PatientService():
 
             if 'allergy' in content:
                 patient.allergy = content['allergy']
-            
+
             if 'username' in content:
                 patient.username = str(content['username'])
             if 'password' in content:

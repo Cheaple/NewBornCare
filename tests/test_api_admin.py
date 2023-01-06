@@ -4,8 +4,9 @@ import flask_unittest
 from app import create_app, db, models
 from app.init_db import init_test_data
 
+
 class TestApiAdmin(flask_unittest.ClientTestCase):
-    
+
     app = create_app('test')
     jwt = None
 
@@ -49,7 +50,6 @@ class TestApiAdmin(flask_unittest.ClientTestCase):
         """
         验证登出
         """
-        pass
 
     def test_admin_add(self, client):
         """
@@ -59,9 +59,8 @@ class TestApiAdmin(flask_unittest.ClientTestCase):
         '''未登陆，检查返回值为失败'''
         data = {}
         response = client.post("/api/admin/add", json=data)
-        json_data = json.loads(response.data)
+        json.loads(response.data)
         self.assertEqual(response.status_code, 401)
-        
 
         '''使用错误的信息进行注册，检查返回值为失败'''
         data = {
@@ -75,9 +74,8 @@ class TestApiAdmin(flask_unittest.ClientTestCase):
             json=data,
             headers={"Authorization": self.jwt}
         )
-        json_data = json.loads(response.data)
+        json.loads(response.data)
         self.assertEqual(response.status_code, 400)
-
 
         '''使用正确的信息进行注册，检查返回值为成功'''
         data = {
@@ -87,12 +85,11 @@ class TestApiAdmin(flask_unittest.ClientTestCase):
         }
         response = client.post(
             "/api/admin/add",
-            json=data, 
+            json=data,
             headers={"Authorization": self.jwt}
         )
-        json_data = json.loads(response.data)
+        json.loads(response.data)
         self.assertEqual(response.status_code, 200)
-
 
         '''使用重复的用户名进行注册，检查返回值为失败'''
         data = {
@@ -102,12 +99,11 @@ class TestApiAdmin(flask_unittest.ClientTestCase):
         }
         response = client.post(
             "/api/admin/add",
-            json=data, 
+            json=data,
             headers={"Authorization": self.jwt}
         )
-        json_data = json.loads(response.data)
+        json.loads(response.data)
         self.assertEqual(response.status_code, 500)
-
 
     def test_admin_update(self, client):
         """
@@ -117,9 +113,9 @@ class TestApiAdmin(flask_unittest.ClientTestCase):
         '''未登陆，检查返回值为失败'''
         data = {}
         response = client.patch("/api/admin/update/1", json=data)
-        json_data = json.loads(response.data)
+        json.loads(response.data)
         self.assertEqual(response.status_code, 401)
-        
+
         '''使用错误的信息进行更新，检查返回值为失败'''
         data = {
             "name": "测试管理员0号@",
@@ -127,10 +123,10 @@ class TestApiAdmin(flask_unittest.ClientTestCase):
         }
         response = client.patch(
             "/api/admin/update/1",
-            json=data, 
+            json=data,
             headers={"Authorization": self.jwt}
         )
-        json_data = json.loads(response.data)
+        json.loads(response.data)
         self.assertEqual(response.status_code, 400)
 
         '''使用正确的信息进行更新，检查返回值为成功'''
@@ -140,10 +136,8 @@ class TestApiAdmin(flask_unittest.ClientTestCase):
         }
         response = client.patch(
             "/api/admin/update/1",
-            json=data, 
+            json=data,
             headers={"Authorization": self.jwt}
         )
-        json_data = json.loads(response.data)
+        json.loads(response.data)
         self.assertEqual(response.status_code, 200)
-
-

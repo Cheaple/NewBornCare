@@ -62,7 +62,7 @@ class AdminService():
         except Exception as e:
             print(e)
             return 0, "error", False
-    
+
     def delete_admin(self, id):
         try:
             admin = Admin.query.get(id)
