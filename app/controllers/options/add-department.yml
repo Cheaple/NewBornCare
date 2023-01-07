@@ -6,7 +6,7 @@ parameters:
     required: true
   
 definitions:
-  DepartmentAdd:
+  Add:
     type: object
     properties:
       message:
@@ -18,4 +18,4 @@ definitions:
 responses:
   200:
     schema:
-      $ref: '#/definitions/DepartmentAdd'
+      $ref: '#/definitions/Add'

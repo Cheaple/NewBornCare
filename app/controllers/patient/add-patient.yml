@@ -2,22 +2,27 @@ parameters:
   - name: username
     in: body
     type: string
+    example: patient001
     required: false
   - name: password
     in: body
     type: string
+    example: patient001
     required: false
   - name: name
     in: body
     type: string
+    example: 陈宇乐
     required: true
   - name: gender
     in: body
     type: integer
+    example: 1
     required: true
   - name: birthdate
     in: body
     type: integer
+    example: 1667275200
     required: true
   - name: palmprint
     in: body
@@ -27,53 +32,65 @@ parameters:
   - name: guardian
     in: body
     type: string
+    example: 陈大乐
     required: true
   - name: guardianId
     in: body
     type: string
+    example: 421002197009100000
     required: true
   - name: relation
     in: body
     type: integer
+    example: 1
     required: true
   - name: tel
     in: body
     type: integer
+    example: 13512340000
     required: true
     
   - name: status
     in: body
     type: integer
+    example: 1
     required: false
   - name: inDate
     in: body
     type: integer
+    example: 13512340000
     requird: false
   - name: department
     in: body
     type: integer
+    example: 5
     required: false
   - name: room
     in: body
     type: integer
+    example: 20
     required: false
   - name: bed
     in: body
     type: integer
+    example: 3
     required: false
   - name: allergy
     in: body
     type: string
+    example: 花粉
     required: false
 definitions:
-  PatientAdd:
+  Add:
     type: object
     properties:
       message:
         type: string
+        example: "ok"
       id:
         type: integer
+        example: 10
 responses:
   200:
     schema:
-      $ref: '#/definitions/PatientAdd'
+      $ref: '#/definitions/Add'

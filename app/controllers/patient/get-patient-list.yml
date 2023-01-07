@@ -17,10 +17,16 @@ definitions:
           properties:
             id:
               type: integer
+              example: 10
             name:
               type: string
+              example: 陈宇乐
             gender:
               type: integer
+              example: 5
+            birthdate:
+              type: integer
+              example: 1667275200
           
 responses:
   200:

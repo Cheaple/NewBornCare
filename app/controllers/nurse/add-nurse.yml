@@ -34,17 +34,8 @@ parameters:
     type: integer
     example: 1
     required: false
-definitions:
-  NurseAdd:
-    type: object
-    properties:
-      message:
-        type: string
-        example: "ok"
-      id:
-        type: integer
-        example: 10
+
 responses:
   200:
     schema:
-      $ref: '#/definitions/NurseAdd'
+      $ref: '#/definitions/Add'

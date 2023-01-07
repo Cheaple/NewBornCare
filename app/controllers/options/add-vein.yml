@@ -5,17 +5,7 @@ parameters:
     example: 前额侧面的颞浅静脉
     required: true
   
-definitions:
-  VeinAdd:
-    type: object
-    properties:
-      message:
-        type: string
-        example: ok
-      id:
-        type: integer
-        example: 5
 responses:
   200:
     schema:
-      $ref: '#/definitions/VeinAdd'
+      $ref: '#/definitions/Add'

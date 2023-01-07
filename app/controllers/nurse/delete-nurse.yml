@@ -5,7 +5,7 @@ parameters:
     example: 10
     required: true
 definitions:
-  NurseDelete:
+  Delete:
     type: object
     properties:
       message:
@@ -17,4 +17,4 @@ definitions:
 responses:
   200:
     schema:
-      $ref: '#/definitions/NurseDelete'
+      $ref: '#/definitions/Delete'

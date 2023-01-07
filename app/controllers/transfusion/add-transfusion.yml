@@ -2,33 +2,40 @@ parameters:
   - name: nurseId
     in: body
     type: integer
+    example: 20
     required: true
   - name: patientId
     in: body
     type: integer
+    example: 10
     required: true
   - name: name
     in: body
     type: string
+    example: 第二次抗生素治疗
     required: false
   - name: startTime
     in: body
     type: integer
+    example: 1667275200
     required: false
 
   - name: vein
     in: body
     type: integer
-    description: 静脉
+    example: 2
+    description: 静脉id
     required: true  
   - name: tool
     in: body
     type: integer
-    description: 输液工具
+    example: 2
+    description: 输液工具id
     required: true
   - name: info
     in: body
     type: string
+    example: "暂无"
     description: 其他信息
     required: false
 
@@ -41,20 +48,26 @@ parameters:
       properties:
         seq:
           type: integer
+          example: 1
           description: 药品在本次输液中的序号
         drug:
           type: integer
-          description: 药品（id）
+          example: 1
+          description: 药品id
         dose:
           type: integer
-          description: 剂量
+          example: 100
+          description: 剂量（ml）
         rate:
           type: integer
+          example: 5
           description: 速率
         startTime:
           type: integer
+          example: 1667275200
         status:
           type: integer
+          example: 1
     required: true
 
   - name: status
@@ -63,15 +76,7 @@ parameters:
     description: 输液状态（-1：已中止；0：已完成；n：正进行到第 n 个药品）
     required: false
     
-definitions:
-  TransfusionAdd:
-    type: object
-    properties:
-      message:
-        type: string
-      id:
-        type: integer
 responses:
   200:
     schema:
-      $ref: '#/definitions/TransfusionAdd'
+      $ref: '#/definitions/Add'

@@ -10,36 +10,49 @@ definitions:
     properties:
       id:
         type: integer
+        example: 10
       name:
         type: string
+        example: 陈宇乐
       gender:
         type: integer
+        example: 1
       birthdate:
         type: integer
-      palmprint:
-        type: binary
+        example: 1667275200
       guardian:
         type: string
+        example: 陈大乐
       guardianId:
         type: string
+        example: 421002197009100000
       relation:
         type: integer
+        example: 1
       tel:
         type: integer
+        example: 13512340000
       status:
         type: integer
+        example: 1
       inDate:
         type: integer
+        example: 1667275200
       outDate:
         type: integer
+        example: 1667276200
       department:
         type: integer
+        example: 5
       room:
         type: integer
+        example: 30
       bed:
         type: integer
+        example: 3
       allergy:
         type: string
+        example: 花粉
 
 responses:
   200:

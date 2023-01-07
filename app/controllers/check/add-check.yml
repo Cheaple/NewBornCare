@@ -2,32 +2,30 @@ parameters:
   - name: nurseId
     in: body
     type: integer
+    example: 20
     required: true
   - name: patientId
     in: body
     type: integer
+    example: 10
     required: true
   - name: transfusionId
     in: body
     type: integer
+    example: 10
     required: false
   - name: time
     in: body
     type: integer
+    example: 1667275200
     required: false
   - name: info
     in: body
     type: string
+    example: "无"
     required: false
-definitions:
-  CheckAdd:
-    type: object
-    properties:
-      message:
-        type: string
-      id:
-        type: integer
+
 responses:
   200:
     schema:
-      $ref: '#/definitions/CheckAdd'
+      $ref: '#/definitions/Add'

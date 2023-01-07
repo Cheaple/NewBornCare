@@ -2,16 +2,9 @@ parameters:
   - name: patientId
     in: path
     type: integer
+    example: 10
     required: true
-definitions:
-  PatientDelete:
-    type: object
-    properties:
-      message:
-        type: string
-      id:
-        type: integer
 responses:
   200:
     schema:
-      $ref: '#/definitions/PatientDelete'
+      $ref: '#/definitions/Delete'
