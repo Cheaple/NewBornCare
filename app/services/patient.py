@@ -1,9 +1,15 @@
+import functools
+
 from sqlalchemy import and_
 
 from app.extensions import db
 from app.models import Patient
 from app.utils import encipher
 
+def cmp(n1, n2):
+    if n1['name'].encode('gbk') > n2['name'].encode('gbk'):
+        return 1
+    return -1
 
 class PatientService():
     def get_patient_with_password(self, username, password):
@@ -75,6 +81,7 @@ class PatientService():
             count_result = db.session.execute(sql_count)
             patient_list = [dict(zip(result.keys(), result))
                             for result in content_result]
+            patient_list.sort(key=functools.cmp_to_key(cmp))
             count = [dict(zip(result.keys(), result))
                      for result in count_result]
 
