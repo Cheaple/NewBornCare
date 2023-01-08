@@ -258,10 +258,12 @@ def init_data():
     # Transfusion
     for j in range(5):
         for i in range(1, numPatient + 1):
+            startTime = generate_time()
             transfusion = models.Transfusion(
                 nurseId=randint(1, numNurse),
                 patientId=i,
-                startTime=generate_time(),
+                startTime=startTime,
+                finishTime=startTime + 7200,
                 name="输液治疗{}".format(j),
                 status=0,
                 drugCnt=2,
