@@ -38,6 +38,7 @@ class NurseService():
                 FROM
                     Nurse
                 {where}
+                ORDER BY name
             '''
             count_base = '''
                 SELECT

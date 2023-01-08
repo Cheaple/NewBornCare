@@ -26,6 +26,7 @@ class CheckService():
                 FROM
                     `Check`
                 {where}
+                ORDER BY time DESC
             '''
             count_base = '''
                 SELECT

@@ -28,6 +28,7 @@ class TransfusionService():
                 FROM
                     Transfusion
                 {where}
+                ORDER BY startTime DESC
             '''
             count_base = '''
                 SELECT

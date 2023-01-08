@@ -273,7 +273,7 @@ def init_data():
                 transfusionId=j * numPatient + i,
                 seq=1,
                 startTime=transfusion.startTime,
-                rate=randint(1, 8),
+                rate=choice([50, 60, 70, 80]),
                 drug=1,
                 dose=400,
                 status=0,  # 已完成
@@ -282,7 +282,7 @@ def init_data():
                 transfusionId=j * numPatient + i,
                 seq=2,
                 startTime=transfusion.startTime + 3600,
-                rate=randint(1, 8),
+                rate=choice([50, 60, 70, 80]),
                 drug=randint(2, 5),
                 dose=100,
                 status=0,  # 已完成
